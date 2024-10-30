@@ -1,6 +1,8 @@
 from enum import Enum
 from typing import List
 
+from piece import getMoves
+
 class EPiece(Enum):
     EMPTY = 0
     DEFAULT_P1 = 1
@@ -15,5 +17,8 @@ openList: List[Board] = []
 closedList: List[Board] = []
 
 def main():
-    # do stuff
+    while(True):
+        #algo stuff
+        possibleMoves = getMoves(Board(), True)
+        
     return

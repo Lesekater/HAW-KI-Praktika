@@ -1,19 +1,12 @@
-from main import EPiece
+from typing import List
+from main import Board, EPiece
 
-class Piece:
-    def getMoves(self, type: EPiece, x: int, y: int):
-        if self.type == EPiece.DAME_P1 or self.type == EPiece.DAME_P2:
-            return DamePiece.getMoves(self, type, x, y)
-        if self.type == EPiece.DEFAULT_P1 or self.type == EPiece.DEFAULT_P2:
-            return DefaultPiece.getMoves(self, type, x, y)
-        return []
 
-class DefaultPiece(Piece):
-    def getMoves(self, type, x, y):
-        # TODO: implement
-        return []
-
-class DamePiece(Piece):
-    def getMoves(self, type, x, y):
-        # TODO: implement
-        return []
+###
+# Piece
+# @return Possible Moves, isWinningMove
+###
+def getMoves(board: Board, player1: bool) -> {List[Board], bool}:
+    # TODO: Implement
+    # 
+    return {[], True}
