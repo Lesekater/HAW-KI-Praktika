@@ -20,5 +20,8 @@ def main():
     while(True):
         #algo stuff
         possibleMoves = getMoves(Board(), True)
+
+        # TODO: Implement
+        # Elias
         
     return

@@ -8,5 +8,5 @@ from main import Board, EPiece
 ###
 def getMoves(board: Board, player1: bool) -> {List[Board], bool}:
     # TODO: Implement
-    # 
+    # Lars
     return {[], True}
