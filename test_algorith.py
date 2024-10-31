@@ -1,5 +1,5 @@
 from const import Board
-from main import main
+from main import main, countOfPieces
 import copy
 
 board = Board([
@@ -54,3 +54,20 @@ def test_correctSortedList(mocker):
     assert len(openList) == 2
     assert openList[0].f == 2
     assert openList[1].f == 1
+
+def test_countPiecesHeuristic():
+    testBoard = Board([[1, 1, 1], [1, 1, 1], [1, 1, 1]])
+    testBoard.player1 = True
+    testBoard2 = Board([[2, 2, 2], [2, 2, 2], [2, 2, 2]])
+    testBoard2.player1 = False
+    testBoard3 = Board([[1, 1, 1], [1, 2, 2], [3, 3, 3]])
+    testBoard3.player1 = True
+
+    result = countOfPieces(testBoard)
+    result2 = countOfPieces(testBoard2)
+    result3 = countOfPieces(testBoard3)
+    
+    # assert
+    assert result == 9
+    assert result2 == 9
+    assert result3 == 4
