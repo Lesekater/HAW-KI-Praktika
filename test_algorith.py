@@ -2,7 +2,16 @@ from const import Board
 from main import main
 import copy
 
-board = Board([[0, 1, 0], [0, 0, 0], [0, 0, 0]])
+board = Board([
+    [0, 1, 0, 1, 0, 1, 0, 1],
+    [1, 0, 1, 0, 1, 0, 1, 0],
+    [0, 1, 0, 1, 0, 1, 0, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [2, 0, 2, 0, 2, 0, 2, 0],
+    [0, 2, 0, 2, 0, 2, 0, 2],
+    [2, 0, 2, 0, 2, 0, 2, 0]
+])
 
 def test_expandLastNode(mocker):
     mocker.patch('main.openList', [board])
