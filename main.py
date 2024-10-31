@@ -36,6 +36,7 @@ def main():
         for move in possibleMoves:
             newBoard = Board(move)
             newBoard.player1 = not nodeToExpand.player1
+            newBoard.parent = nodeToExpand
 
             # calculate g
             newBoard.g = nodeToExpand.g + 1
@@ -63,6 +64,11 @@ def main():
     if foundGoal:
         print("Goal found!")
         print(formatBoard(nodeToExpand))
+        print("Total moves: " + str(nodeToExpand.g))
+        print ("Full Game: ")
+        while nodeToExpand.parent:
+            print(formatBoard(nodeToExpand.parent))
+            nodeToExpand = nodeToExpand.parent
     else:
         print("Goal not found!")
 
