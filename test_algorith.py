@@ -1,5 +1,6 @@
 from const import Board
 from main import main
+import copy
 
 board = Board([[0, 1, 0], [0, 0, 0], [0, 0, 0]])
 
@@ -26,17 +27,21 @@ def test_noGoalFound(mocker):
     assert foundGoal is False
 
 def test_correctSortedList(mocker):
-    board1 = board.replace(f=0)
-    board2 = board.replace(f=1)
-    board3 = board.replace(f=2)
+    board1 = copy.copy(board)
+    board1.f = 2
+    board2 = copy.copy(board)
+    board2.f = 1
+    board3 = copy.copy(board)
+    board3.f = 0
+
     openListMock = [board1, board2, board3]
 
-    mocker.patch('main.openList', [board])
-    mocker.patch('main.getMoves', return_value=([board], False))
+    mocker.patch('main.openList', openListMock)
+    mocker.patch('main.getMoves', return_value=([], True))
 
     (foundGoal, openList, closedList) = main()
 
     # assert
     assert len(openList) == 2
-    assert openList[0].f == 0
+    assert openList[0].f == 2
     assert openList[1].f == 1
