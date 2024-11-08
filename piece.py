@@ -1,4 +1,3 @@
-from typing import List, Tuple
 from const import Board, EPiece
 from enum import Enum
 
@@ -12,7 +11,7 @@ class Direction(Enum):
 # Piece
 # @return Possible Moves, isWinningMove
 ###
-def getMoves(board: Board, player1: bool) -> Tuple[List[Board], bool]:
+def getMoves(board: Board, player1: bool) -> tuple[list[Board], bool]:
     # TODO: Implement
     # Lars
     return [], False
@@ -22,17 +21,21 @@ def getMoves(board: Board, player1: bool) -> Tuple[List[Board], bool]:
 
 # Player1 moves in positive direction (down)
 # Player2 moves in negative direction (up)
-def getMovesForPosition(board: Board, x: int, y: int) -> List[Board]:
-    possibleMoves: List[Board] = List()
+def getMovesForPosition(board: Board, x: int, y: int) -> list[Board]:
+    possibleMoves: list[Board] = list()
     pieceToMove: EPiece = EPiece(board.data[x][y])
     # if pieceToMove == EPiece.DEFAULT_P1:
     return possibleMoves
 
-def CustomDiagonals(board: Board, directions: List[Direction], startX: int, startY:int) -> dict(Direction, List[EPiece]):
-    return "test"
+def CustomDiagonals(board: Board, directions: list[Direction], startX: int, startY: int) -> dict[Direction, list[EPiece]]:
+    movesForDir: dict[Direction, list[EPiece]] = {}
+    for dir in directions:
+        movesForDir[dir] = contentOfDiagonals(board, dir, startX, startY)
+    return movesForDir
 
-def contentOfDiagonals(board: Board, direction: Direction, startX: int, startY: int) -> List[EPiece]:
-    contentInDir: List[EPiece] = List()
+
+def contentOfDiagonals(board: Board, direction: Direction, startX: int, startY: int) -> list[EPiece]:
+    contentInDir: list[EPiece] = list()
     xSearchModifyer: int = 1
     ySearchModifyer: int = 1
 
