@@ -15,7 +15,7 @@ class Board:
         self.g = 0.0
         self.player1 = True
 
-    data: List[List[int]] = []
+    data: List[List[EPiece]] = []
     f: float = 0.0
     g: float = 0.0
     player1: bool = True
