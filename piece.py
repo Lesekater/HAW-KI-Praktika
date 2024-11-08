@@ -28,13 +28,29 @@ def getMovesForPosition(board: Board, x: int, y: int) -> List[Board]:
     # if pieceToMove == EPiece.DEFAULT_P1:
     return possibleMoves
 
-def contentOfDiagonals(direction: Direction) -> List[EPiece]:
+def CustomDiagonals(board: Board, directions: List[Direction], startX: int, startY:int) -> dict(Direction, List[EPiece]):
+    return "test"
+
+def contentOfDiagonals(board: Board, direction: Direction, startX: int, startY: int) -> List[EPiece]:
     contentInDir: List[EPiece] = List()
     xSearchModifyer: int = 1
     ySearchModifyer: int = 1
+
+    x: int = startX
+    y: int = startY
+
     if direction == Direction.Up_Right or direction == Direction.Up_Left:
         ySearchModifyer = -1
     if direction == Direction.Up_Left or direction == Direction.Down_Left:
         xSearchModifyer = -1
+
+    x += xSearchModifyer
+    y += ySearchModifyer
+    while (x > -1 and x < 8 and y > -1 and y < 8):
+        contentInDir.append(EPiece(board.data[x][y]))
+        x += xSearchModifyer
+        y += ySearchModifyer
+        print(x)
+        print(y)
 
     return contentInDir
