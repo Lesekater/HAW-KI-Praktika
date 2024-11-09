@@ -29,6 +29,7 @@ def getMovesForPosition(board: Board, x: int, y: int) -> list[Board]:
     directionsToCheck: list[Direction] = list()
 
     # TODO: Move all this crap into the getDiagonalContent() function. Its is clutter that is ugly and i hate it.
+    # I REAAALY WANT TO DO THIS RIGHT KNOW. BUT I AM VERY EEPY. THE DUALITY OF EEPYNESS :3
 
     # Create a list with all the diagonal directions we need to check for a given piece
     if pieceToMove == EPiece.EMPTY:
