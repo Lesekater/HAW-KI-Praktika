@@ -3,15 +3,23 @@ from const import Board
 from main import main, countOfPieces, makeMove
 import copy
 
+# Player1 is odd  numbers (1 and 3) (Black)
+# Player2 is even numbers (2 and 4) (White)
+
+# Player1 moves in positive direction (down)
+# Player2 moves in negative direction (up)
 board = Board([
-    [0, 1, 0, 1, 0, 1, 0, 1],
-    [1, 0, 1, 0, 1, 0, 1, 0],
-    [0, 1, 0, 1, 0, 1, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [2, 0, 2, 0, 2, 0, 2, 0],
-    [0, 2, 0, 2, 0, 2, 0, 2],
-    [2, 0, 2, 0, 2, 0, 2, 0]
+  # 0                     7
+  # |------- X-Axis -------|    _
+    [0, 1, 0, 1, 0, 1, 0, 1], # | 0
+    [1, 0, 1, 0, 1, 0, 1, 0], # |
+    [0, 1, 0, 1, 0, 1, 0, 1], # |
+    [0, 0, 0, 0, 0, 0, 0, 0], # Y-Axis
+    [0, 0, 0, 0, 0, 0, 0, 0], # |
+    [2, 0, 2, 0, 2, 0, 2, 0], # |
+    [0, 2, 0, 2, 0, 2, 0, 2], # |
+    [2, 0, 2, 0, 2, 0, 2, 0]  # | 7
+                              # -
 ])
 
 def test_expandLastNode(mocker):
