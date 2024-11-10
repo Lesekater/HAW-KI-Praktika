@@ -1,6 +1,7 @@
 from typing import List
 from const import Board
-from main import main, countOfPieces, makeMove
+from heuristics import countOfPieces
+from main import main, makeMove
 import copy
 
 # Player1 is odd  numbers (1 and 3) (Black)
@@ -26,7 +27,7 @@ def test_expandLastNode(mocker):
     # mocker.patch('main.openList', [board])
     mocker.patch('main.getMoves', return_value=([board], True))
 
-    (foundGoal, openList, closedList) = main([board], [])
+    (foundGoal, openList, closedList) = main([board])
 
     # assert
     assert len(openList) == 0
@@ -37,7 +38,7 @@ def test_noGoalFound(mocker):
     # mocker.patch('main.openList', [board])
     mocker.patch('main.getMoves', return_value=([], False))
 
-    (foundGoal, openList, closedList) = main([board], [])
+    (foundGoal, openList, closedList) = main([board])
 
     # assert
     assert len(openList) == 0
@@ -56,7 +57,7 @@ def test_correctSortedList(mocker):
             
     mocker.patch('main.getMoves', return_value=([board1], True))
 
-    (foundGoal, openList, closedList) = main(openListMock, [])
+    (foundGoal, openList, closedList) = main(openListMock)
 
     # assert
     assert len(openList) == 2
