@@ -1,5 +1,6 @@
+from typing import List
 from const import Board
-from main import main, countOfPieces
+from main import main, countOfPieces, makeMove
 import copy
 
 board = Board([
@@ -14,10 +15,10 @@ board = Board([
 ])
 
 def test_expandLastNode(mocker):
-    mocker.patch('main.openList', [board])
-    mocker.patch('main.getMoves', return_value=(board, True))
+    # mocker.patch('main.openList', [board])
+    mocker.patch('main.getMoves', return_value=([board], True))
 
-    (foundGoal, openList, closedList) = main()
+    (foundGoal, openList, closedList) = main([board], [])
 
     # assert
     assert len(openList) == 0
@@ -25,10 +26,10 @@ def test_expandLastNode(mocker):
     assert foundGoal is True
 
 def test_noGoalFound(mocker):
-    mocker.patch('main.openList', [board])
+    # mocker.patch('main.openList', [board])
     mocker.patch('main.getMoves', return_value=([], False))
 
-    (foundGoal, openList, closedList) = main()
+    (foundGoal, openList, closedList) = main([board], [])
 
     # assert
     assert len(openList) == 0
@@ -44,11 +45,10 @@ def test_correctSortedList(mocker):
     board3.f = 0
 
     openListMock = [board1, board2, board3]
+            
+    mocker.patch('main.getMoves', return_value=([board1], True))
 
-    mocker.patch('main.openList', openListMock)
-    mocker.patch('main.getMoves', return_value=([], True))
-
-    (foundGoal, openList, closedList) = main()
+    (foundGoal, openList, closedList) = main(openListMock, [])
 
     # assert
     assert len(openList) == 2
@@ -71,3 +71,93 @@ def test_countPiecesHeuristic():
     assert result == 9
     assert result2 == 9
     assert result3 == 4
+
+def test_hardcodedGame(mocker):
+
+    initalBoard = Board([])
+
+    heuristic_bL = 1
+    bL = Board([])
+    # bL.g = 1
+    # bL.f = 1
+    bL.parent = initalBoard
+    
+    heuristic_bL1 = 0
+    bL1 = Board([])
+    # bL1.g = 2
+    # bL1.f = 0
+    bL1.parent = bL
+
+    heuristic_bR = 1
+    bR = Board([])
+    # bR.g = 1
+    # bR.f = 1
+    bR.parent = initalBoard
+
+    heuristic_bR1 = 1
+    bR1 = Board([])
+    # bR1.g = 2
+    # bR1.f = 1
+    bR1.parent = bR
+
+    def mockHeuristic(board):
+        if board.id == bL.id:
+            return heuristic_bL
+        if board.id == bL1.id:
+            return heuristic_bL1
+        if board.id == bR.id:
+            return heuristic_bR
+        if board.id == bR1.id:
+            return heuristic_bR1
+        print("Error: Board not found")
+
+    mocker.patch('main.calculateHeuristic', mockHeuristic)
+    openList: List[Board] = []
+    closedList: List[Board] = []
+
+    # step 1
+    openList = [initalBoard]
+    mocker.patch('main.getMoves', return_value=([bR, bL], False))
+
+    nodeToExpand = openList.pop()
+    assert nodeToExpand == initalBoard
+    (hasWon, _) = makeMove(nodeToExpand, openList, closedList)
+
+    # assert
+    assert hasWon is False
+    assert len(openList) == 2
+    assert openList == [bR, bL]
+
+    # step 2
+    mocker.patch('main.getMoves', return_value=([bL1], False))
+
+    nodeToExpand = openList.pop()
+    assert nodeToExpand == bL
+    (hasWon, _) = makeMove(nodeToExpand, openList, closedList)
+
+    # assert
+    assert hasWon is False
+    assert openList[1].f == 2
+    assert len(openList) == 2
+    assert openList == [bR, bL1]
+
+    # step 3
+    mocker.patch('main.getMoves', return_value=([], False))
+    nodeToExpand = openList.pop()
+    assert nodeToExpand == bL1
+    (hasWon, _) = makeMove(nodeToExpand, openList, closedList)
+
+    # assert
+    assert hasWon is False
+    assert len(openList) == 1
+    assert openList == [bR]
+
+    # step 4
+    mocker.patch('main.getMoves', return_value=([bR1], True))
+    nodeToExpand = openList.pop()
+    assert nodeToExpand == bR
+    (hasWon, _) = makeMove(nodeToExpand, openList, closedList)
+
+    # assert
+    assert hasWon is True
+    assert len(openList) == 0
