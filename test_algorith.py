@@ -129,3 +129,65 @@ def test_hardcodedGame(mocker):
     assert len(openList) == 0
     assert closedList == [initalBoard, bL, bL1] # bR is not in closedList because the program exits before adding it
 
+def test_hardcodedGame3(mocker):
+    
+        # hardcoded boards
+        initalBoard = Board([])
+        
+        heuristic_bL = 2
+        bL = Board([])
+
+        heuristic_bLL = 1
+        bLL = Board([])
+
+        heuristic_bLR = 2
+        bLR = Board([])
+
+        herustic_bLR1 = 2
+        bLR1 = Board([])
+
+        heuristic_bR = 2
+        bR = Board([])
+
+        def mockHeuristic(board):
+            if board.id == bL.id:
+                return heuristic_bL
+            if board.id == bLL.id:
+                return heuristic_bLL
+            if board.id == bLR.id:
+                return heuristic_bLR
+            if board.id == bR.id:
+                return heuristic_bR
+            print("Error: Board not found")
+
+        mocker.patch('main.calculateHeuristic', mockHeuristic)
+
+        # hardcoded move results
+        def mockGetMoves(board, player1):
+            if board.id == initalBoard.id:
+                return [bR, bL], False
+            if board.id == bL.id:
+                return [bLL, bLR], False
+            if board.id == bLL.id:
+                return [], False
+            if board.id == bLR.id:
+                return [bLR1], True
+            if board.id == bR.id:
+                return [], False
+            print("Error: Board not found")
+
+        mocker.patch('main.getMoves', mockGetMoves)
+
+        openList = [initalBoard]
+        closedList: List[Board] = []
+        hasWon = False
+
+        while not hasWon:
+            nodeToExpand = openList.pop()
+            (hasWon, _) = makeMove(nodeToExpand, openList, closedList)
+
+        # assert
+        assert hasWon is True
+
+        assert openList == [bR, bLL]
+        assert closedList == [initalBoard, bL]
