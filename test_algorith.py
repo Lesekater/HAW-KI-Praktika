@@ -83,6 +83,21 @@ def test_countPiecesHeuristic():
 
 def test_hardcodedGame(mocker):
 
+    # Tree representation:
+    #   initalBoard
+    #     /     \
+    #    bL      bR
+    #     |       |
+    #    bL1     bR1
+
+    # Heuristic values:
+    #       1
+    #     /    \
+    #    1      1
+    #    |      |
+    #    0      0
+
+
     # hardcoded boards
     initalBoard = Board([])
 
@@ -139,7 +154,26 @@ def test_hardcodedGame(mocker):
     assert closedList == [initalBoard, bL, bL1] # bR is not in closedList because the program exits before adding it
 
 def test_hardcodedGame3(mocker):
-    
+        
+        # Tree representation:
+        #   initalBoard
+        #     /     \
+        #    bL      bR
+        #   /  \      
+        # bLL  bLR
+        #       |
+        #      bLR1
+
+        # Heuristic values:
+        #       2
+        #     /    \
+        #    2      2
+        #   /  \
+        #  1    2
+        #       |
+        #       2
+
+
         # hardcoded boards
         initalBoard = Board([])
         
@@ -165,6 +199,8 @@ def test_hardcodedGame3(mocker):
                 return heuristic_bLL
             if board.id == bLR.id:
                 return heuristic_bLR
+            if board.id == bLR1.id:
+                return herustic_bLR1
             if board.id == bR.id:
                 return heuristic_bR
             print("Error: Board not found")
