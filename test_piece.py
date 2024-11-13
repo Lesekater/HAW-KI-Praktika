@@ -169,7 +169,7 @@ def test_getMoves_simple():
                                 [0, 0, 0, 0, 0],
                                 [1, 0, 1, 0, 1]])
     
-    result = getMoves(testBoard)
+    result = getMoves(testBoard, True)
 
     # assert
     board1 = Board.fromIntList([[0, 0, 0, 0, 0],
