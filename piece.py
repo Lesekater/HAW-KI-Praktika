@@ -72,13 +72,15 @@ def contentOfDiagonals(board: Board, direction: Direction, startX: int, startY: 
     if direction == Direction.Up_Left or direction == Direction.Down_Left:
         xSearchModifyer = -1
 
+    print("ySearchModifyer: " + str(ySearchModifyer))
+    print("xSearchModifyer: " + str(xSearchModifyer))
+
     x += xSearchModifyer
     y += ySearchModifyer
     while (x > -1 and x < size_x) and (y > -1 and y < size_y):
-        contentInDir.append(EPiece(board.data[x][y]))
+        contentInDir.append(EPiece(board.data[y][x]))
+        print("x: " + str(x), "y: " + str(y) + " | " + str(EPiece(board.data[y][x])))
         x += xSearchModifyer
         y += ySearchModifyer
-        print(x)
-        print(y)
 
     return contentInDir
