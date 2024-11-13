@@ -23,7 +23,7 @@ def getMoves(board: Board, player1: bool) -> tuple[list[Board], bool]:
 
 # Player1 moves in positive direction (down)
 # Player2 moves in negative direction (up)
-def getMovesForPosition(board: Board, x: int, y: int) -> list[Board]:
+def getMovesForPosition(board: Board, x: int, y: int) -> tuple[list[Board], int]:
     """Returns the possible Moves for a single piece on a board"""
     possibleMoves: list[Board] = list()
     pieceToMove: EPiece = board.data[y][x]
@@ -35,7 +35,7 @@ def getMovesForPosition(board: Board, x: int, y: int) -> list[Board]:
     # Create a list with all the diagonal directions we need to check for a given piece
     if pieceToMove == EPiece.EMPTY:
         print("Cannot check moves for an empty spot")
-        return possibleMoves
+        return (possibleMoves, -1)
     if pieceToMove == EPiece.DEFAULT_P1 or pieceToMove.value > 2: #Check for these Directions if it's a player 1 piece or a dame
         directionsToCheck.append(Direction.Down_Left)
         directionsToCheck.append(Direction.Down_Right)
@@ -46,20 +46,91 @@ def getMovesForPosition(board: Board, x: int, y: int) -> list[Board]:
     # Check those diagonals
     diaToCheck: dict[Direction, list[EPiece]] = getDiagonalContent(board, directionsToCheck, x, y)
 
+    # Do sick moves
+    for d in diaToCheck:
+        movesForDir: list[Board] = checkDirection(board, d, diaToCheck[d], pieceToMove, x, y)
+        for m in movesForDir:
+            possibleMoves.append(m)
+
     return possibleMoves
 
-def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece: EPiece, startX: int, startY: int) -> list[Board]:
+def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece: EPiece, x: int, y: int) -> tuple[list[Board], int]:
     moves: list[Board] = list()
+    capturedPieces: int = 0
+
+    if not checkIfPiecesOppose(piece, dia[0]):
+        return (moves, 0)
 
     searchMods: tuple[int, int] = getSearchModifiyerForDirection(direction)
     xMod: int = searchMods[0]
     yMod: int = searchMods[1]
 
-    if dia[0] == EPiece.EMPTY:
-        moves.append(board.swap(startX,startY,startX+xMod, startY+yMod))
+    newPosX: int = -1
+    newPosY: int = -1
+    furtherMoves: tuple[list[Board], int] = (list(), -1)
+    move: Board = board
 
-    return moves
+    # Default
+    if piece.value < 3 and piece.value > 0:
+        # WALK
+        if dia[0] == EPiece.EMPTY:
+            move = board.swap(x, y, x+xMod, y+yMod)
+            moves.append(move)
+            return (moves, 0)
+        # FIGHT
+        elif dia[1] == EPiece.EMPTY:
+            newPosX = x+xMod+xMod
+            newPosY = y+yMod+yMod
+            capturedPieces += 1
+            move = board.swap(x, y, newPosX, newPosY).strikePiece(x+xMod, y+yMod)
+            furtherMoves = getMovesForPosition(move,newPosX, newPosY)
+        # ???
+        else:
+            return (moves, -1)
+    # Dame
+    else:
+        firstPiece: tuple[int, EPiece] = getFirstNonEmpty(dia)
+        # The next Piece on diagonal is friendly, only WALK
+        if firstPiece[0] > 0 and not checkIfPiecesOppose(piece, firstPiece[1]):
+            for i in range(firstPiece[0]):
+                move = board.swap(x, y, x+i*xMod, y+i*yMod)
+                moves.append(move)
+                return (moves, 0)
+        # Next piece on diagonal is enemy, FIGHT
+        elif dia[firstPiece[0]+1] == EPiece.EMPTY and checkIfPiecesOppose(piece, firstPiece[1]):
+            newPosX = x+firstPiece[0]*xMod+xMod
+            newPosY = y+firstPiece[0]*yMod+yMod
+            move = board.swap(x, y, newPosX, newPosY).strikePiece(newPosX - xMod, newPosY - yMod)
+            capturedPieces += 1
+            furtherMoves = getMovesForPosition(move,newPosX, newPosY)
+        # ???
+        else:
+            return (moves, -1)
 
+
+    # Look for further moves
+    if furtherMoves[1] > 0 and capturedPieces > 0:
+        for m in furtherMoves[0]:
+            capturedPieces += furtherMoves[1]
+            moves.append(m)
+    else:
+        moves.append(move)
+    return (moves, capturedPieces)
+
+
+
+def checkIfPiecesOppose(f: EPiece, s: EPiece) -> bool:
+    if ((f == EPiece.DEFAULT_P1 or f == EPiece.DAME_P1) and (s == EPiece.DEFAULT_P2 or EPiece.DAME_P2)) or \
+        ((f == EPiece.DEFAULT_P2 or f == EPiece.DAME_P2) and (s == EPiece.DEFAULT_P1 or EPiece.DAME_P1)):
+        return True
+    else:
+        return False
+
+def getFirstNonEmpty(l: list[EPiece]) -> tuple[int, EPiece]:
+    for idx, p in enumerate(l):
+        if p != EPiece.EMPTY:
+            return (idx, p)
+    return (-1, EPiece.EMPTY)
 
 def getSearchModifiyerForDirection(d: Direction) -> tuple[int, int]:
     xSearchModifyer: int = 1
