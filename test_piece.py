@@ -63,3 +63,22 @@ def test_getDiagonalContent():
                       Direction.Up_Left: [EPiece.DEFAULT_P2, EPiece.DEFAULT_P1],
                       Direction.Down_Left: [EPiece.DEFAULT_P1, EPiece.DEFAULT_P2],
                       Direction.Up_Right: [EPiece.DAME_P1, EPiece.DAME_P2, EPiece.DEFAULT_P1]}
+    
+    ## test with unporportional board
+    testBoard = Board([[1, 1, 1, 1, 1, 1],
+                       [1, 1, 1, 1, 1, 1],
+                       [1, 1, 1, 1, 1, 1]])
+    
+    testBoard2 = Board([[1, 1, 1],
+                        [1, 1, 1],
+                        [1, 1, 1],
+                        [1, 1, 1],
+                        [1, 1, 1],
+                        [1, 1, 1]])
+    
+    result = getDiagonalContent(testBoard, [Direction.Down_Right], 3, 0)
+    result2 = getDiagonalContent(testBoard2, [Direction.Down_Right], 0, 3)
+
+    # assert
+    assert result == {Direction.Down_Right: [EPiece.DEFAULT_P1, EPiece.DEFAULT_P1]}
+    assert result2 == {Direction.Down_Right: [EPiece.DEFAULT_P1, EPiece.DEFAULT_P1]}

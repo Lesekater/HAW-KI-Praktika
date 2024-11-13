@@ -64,8 +64,8 @@ def contentOfDiagonals(board: Board, direction: Direction, startX: int, startY: 
     x: int = startX
     y: int = startY
 
-    size_x = len(board.data)
-    size_y = len(board.data[0])
+    size_x = len(board.data[0])
+    size_y = len(board.data)
 
     if direction == Direction.Up_Right or direction == Direction.Up_Left:
         ySearchModifyer = -1
