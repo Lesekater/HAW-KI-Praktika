@@ -154,8 +154,9 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
     # Dame
     elif piece.value > 2 and piece.value < 5:
         firstPiece: tuple[int, EPiece] = getFirstNonEmpty(dia)
-        newPosX = x+firstPiece[0]*xMod+xMod
-        newPosY = y+firstPiece[0]*yMod+yMod
+        multiplyer: int = firstPiece[0] + 1
+        newPosX = x+multiplyer*xMod+xMod
+        newPosY = y+multiplyer*yMod+yMod
         # The next Piece on diagonal is friendly or only empty, WALK
         print("new posX: " + str(newPosX) + " new posY: " + str(newPosY))
         if (firstPiece[0] > 0 or firstPiece[1] == EPiece.EMPTY) and not checkIfPiecesOppose(piece, firstPiece[1]):
@@ -172,9 +173,9 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
         # Next piece on diagonal is enemy, FIGHT
         elif not checkForInBounds(board, newPosX, newPosY) and dia[firstPiece[0]+1] == EPiece.EMPTY and not checkIfPiecesOppose(piece, firstPiece[1]):
             print("FIGHT")
-            move = board.swap(x, y, newPosX+xMod, newPosY+yMod).strikePiece(newPosX, newPosY)
+            move = board.swap(x, y, newPosX, newPosY).strikePiece(newPosX-xMod, newPosY-yMod)
             capturedPieces += 1
-            furtherMoves = getMovesForPosition(move,newPosX+xMod, newPosY+yMod)
+            furtherMoves = getMovesForPosition(move,newPosX, newPosY)
         # ???
         else:
             print("??? 1")
@@ -198,7 +199,8 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
 def checkForInBounds(board: Board, x: int, y:int) -> bool:
     size_x = len(board.data[0])
     size_y = len(board.data)
-    if (x >= size_x - 1) or (y >= size_y - 1):
+
+    if (x < 0 or x >= size_x) or (y < 0 or y >= size_y):
         print("OUT OF BOUNDS")
         return True
     return False

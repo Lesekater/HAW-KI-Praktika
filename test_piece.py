@@ -87,28 +87,28 @@ def test_getDiagonalContent():
 ## moving pieces
 ####################################
 
-# def test_getMovesForPosition_simple():
-#     testBoard = Board.fromIntList([[1, 0, 0],
-#                                 [0, 0, 0],
-#                                 [0, 0, 0]])
+def test_getMovesForPosition_simple():
+    testBoard = Board.fromIntList([[1, 0, 0],
+                                [0, 0, 0],
+                                [0, 0, 0]])
     
-#     result = getMovesForPosition(testBoard, 0, 0)
+    result = getMovesForPosition(testBoard, 0, 0)
 
-#     # assert
-#     print("result", result)
-#     assert result[0][0].data == Board.fromIntList([[0, 0, 0],
-#                                         [0, 1, 0],
-#                                         [0, 0, 0]]).data
+    # assert
+    print("result", result)
+    assert result[0][0].data == Board.fromIntList([[0, 0, 0],
+                                        [0, 1, 0],
+                                        [0, 0, 0]]).data
 
-# def test_getMovesForPosition_invalid():
-#     testBoard = Board.fromIntList([[0, 0, 0],
-#                                 [0, 0, 0],
-#                                 [0, 0, 1]])
+def test_getMovesForPosition_invalid():
+    testBoard = Board.fromIntList([[0, 0, 0],
+                                [0, 0, 0],
+                                [0, 0, 1]])
     
-#     result = getMovesForPosition(testBoard, 2, 2)
+    result = getMovesForPosition(testBoard, 2, 2)
 
-#     # assert
-#     assert result == ([], -1)
+    # assert
+    assert result == ([], -1)
     
 # def test_getMovesForPosition_strike():
 #     testBoard = Board.fromIntList([[1, 0, 0],
@@ -121,6 +121,21 @@ def test_getDiagonalContent():
 #     assert result[0][0].data == Board.fromIntList([[0, 0, 0],
 #                                         [0, 0, 0],
 #                                         [0, 0, 1]]).data
+    
+#     testBoard2 = Board.fromIntList([[0, 0, 0, 0, 0],
+#                                 [0, 2, 0, 0, 0],
+#                                 [0, 0, 0, 0, 0],
+#                                 [0, 2, 0, 0, 0],
+#                                 [1, 0, 0, 0, 0]])
+    
+#     result2 = getMovesForPosition(testBoard2, 0, 0)
+
+#     # assert
+#     assert result2[0][0].data == Board.fromIntList([[1, 0, 0, 0, 0],
+#                                         [0, 0, 0, 0, 0],
+#                                         [0, 0, 0, 0, 0],
+#                                         [0, 0, 0, 0, 0],
+#                                         [0, 0, 0, 0, 0]]).data
     
 def test_getMovesForPosition_dame():
     testBoard = Board.fromIntList([[0, 0, 0],
