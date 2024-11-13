@@ -1,3 +1,4 @@
+import copy
 from enum import Enum
 from typing import List
 from uuid import UUID
@@ -17,6 +18,26 @@ class Board:
         self.f = 0.0
         self.g = 0.0
         self.player1 = True
+
+    def __swapOnSelf(self, firstX: int, firstY: int, secondX: int, secondY: int):
+        firstPiece: EPiece = self.data[firstX][firstY]
+        secondPiece: EPiece = self.data[secondX][secondY]
+        self.data[firstX][firstY] = secondPiece
+        self.data[secondX][secondY] = firstPiece
+
+    def swap(self, firstX: int, firstY: int, secondX: int, secondY: int) -> 'Board':
+        nB: 'Board' = copy.deepcopy(self)
+        nB.__swapOnSelf(firstX, firstY, secondX, secondY)
+        return nB
+
+    def __strikePieceOnSelf(self, x: int, y:int):
+        self.data[x][y] = EPiece.EMPTY
+
+    def strikePiece(self, x: int, y:int) -> 'Board':
+        nB: 'Board' = copy.deepcopy(self)
+        nB.__strikePieceOnSelf(x,y)
+        return nB
+
 
     id: UUID = None
     data: List[List[EPiece]] = []
