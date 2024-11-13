@@ -50,7 +50,7 @@ def checkForWinningBoard(b: Board) -> bool:
             if x == EPiece.DEFAULT_P2 or x == EPiece.DAME_P2:
                 foundP2 = True
 
-    return foundP1 and foundP2
+    return not(foundP1 and foundP2)
 # Player1 is odd  numbers (1 and 3) (Black)
 # Player2 is even numbers (2 and 4) (White)
 
