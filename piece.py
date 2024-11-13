@@ -26,7 +26,7 @@ def getMoves(board: Board, player1: bool) -> tuple[list[Board], bool]:
 def getMovesForPosition(board: Board, x: int, y: int) -> list[Board]:
     """Returns the possible Moves for a single piece on a board"""
     possibleMoves: list[Board] = list()
-    pieceToMove: EPiece = board.data[x][y]
+    pieceToMove: EPiece = board.data[y][x]
     directionsToCheck: list[Direction] = list()
 
     # TODO: Move all this crap into the getDiagonalContent() function. Its is clutter that is ugly and i hate it.
@@ -48,7 +48,7 @@ def getMovesForPosition(board: Board, x: int, y: int) -> list[Board]:
 
     return possibleMoves
 
-def checkDirection(board: Board, direct: Direction, dia: list[EPiece], piece: EPiece, startX: int, startY: int) -> list[Board]:
+def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece: EPiece, startX: int, startY: int) -> list[Board]:
     moves: list[Board] = list()
 
     searchMods: tuple[int, int] = getSearchModifiyerForDirection(direction)
@@ -56,7 +56,7 @@ def checkDirection(board: Board, direct: Direction, dia: list[EPiece], piece: EP
     yMod: int = searchMods[1]
 
     if dia[0] == EPiece.EMPTY:
-        moves.append(board.swap(startX,startY,startX))
+        moves.append(board.swap(startX,startY,startX+xMod, startY+yMod))
 
     return moves
 

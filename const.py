@@ -20,10 +20,10 @@ class Board:
         self.player1 = True
 
     def __swapOnSelf(self, firstX: int, firstY: int, secondX: int, secondY: int):
-        firstPiece: EPiece = self.data[firstX][firstY]
-        secondPiece: EPiece = self.data[secondX][secondY]
-        self.data[firstX][firstY] = secondPiece
-        self.data[secondX][secondY] = firstPiece
+        firstPiece: EPiece = self.data[firstY][firstX]
+        secondPiece: EPiece = self.data[secondY][secondX]
+        self.data[firstY][firstX] = secondPiece
+        self.data[secondY][secondX] = firstPiece
 
     def swap(self, firstX: int, firstY: int, secondX: int, secondY: int) -> 'Board':
         nB: 'Board' = copy.deepcopy(self)
@@ -31,7 +31,7 @@ class Board:
         return nB
 
     def __strikePieceOnSelf(self, x: int, y:int):
-        self.data[x][y] = EPiece.EMPTY
+        self.data[y][x] = EPiece.EMPTY
 
     def strikePiece(self, x: int, y:int) -> 'Board':
         nB: 'Board' = copy.deepcopy(self)
