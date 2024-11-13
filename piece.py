@@ -159,13 +159,14 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
         if (firstPiece[0] > 0 or firstPiece[1] == EPiece.EMPTY) and not checkIfPiecesOppose(piece, firstPiece[1]):
             print("WALK")
             rangeToEnd = len(dia) if firstPiece[0] == -1 else firstPiece[0]
+            print("rangeToEnd: " + str(rangeToEnd))
             for i in range(rangeToEnd):
                 i += 1
                 print("i: " + str(i) + " xMod: " + str(xMod) + " yMod: " + str(yMod))
                 print("x: " + str(x+i*xMod) + " y: " + str(y+i*yMod))
                 move = board.swap(x, y, x+i*xMod, y+i*yMod)
                 moves.append(move)
-                return moves, 0
+            return moves, 0
         # Next piece on diagonal is enemy, FIGHT
         elif checkForInBounds(board, newPosX, newPosY) and dia[firstPiece[0]+1] == EPiece.EMPTY and checkIfPiecesOppose(piece, firstPiece[1]):
             print("FIGHT")

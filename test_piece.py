@@ -147,6 +147,19 @@ def test_getMovesForPosition_dame():
         print("formatBoard(result[0][i]): \n", formatBoard(result[0][i]))
         assert result[0][i].data == [board1, board2, board3, board4][i].data
 
+    testboard2 = Board.fromIntList([[0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0],
+                                [0, 0, 3, 0, 0],
+                                [0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0]])
+    
+    result2 = getMovesForPosition(testboard2, 2, 2)
+
+    # assert
+    for i in range(len(result2[0])):
+        print("formatBoard(result2[0][i]): \n", formatBoard(result2[0][i]))
+    assert len(result2[0]) == 8
+
 # def test_getMovesForPosition_dame_strike():
 #     testBoard = Board.fromIntList([[3, 0, 0],
 #                                 [0, 2, 0],
