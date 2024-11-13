@@ -1,8 +1,9 @@
 from typing import List
-from const import Board
-from heuristics import countOfPieces
-from main import main, makeMove
 import copy
+
+from const import Board
+from heuristics import countOfPieces, countOfDames
+from main import main, makeMove
 
 # Player1 is odd  numbers (1 and 3) (Black)
 # Player2 is even numbers (2 and 4) (White)
@@ -22,6 +23,10 @@ board = Board([
     [2, 0, 2, 0, 2, 0, 2, 0]  # | 7
                               # -
 ])
+
+####################################
+## Test main algorithm
+####################################
 
 def test_expandLastNode(mocker):
     # mocker.patch('main.openList', [board])
@@ -63,23 +68,6 @@ def test_correctSortedList(mocker):
     assert len(openList) == 2
     assert openList[0].f == 2
     assert openList[1].f == 1
-
-def test_countPiecesHeuristic():
-    testBoard = Board([[1, 1, 1], [1, 1, 1], [1, 1, 1]])
-    testBoard.player1 = True
-    testBoard2 = Board([[2, 2, 2], [2, 2, 2], [2, 2, 2]])
-    testBoard2.player1 = False
-    testBoard3 = Board([[1, 1, 1], [1, 2, 2], [3, 3, 3]])
-    testBoard3.player1 = True
-
-    result = countOfPieces(testBoard)
-    result2 = countOfPieces(testBoard2)
-    result3 = countOfPieces(testBoard3)
-    
-    # assert
-    assert result == 9
-    assert result2 == 9
-    assert result3 == 4
 
 def test_hardcodedGame(mocker):
 
@@ -236,3 +224,41 @@ def test_hardcodedGame3(mocker):
 
         assert openList == [bR, bLL]
         assert closedList == [initalBoard, bL]
+
+####################################
+## Test heuristics
+####################################
+
+def test_countPiecesHeuristic():
+    testBoard = Board([[1, 1, 1], [1, 1, 1], [1, 1, 1]])
+    testBoard.player1 = True
+    testBoard2 = Board([[2, 2, 2], [2, 2, 2], [2, 2, 2]])
+    testBoard2.player1 = False
+    testBoard3 = Board([[1, 1, 1], [1, 2, 2], [3, 3, 3]])
+    testBoard3.player1 = True
+
+    result = countOfPieces(testBoard)
+    result2 = countOfPieces(testBoard2)
+    result3 = countOfPieces(testBoard3)
+    
+    # assert
+    assert result == 9
+    assert result2 == 9
+    assert result3 == 4
+
+def test_countOfDamesHeuristic():
+    testBoard = Board([[3, 3, 3], [3, 3, 3], [3, 3, 3]])
+    testBoard.player1 = True
+    testBoard2 = Board([[4, 4, 4], [4, 4, 4], [4, 4, 4]])
+    testBoard2.player1 = False
+    testBoard3 = Board([[3, 3, 3], [3, 4, 4], [1, 1, 1]])
+    testBoard3.player1 = True
+
+    result = countOfDames(testBoard)
+    result2 = countOfDames(testBoard2)
+    result3 = countOfDames(testBoard3)
+    
+    # assert
+    assert result == 9
+    assert result2 == 9
+    assert result3 == 4
