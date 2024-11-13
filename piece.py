@@ -33,6 +33,7 @@ def getMovesForPosition(board: Board, x: int, y: int) -> tuple[list[Board], int]
     # I REAAALY WANT TO DO THIS RIGHT KNOW. BUT I AM VERY EEPY. THE DUALITY OF EEPYNESS :3
 
     # Create a list with all the diagonal directions we need to check for a given piece
+    print("pieceToMove: " + str(pieceToMove))
     if pieceToMove == EPiece.EMPTY:
         print("Cannot check moves for an empty spot")
         return (possibleMoves, -1)
@@ -42,6 +43,9 @@ def getMovesForPosition(board: Board, x: int, y: int) -> tuple[list[Board], int]
     if pieceToMove == EPiece.DEFAULT_P2 or pieceToMove.value > 2: #Check for these Directions if it's a player 2 piece or a dame
         directionsToCheck.append(Direction.Up_Left)
         directionsToCheck.append(Direction.Up_Right)
+
+    print("x: " + str(x) + " y: " + str(y))
+    print("directionsToCheck: " + str(directionsToCheck))
 
     # Check those diagonals
     diaToCheck: dict[Direction, list[EPiece]] = getDiagonalContent(board, directionsToCheck, x, y)
@@ -166,14 +170,14 @@ def contentOfDiagonals(board: Board, direction: Direction, startX: int, startY: 
     size_x = len(board.data[0])
     size_y = len(board.data)
 
-    print("ySearchModifyer: " + str(ySearchModifyer))
-    print("xSearchModifyer: " + str(xSearchModifyer))
+    # print("ySearchModifyer: " + str(ySearchModifyer))
+    # print("xSearchModifyer: " + str(xSearchModifyer))
 
     x += xSearchModifyer
     y += ySearchModifyer
     while (x > -1 and x < size_x) and (y > -1 and y < size_y):
         contentInDir.append(EPiece(board.data[y][x]))
-        print("x: " + str(x), "y: " + str(y) + " | " + str(EPiece(board.data[y][x])))
+        # print("x: " + str(x), "y: " + str(y) + " | " + str(EPiece(board.data[y][x])))
         x += xSearchModifyer
         y += ySearchModifyer
 
