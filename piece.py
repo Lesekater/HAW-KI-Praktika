@@ -89,7 +89,7 @@ def getMovesForPosition(board: Board, x: int, y: int) -> tuple[list[Board], int]
     if not diaToCheck:
         return possibleMoves, -1
     
-    # print("diaToCheck: " + str(diaToCheck))
+    print("diaToCheck: " + str(diaToCheck))
 
     # Do sick moves
     map: dict[int, list[Board]] = {}
@@ -97,7 +97,7 @@ def getMovesForPosition(board: Board, x: int, y: int) -> tuple[list[Board], int]
     for d in diaToCheck:
         moves: tuple[list[Board], int] = checkDirection(board, d, diaToCheck[d], pieceToMove, x, y)
 
-        # print("moves: " + str(moves))
+        print("moves: " + str(moves))
 
         if moves[1] > highestKDR:
             highestKDR = moves[1]
@@ -113,7 +113,8 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
     moves: list[Board] = []
     capturedPieces: int = 0
 
-    # print("checkIfPiecesOppose(piece, dia[0]): " + str(checkIfPiecesOppose(piece, dia[0])))
+    print("self: " + str(piece) + ", opponent: " + str(dia[0]))
+    print("checkIfPiecesOppose(piece, dia[0]): " + str(checkIfPiecesOppose(piece, dia[0])))
 
     # TODO: check -> I removed the if "not" -- is this correct?
     if checkIfPiecesOppose(piece, dia[0]):
@@ -128,7 +129,7 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
     furtherMoves: tuple[list[Board], int] = ([], -1)
     move: Board = board
 
-    # print("piece: " + str(piece))
+    print("piece: " + str(piece))
 
     # Default
     if piece.value < 3 and piece.value > 0:
@@ -190,10 +191,11 @@ def checkForInBounds(board: Board, x: int, y:int) -> bool:
     return False
 
 def checkIfPiecesOppose(f: EPiece, s: EPiece) -> bool:
-    if f == EPiece.EMPTY or s == EPiece.EMPTY:
+    print("f: " + str(f) + " s: " + str(s))
+    if s == EPiece.EMPTY:
         return False
-    elif ((f == EPiece.DEFAULT_P1 or f == EPiece.DAME_P1) and (s == EPiece.DEFAULT_P2 or EPiece.DAME_P2)) or \
-        ((f == EPiece.DEFAULT_P2 or f == EPiece.DAME_P2) and (s == EPiece.DEFAULT_P1 or EPiece.DAME_P1)):
+    elif (f in {EPiece.DEFAULT_P1, EPiece.DAME_P1} and s in {EPiece.DEFAULT_P1, EPiece.DAME_P1}) or \
+         (f in {EPiece.DEFAULT_P2, EPiece.DAME_P2} and s in {EPiece.DEFAULT_P2, EPiece.DAME_P2}):
         return True
     else:
         return False
