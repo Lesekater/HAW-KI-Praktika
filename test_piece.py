@@ -160,19 +160,41 @@ def test_getMovesForPosition_dame():
         print("formatBoard(result2[0][i]): \n", formatBoard(result2[0][i]))
     assert len(result2[0]) == 8
 
-# def test_getMovesForPosition_dame_strike():
-#     testBoard = Board.fromIntList([[3, 0, 0],
-#                                 [0, 2, 0],
-#                                 [0, 0, 0]])
+def test_getMovesForPosition_dame_strike():
+    testBoard = Board.fromIntList([[3, 0, 0],
+                                [0, 2, 0],
+                                [0, 0, 0]])
     
-#     result = getMovesForPosition(testBoard, 0, 0)
+    result = getMovesForPosition(testBoard, 0, 0)
 
-#     assert
-#     board1 = Board.fromIntList([[0, 0, 0],
-#                                 [0, 0, 0],
-#                                 [0, 0, 3]])
+    # assert
+    board1 = Board.fromIntList([[0, 0, 0],
+                                [0, 0, 0],
+                                [0, 0, 3]])
     
-#     assert result[0][0].data == board1.data
+    print("formatBoard(result[0][0]): \n", formatBoard(result[0][0]))
+    print("formatBoard(board1): \n", formatBoard(board1))
+    
+    assert result[0][0].data == board1.data
+
+    testBoard2 = Board.fromIntList([[3, 0, 0, 0, 0],
+                                [0, 2, 0, 0, 0],
+                                [0, 0, 0, 0, 0],
+                                [0, 2, 0, 0, 0],
+                                [0, 0, 0, 0, 0]])
+    
+    result2 = getMovesForPosition(testBoard2, 0, 0)
+
+    # assert
+    board2 = Board.fromIntList([[0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0],
+                                [3, 0, 0, 0, 0]])
+    
+    print("formatBoard(result2[0][0]): \n", formatBoard(result2[0][0]))
+    print("formatBoard(board2): \n", formatBoard(board2))
+    assert result2[0][0].data == board2.data
 
 # ###################################
 # # moving pieces -- multiple moves

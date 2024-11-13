@@ -69,6 +69,7 @@ def getMovesForPosition(board: Board, x: int, y: int) -> tuple[list[Board], int]
 
     # Create a list with all the diagonal directions we need to check for a given piece
     print("pieceToMove: " + str(pieceToMove))
+    print("piece position: x: " + str(x) + " y: " + str(y))
     if pieceToMove == EPiece.EMPTY:
         print("Cannot check moves for an empty spot")
         return possibleMoves, -1
@@ -156,6 +157,7 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
         newPosX = x+firstPiece[0]*xMod+xMod
         newPosY = y+firstPiece[0]*yMod+yMod
         # The next Piece on diagonal is friendly or only empty, WALK
+        print("new posX: " + str(newPosX) + " new posY: " + str(newPosY))
         if (firstPiece[0] > 0 or firstPiece[1] == EPiece.EMPTY) and not checkIfPiecesOppose(piece, firstPiece[1]):
             print("WALK")
             rangeToEnd = len(dia) if firstPiece[0] == -1 else firstPiece[0]
@@ -168,11 +170,11 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
                 moves.append(move)
             return moves, 0
         # Next piece on diagonal is enemy, FIGHT
-        elif checkForInBounds(board, newPosX, newPosY) and dia[firstPiece[0]+1] == EPiece.EMPTY and checkIfPiecesOppose(piece, firstPiece[1]):
+        elif not checkForInBounds(board, newPosX, newPosY) and dia[firstPiece[0]+1] == EPiece.EMPTY and not checkIfPiecesOppose(piece, firstPiece[1]):
             print("FIGHT")
-            move = board.swap(x, y, newPosX, newPosY).strikePiece(newPosX - xMod, newPosY - yMod)
+            move = board.swap(x, y, newPosX+xMod, newPosY+yMod).strikePiece(newPosX, newPosY)
             capturedPieces += 1
-            furtherMoves = getMovesForPosition(move,newPosX, newPosY)
+            furtherMoves = getMovesForPosition(move,newPosX+xMod, newPosY+yMod)
         # ???
         else:
             print("??? 1")
