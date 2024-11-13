@@ -12,12 +12,22 @@ class EPiece(Enum):
     DAME_P2 = 4
     
 class Board:
-    def __init__(self, boardArray: List[List[int]]):
+    def __init__(self, boardArray: List[List[EPiece]]):
         self.id = uuid.uuid1()
         self.data = boardArray
         self.f = 0.0
         self.g = 0.0
         self.player1 = True
+
+    def fromIntList(boardArray: List[List[int]]) -> 'Board':
+        self = Board([])
+        self.data = []
+        for row in boardArray:
+            newRow = []
+            for piece in row:
+                newRow.append(EPiece(piece))
+            self.data.append(newRow)
+        return self
 
     def __swapOnSelf(self, firstX: int, firstY: int, secondX: int, secondY: int):
         firstPiece: EPiece = self.data[firstY][firstX]
@@ -37,7 +47,6 @@ class Board:
         nB: 'Board' = copy.deepcopy(self)
         nB.__strikePieceOnSelf(x,y)
         return nB
-
 
     id: UUID = None
     data: List[List[EPiece]] = []

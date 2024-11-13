@@ -1,7 +1,7 @@
 from typing import List
 import copy
 
-from const import Board
+from const import Board, EPiece
 from heuristics import countOfPieces, countOfDames
 from main import main, makeMove
 
@@ -10,7 +10,7 @@ from main import main, makeMove
 
 # Player1 moves in positive direction (down)
 # Player2 moves in negative direction (up)
-board = Board([
+board = Board.fromIntList([
   # 0                     7
   # |------- X-Axis -------|    _
     [0, 1, 0, 1, 0, 1, 0, 1], # | 0
@@ -230,11 +230,11 @@ def test_hardcodedGame3(mocker):
 ####################################
 
 def test_countPiecesHeuristic():
-    testBoard = Board([[1, 1, 1], [1, 1, 1], [1, 1, 1]])
+    testBoard = Board.fromIntList([[1, 1, 1], [1, 1, 1], [1, 1, 1]])
     testBoard.player1 = True
-    testBoard2 = Board([[2, 2, 2], [2, 2, 2], [2, 2, 2]])
+    testBoard2 = Board.fromIntList([[2, 2, 2], [2, 2, 2], [2, 2, 2]])
     testBoard2.player1 = False
-    testBoard3 = Board([[1, 1, 1], [1, 2, 2], [3, 3, 3]])
+    testBoard3 = Board.fromIntList([[1, 1, 1], [1, 2, 2], [3, 3, 3]])
     testBoard3.player1 = True
 
     result = countOfPieces(testBoard)
@@ -247,11 +247,11 @@ def test_countPiecesHeuristic():
     assert result3 == 4
 
 def test_countOfDamesHeuristic():
-    testBoard = Board([[3, 3, 3], [3, 3, 3], [3, 3, 3]])
+    testBoard = Board.fromIntList([[3, 3, 3], [3, 3, 3], [3, 3, 3]])
     testBoard.player1 = True
-    testBoard2 = Board([[4, 4, 4], [4, 4, 4], [4, 4, 4]])
+    testBoard2 = Board.fromIntList([[4, 4, 4], [4, 4, 4], [4, 4, 4]])
     testBoard2.player1 = False
-    testBoard3 = Board([[3, 3, 3], [3, 4, 4], [1, 1, 1]])
+    testBoard3 = Board.fromIntList([[3, 3, 3], [3, 4, 4], [1, 1, 1]])
     testBoard3.player1 = True
 
     result = countOfDames(testBoard)

@@ -37,9 +37,9 @@ def countOfPieces(board: Board) -> float:
     count = 0
     for row in board.data:
         for piece in row:
-            if piece == EPiece.DEFAULT_P1.value and currentPlayer:
+            if piece == EPiece.DEFAULT_P1 and currentPlayer:
                 count += 1
-            elif piece == EPiece.DEFAULT_P2.value and not currentPlayer:
+            elif piece == EPiece.DEFAULT_P2 and not currentPlayer:
                 count += 1
 
     return count
@@ -49,9 +49,9 @@ def countOfDames(board):
     count = 0
     for row in board.data:
         for piece in row:
-            if piece == EPiece.DAME_P1.value and currentPlayer:
+            if piece == EPiece.DAME_P1 and currentPlayer:
                 count += 1
-            elif piece == EPiece.DAME_P2.value and not currentPlayer:
+            elif piece == EPiece.DAME_P2 and not currentPlayer:
                 count += 1
 
     return count
