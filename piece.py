@@ -86,6 +86,9 @@ def getMovesForPosition(board: Board, x: int, y: int) -> tuple[list[Board], int]
     # remove empty lists from diaToCheck dict
     diaToCheck = {k: v for k, v in diaToCheck.items() if v}
 
+    if not diaToCheck:
+        return possibleMoves, -1
+
     # Do sick moves
     map: dict[int, list[Board]] = {}
     highestKDR: int = -1
