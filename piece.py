@@ -2,6 +2,8 @@ import copy
 from const import Board, EPiece
 from enum import Enum
 
+from util import formatBoard
+
 class Direction(Enum):
     Up_Right = 1
     Up_Left = 2
@@ -153,22 +155,30 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
         firstPiece: tuple[int, EPiece] = getFirstNonEmpty(dia)
         newPosX = x+firstPiece[0]*xMod+xMod
         newPosY = y+firstPiece[0]*yMod+yMod
-        # The next Piece on diagonal is friendly, only WALK
-        if firstPiece[0] > 0 and not checkIfPiecesOppose(piece, firstPiece[1]):
-            for i in range(firstPiece[0]):
+        # The next Piece on diagonal is friendly or only empty, WALK
+        if (firstPiece[0] > 0 or firstPiece[1] == EPiece.EMPTY) and not checkIfPiecesOppose(piece, firstPiece[1]):
+            print("WALK")
+            rangeToEnd = len(dia) if firstPiece[0] == -1 else firstPiece[0]
+            for i in range(rangeToEnd):
+                i += 1
+                print("i: " + str(i) + " xMod: " + str(xMod) + " yMod: " + str(yMod))
+                print("x: " + str(x+i*xMod) + " y: " + str(y+i*yMod))
                 move = board.swap(x, y, x+i*xMod, y+i*yMod)
                 moves.append(move)
                 return moves, 0
         # Next piece on diagonal is enemy, FIGHT
         elif checkForInBounds(board, newPosX, newPosY) and dia[firstPiece[0]+1] == EPiece.EMPTY and checkIfPiecesOppose(piece, firstPiece[1]):
+            print("FIGHT")
             move = board.swap(x, y, newPosX, newPosY).strikePiece(newPosX - xMod, newPosY - yMod)
             capturedPieces += 1
             furtherMoves = getMovesForPosition(move,newPosX, newPosY)
         # ???
         else:
+            print("??? 1")
             return moves, -1
     #???
     else:
+        print("??? 2")
         return moves, -1
 
 
