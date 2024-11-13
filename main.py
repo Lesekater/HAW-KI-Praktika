@@ -4,6 +4,7 @@ from enum import Enum
 
 from heuristics import calculateHeuristic, heurisitcTypes
 from piece import getMoves
+from util import formatBoard
 
 def main(openList: List[Board] = [], 
          closedList: List[Board] = [], 
@@ -71,9 +72,3 @@ def makeMove(nodeToExpand: Board,
 
     # did not find goal
     return False, None   
-
-def formatBoard(board: Board) -> str:
-    formattedBoard = ""
-    for row in board.data:
-        formattedBoard += str(row) + "\n"
-    return formattedBoard
