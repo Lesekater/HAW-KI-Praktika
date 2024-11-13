@@ -47,12 +47,19 @@ def getMovesForPosition(board: Board, x: int, y: int) -> tuple[list[Board], int]
     diaToCheck: dict[Direction, list[EPiece]] = getDiagonalContent(board, directionsToCheck, x, y)
 
     # Do sick moves
+    map: dict[int, list[Board]] = {}
+    highestKDR: int = 0
     for d in diaToCheck:
-        movesForDir: list[Board] = checkDirection(board, d, diaToCheck[d], pieceToMove, x, y)
-        for m in movesForDir:
-            possibleMoves.append(m)
+        moves: tuple[list[Board], int] = checkDirection(board, d, diaToCheck[d], pieceToMove, x, y)
+        if moves[1] > highestKDR:
+            highestKDR = moves[1]
+        if moves[1] not in map:
+            map[moves[1]]=list()
+        for m in moves[0]:
+            map[moves[1]].append(m)
 
-    return possibleMoves
+
+    return (map[highestKDR], highestKDR)
 
 def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece: EPiece, x: int, y: int) -> tuple[list[Board], int]:
     moves: list[Board] = list()
@@ -72,15 +79,15 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
 
     # Default
     if piece.value < 3 and piece.value > 0:
+        newPosX = x+xMod+xMod
+        newPosY = y+yMod+yMod
         # WALK
         if dia[0] == EPiece.EMPTY:
             move = board.swap(x, y, x+xMod, y+yMod)
             moves.append(move)
             return (moves, 0)
         # FIGHT
-        elif dia[1] == EPiece.EMPTY:
-            newPosX = x+xMod+xMod
-            newPosY = y+yMod+yMod
+        elif checkForInBounds(board, newPosX, newPosY) and dia[1] == EPiece.EMPTY:
             capturedPieces += 1
             move = board.swap(x, y, newPosX, newPosY).strikePiece(x+xMod, y+yMod)
             furtherMoves = getMovesForPosition(move,newPosX, newPosY)
@@ -88,8 +95,10 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
         else:
             return (moves, -1)
     # Dame
-    else:
+    elif piece.value > 2 and piece.value < 5:
         firstPiece: tuple[int, EPiece] = getFirstNonEmpty(dia)
+        newPosX = x+firstPiece[0]*xMod+xMod
+        newPosY = y+firstPiece[0]*yMod+yMod
         # The next Piece on diagonal is friendly, only WALK
         if firstPiece[0] > 0 and not checkIfPiecesOppose(piece, firstPiece[1]):
             for i in range(firstPiece[0]):
@@ -97,30 +106,40 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
                 moves.append(move)
                 return (moves, 0)
         # Next piece on diagonal is enemy, FIGHT
-        elif dia[firstPiece[0]+1] == EPiece.EMPTY and checkIfPiecesOppose(piece, firstPiece[1]):
-            newPosX = x+firstPiece[0]*xMod+xMod
-            newPosY = y+firstPiece[0]*yMod+yMod
+        elif checkForInBounds(board, newPosX, newPosY) and dia[firstPiece[0]+1] == EPiece.EMPTY and checkIfPiecesOppose(piece, firstPiece[1]):
             move = board.swap(x, y, newPosX, newPosY).strikePiece(newPosX - xMod, newPosY - yMod)
             capturedPieces += 1
             furtherMoves = getMovesForPosition(move,newPosX, newPosY)
         # ???
         else:
             return (moves, -1)
+    #???
+    else:
+        return (moves, -1)
 
 
     # Look for further moves
     if furtherMoves[1] > 0 and capturedPieces > 0:
+        capturedPieces += furtherMoves[1]
         for m in furtherMoves[0]:
-            capturedPieces += furtherMoves[1]
             moves.append(m)
     else:
         moves.append(move)
     return (moves, capturedPieces)
 
 
+def checkForInBounds(board: Board, x: int, y:int) -> bool:
+    size_x = len(board.data[0])
+    size_y = len(board.data)
+    if (x >= size_x - 1) or (y >= size_y - 1):
+        print("OUT OF BOUNDS")
+        return True
+    return False
 
 def checkIfPiecesOppose(f: EPiece, s: EPiece) -> bool:
-    if ((f == EPiece.DEFAULT_P1 or f == EPiece.DAME_P1) and (s == EPiece.DEFAULT_P2 or EPiece.DAME_P2)) or \
+    if f == EPiece.EMPTY or s == EPiece.EMPTY:
+        return False
+    elif ((f == EPiece.DEFAULT_P1 or f == EPiece.DAME_P1) and (s == EPiece.DEFAULT_P2 or EPiece.DAME_P2)) or \
         ((f == EPiece.DEFAULT_P2 or f == EPiece.DAME_P2) and (s == EPiece.DEFAULT_P1 or EPiece.DAME_P1)):
         return True
     else:
