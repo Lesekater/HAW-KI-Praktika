@@ -24,7 +24,7 @@ board = Board.fromIntList([
     ])
 board.player1 = True
 
-def test_board():
+def test_board_constructor():
     board = Board([
         [EPiece.EMPTY, EPiece.EMPTY, EPiece.EMPTY],
         [EPiece.EMPTY, EPiece.EMPTY, EPiece.EMPTY],
@@ -46,6 +46,22 @@ def test_board_swap():
     # assert
     assert newBoard.data == Board.fromIntList([
         [2, 1, 3],
+        [4, 4, 4],
+        [4, 4, 4]
+    ]).data
+
+def test_board_strikePiece():
+    test_board = Board.fromIntList([
+        [1, 2, 3],
+        [4, 4, 4],
+        [4, 4, 4]
+    ])
+    
+    newBoard = test_board.strikePiece(0, 0)
+
+    # assert
+    assert newBoard.data == Board.fromIntList([
+        [0, 2, 3],
         [4, 4, 4],
         [4, 4, 4]
     ]).data
