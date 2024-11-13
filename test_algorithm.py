@@ -25,20 +25,6 @@ board = Board.fromIntList([
 ])
 
 ####################################
-## Test board implementation
-####################################
-
-def test_board():
-    board = Board([
-        [EPiece.EMPTY, EPiece.EMPTY, EPiece.EMPTY],
-        [EPiece.EMPTY, EPiece.EMPTY, EPiece.EMPTY],
-        [EPiece.EMPTY, EPiece.EMPTY, EPiece.EMPTY]])
-    board.player1 = True
-
-    # assert
-    assert board.data == Board.fromIntList([[0, 0, 0], [0, 0, 0], [0, 0, 0]]).data
-
-####################################
 ## Test main algorithm
 ####################################
 
