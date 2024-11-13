@@ -88,12 +88,17 @@ def getMovesForPosition(board: Board, x: int, y: int) -> tuple[list[Board], int]
 
     if not diaToCheck:
         return possibleMoves, -1
+    
+    # print("diaToCheck: " + str(diaToCheck))
 
     # Do sick moves
     map: dict[int, list[Board]] = {}
     highestKDR: int = -1
     for d in diaToCheck:
         moves: tuple[list[Board], int] = checkDirection(board, d, diaToCheck[d], pieceToMove, x, y)
+
+        # print("moves: " + str(moves))
+
         if moves[1] > highestKDR:
             highestKDR = moves[1]
         if moves[1] not in map:
@@ -108,7 +113,10 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
     moves: list[Board] = []
     capturedPieces: int = 0
 
-    if not checkIfPiecesOppose(piece, dia[0]):
+    # print("checkIfPiecesOppose(piece, dia[0]): " + str(checkIfPiecesOppose(piece, dia[0])))
+
+    # TODO: check -> I removed the if "not" -- is this correct?
+    if checkIfPiecesOppose(piece, dia[0]):
         return moves, 0
 
     searchMods: tuple[int, int] = getSearchModifiyerForDirection(direction)
@@ -119,6 +127,8 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
     newPosY: int = -1
     furtherMoves: tuple[list[Board], int] = ([], -1)
     move: Board = board
+
+    # print("piece: " + str(piece))
 
     # Default
     if piece.value < 3 and piece.value > 0:
