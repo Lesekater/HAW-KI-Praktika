@@ -65,9 +65,9 @@ def getSearchModifiyerForDirection(d: Direction) -> tuple[int, int]:
     xSearchModifyer: int = 1
     ySearchModifyer: int = 1
 
-    if d== Direction.Up_Right or d == Direction.Up_Left:
+    if d == Direction.Up_Right or d == Direction.Up_Left:
         ySearchModifyer = -1
-    if d== Direction.Up_Left or d == Direction.Down_Left:
+    if d == Direction.Up_Left or d == Direction.Down_Left:
         xSearchModifyer = -1
 
     return (xSearchModifyer, ySearchModifyer)
@@ -95,18 +95,8 @@ def contentOfDiagonals(board: Board, direction: Direction, startX: int, startY: 
     size_x = len(board.data[0])
     size_y = len(board.data)
 
-    if direction == Direction.Up_Right or direction == Direction.Up_Left:
-        ySearchModifyer = -1
-    if direction == Direction.Up_Left or direction == Direction.Down_Left:
-        xSearchModifyer = -1
-
     print("ySearchModifyer: " + str(ySearchModifyer))
     print("xSearchModifyer: " + str(xSearchModifyer))
-
-    if direction == Direction.Up_Right or direction == Direction.Up_Left:
-        ySearchModifyer = -1
-    if direction == Direction.Up_Left or direction == Direction.Down_Left:
-        xSearchModifyer = -1
 
     x += xSearchModifyer
     y += ySearchModifyer
