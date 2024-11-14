@@ -20,3 +20,13 @@ def formatBoard(board: Board) -> str:
             formattedBoard += convertPiecesToEmoji(piece.value)
         formattedBoard += "\n"
     return formattedBoard
+
+def formatBoardWithCoords(board: Board) -> str:
+    formattedBoard = ""
+    for i, row in enumerate(board.data):
+        formattedBoard += f"{i} "
+        for piece in row:
+            formattedBoard += convertPiecesToEmoji(piece.value)
+        formattedBoard += "\n"
+    formattedBoard += "  0 1 2 3 4 5 6 7\n"
+    return formattedBoard
