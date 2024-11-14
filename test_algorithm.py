@@ -30,7 +30,7 @@ board = Board.fromIntList([
 
 def test_expandLastNode(mocker):
     # mocker.patch('main.openList', [board])
-    mocker.patch('main.getMoves', return_value=([board], True))
+    mocker.patch('algorithm.getMoves', return_value=([board], True))
 
     (foundGoal, openList, closedList) = main([board])
 
@@ -41,7 +41,7 @@ def test_expandLastNode(mocker):
 
 def test_noGoalFound(mocker):
     # mocker.patch('main.openList', [board])
-    mocker.patch('main.getMoves', return_value=([], False))
+    mocker.patch('algorithm.getMoves', return_value=([], False))
 
     (foundGoal, openList, closedList) = main([board])
 
@@ -60,7 +60,7 @@ def test_correctSortedList(mocker):
 
     openListMock = [board1, board2, board3]
             
-    mocker.patch('main.getMoves', return_value=([board1], True))
+    mocker.patch('algorithm.getMoves', return_value=([board1], True))
 
     (foundGoal, openList, closedList) = main(openListMock)
 
@@ -101,7 +101,7 @@ def test_hardcodedGame(mocker):
     heuristic_bR1 = 1
     bR1 = Board([])
 
-    def mockHeuristic(board):
+    def mockHeuristic(board, _):
         if board.id == bL.id:
             return heuristic_bL
         if board.id == bL1.id:
@@ -112,7 +112,7 @@ def test_hardcodedGame(mocker):
             return heuristic_bR1
         print("Error: Board not found")
 
-    mocker.patch('main.calculateHeuristic', mockHeuristic)
+    mocker.patch('algorithm.calculateHeuristic', mockHeuristic)
 
     # hardcoded move results
     def mockGetMoves(board, player1):
@@ -126,7 +126,7 @@ def test_hardcodedGame(mocker):
             return [bR1], True
         print("Error: Board not found")
 
-    mocker.patch('main.getMoves', mockGetMoves)
+    mocker.patch('algorithm.getMoves', mockGetMoves)
 
     openList = [initalBoard]
     closedList: List[Board] = []
@@ -180,7 +180,7 @@ def test_hardcodedGame3(mocker):
         heuristic_bR = 2
         bR = Board([])
 
-        def mockHeuristic(board):
+        def mockHeuristic(board, _):
             if board.id == bL.id:
                 return heuristic_bL
             if board.id == bLL.id:
@@ -193,7 +193,7 @@ def test_hardcodedGame3(mocker):
                 return heuristic_bR
             print("Error: Board not found")
 
-        mocker.patch('main.calculateHeuristic', mockHeuristic)
+        mocker.patch('algorithm.calculateHeuristic', mockHeuristic)
 
         # hardcoded move results
         def mockGetMoves(board, player1):
@@ -209,7 +209,7 @@ def test_hardcodedGame3(mocker):
                 return [], False
             print("Error: Board not found")
 
-        mocker.patch('main.getMoves', mockGetMoves)
+        mocker.patch('algorithm.getMoves', mockGetMoves)
 
         openList = [initalBoard]
         closedList: List[Board] = []
