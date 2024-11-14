@@ -25,28 +25,31 @@ testBoard1 = Board.fromIntList([
     [2, 0, 2, 0, 2, 0, 2, 0],
     [0, 2, 0, 2, 0, 2, 0, 2]])
 
-# testBoard1 = Board.fromIntList([
-#     [1, 0, 0, 1],
-#     [0, 0, 0, 0],
-#     [0, 0, 0, 0],
-#     [2, 0, 0, 2]])
+testBoard2 = Board.fromIntList([
+    [1, 0, 0, 1],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [2, 0, 0, 2]])
 
-# testBoard1 = Board.fromIntList([
-#     [1, 1, 0, 0],
-#     [0, 0, 0, 0],
-#     [2, 0, 2, 2]])
+testBoard3 = Board.fromIntList([
+    [1, 1, 0, 0],
+    [0, 0, 0, 0],
+    [2, 0, 2, 2]])
 
-# testBoard1 = Board.fromIntList([
-#     [1, 0, 1, 0, 1],
-#     [0, 1, 0, 1, 0],
-#     [0, 0, 0, 0, 0],
-#     [0, 0, 0, 0, 0],
-#     [2, 0, 2, 0, 2],
-#     [0, 2, 0, 2, 0]])
+testBoard4 = Board.fromIntList([
+    [1, 0, 1, 0, 1],
+    [0, 1, 0, 1, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [2, 0, 2, 0, 2],
+    [0, 2, 0, 2, 0]])
+
+testBoards = [testBoard1, testBoard2, testBoard3, testBoard4]
 
 def main(openList: List[Board] = [testBoard1],
          closedList: List[Board] = [], 
-         usedHeuristic: heurisitcTypes = heurisitcTypes.Random
+         usedHeuristicPlayer1: heurisitcTypes = heurisitcTypes.CountOfPieces,
+         usedHeuristicPlayer2: heurisitcTypes = heurisitcTypes.CountOfPieces
          ) -> Tuple[bool, List[Board], List[Board]]:
     foundGoal = False
     highestG = 0
@@ -61,6 +64,7 @@ def main(openList: List[Board] = [testBoard1],
 
     while not foundGoal and len(openList) > 0:
         nodeToExpand = openList.pop()
+        usedHeuristic = usedHeuristicPlayer1 if nodeToExpand.player1 else usedHeuristicPlayer2
         (foundGoal, winningBoard) = makeMove(nodeToExpand, openList, closedList, usedHeuristic)
         highestG = max(highestG, nodeToExpand.g)
 
@@ -214,5 +218,34 @@ def printWinningPath(winningBoard: Board, initalBoard: Board):
     print(formatBoard(initalBoard))
     print("---START---")
 
+def checkForHeuristicValidity(heuristic):
+    # check if heuristic is valid & implemented
+        if int(heuristic) >= len(heurisitcTypes) or calculateHeuristic(testBoard1, heurisitcTypes(int(heuristic))) == "unimplemented":
+            print("Heuristic not implemented or invalid.")
+            sys.exit(1)
+
 if __name__ == "__main__":
-    interactiveMain()
+    print("Choose mode to start (1: interactive, 2: automatic):")
+    mode = input("Enter mode: ")
+    if mode == "1":
+        interactiveMain()
+    else:
+        print("Choose heuristic to use for Player 1:")
+        for i, heuristic in enumerate(heurisitcTypes):
+            print(str(i) + ": " + heuristic.name)
+        heuristic1 = input("Enter heuristic: ")
+        checkForHeuristicValidity(heuristic1)
+
+        print("Choose heuristic to use for Player 2:")
+        for i, heuristic in enumerate(heurisitcTypes):
+            print(str(i) + ": " + heuristic.name)
+        heuristic2 = input("Enter heuristic: ")
+        checkForHeuristicValidity(heuristic2)
+
+        # choose test board
+        print("Choose test board to use.")
+        for i, board in enumerate(testBoards):
+            print(str(i) + ": \n" + formatBoard(board))
+        board = input("Enter board: ")
+
+        main([testBoards[int(board)]], [], heurisitcTypes(int(heuristic1)), heurisitcTypes(int(heuristic2)))
