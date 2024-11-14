@@ -1,4 +1,5 @@
 from const import Board
+from heuristics import heurisitcTypes
 
 def convertPiecesToEmoji(piece: int) -> str:
     if piece == 0:
@@ -13,13 +14,21 @@ def convertPiecesToEmoji(piece: int) -> str:
         return "🔵"
     return "❔"
 
-def formatBoard(board: Board) -> str:
+def formatBoard(board: Board, additionalInfo: bool = False, heuristic: heurisitcTypes = None) -> str:
     formattedBoard = ""
-    for row in board.data:
+    for (i, row) in enumerate(board.data):
         for piece in row:
             formattedBoard += convertPiecesToEmoji(piece.value)
+        if additionalInfo and i == 0:
+            formattedBoard += " " + additionalInfoRowOne(not board.player1, heuristic)
         formattedBoard += "\n"
     return formattedBoard
+
+def additionalInfoRowOne(player1, heuristic: heurisitcTypes = None) -> str:
+    if player1:
+        return "Player 1 (⚫, 🔴" + ((", " + heuristic.name + ")") if heuristic != None else ")")
+    else:
+        return "Player 2 (⚪, 🔵" + ((", " + heuristic.name + ")") if heuristic != None else ")")
 
 def formatBoardWithCoords(board: Board) -> str:
     formattedBoard = ""

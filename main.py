@@ -7,7 +7,7 @@ from enum import Enum
 
 from heuristics import calculateHeuristic, heurisitcTypes
 from piece import getMoves
-from util import formatBoard, formatBoardWithCoords
+from util import convertPiecesToEmoji, formatBoard, formatBoardWithCoords
 
 signalCtlC = False
 
@@ -81,16 +81,16 @@ def main(openList: List[Board] = [testBoard1],
         # on ctl+c print winning path
         if signalCtlC:
             winningBoard = nodeToExpand
-            printWinningPath(winningBoard, initalBoard)
+            printWinningPath(winningBoard, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
             return foundGoal, openList, closedList
 
     if foundGoal:
         print("Goal found!")
-        printWinningPath(winningBoard, initalBoard)
+        printWinningPath(winningBoard, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
     else:
         print("Goal not found!")
         print("Game up to now:")
-        printWinningPath(nodeToExpand, initalBoard)
+        printWinningPath(nodeToExpand, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
 
     return foundGoal, openList, closedList
 
@@ -207,15 +207,15 @@ def checkForStaleMateByRepetition(currentMove: Board) -> bool:
     
     return repeatedMove == 2
 
-def printWinningPath(winningBoard: Board, initalBoard: Board):
+def printWinningPath(winningBoard: Board, initalBoard: Board, heuristic1: heurisitcTypes = None, heuristic2: heurisitcTypes = None):
     print("\n")
     print("Total moves: " + str(winningBoard.g))
     print ("Full Game: ")
     print("---END---")
     while winningBoard.parent is not None and winningBoard.g != 0.0:
-        print(formatBoard(winningBoard))
+        print(formatBoard(winningBoard, True, heuristic1 if winningBoard.player1 else heuristic2))
         winningBoard = winningBoard.parent
-    print(formatBoard(initalBoard))
+    print(formatBoard(initalBoard, True, heuristic1 if initalBoard.player1 else heuristic2))
     print("---START---")
 
 def checkForHeuristicValidity(heuristic):
@@ -230,13 +230,13 @@ if __name__ == "__main__":
     if mode == "1":
         interactiveMain()
     else:
-        print("Choose heuristic to use for Player 1:")
+        print("Choose heuristic to use for Player 1 (colors: " + convertPiecesToEmoji(EPiece.DEFAULT_P1.value) + ", " + convertPiecesToEmoji(EPiece.DAME_P1.value) + "):")
         for i, heuristic in enumerate(heurisitcTypes):
             print(str(i) + ": " + heuristic.name)
         heuristic1 = input("Enter heuristic: ")
         checkForHeuristicValidity(heuristic1)
 
-        print("Choose heuristic to use for Player 2:")
+        print("Choose heuristic to use for Player 2 (colors: " + convertPiecesToEmoji(EPiece.DEFAULT_P2.value) + ", " + convertPiecesToEmoji(EPiece.DAME_P2.value) + "):")
         for i, heuristic in enumerate(heurisitcTypes):
             print(str(i) + ": " + heuristic.name)
         heuristic2 = input("Enter heuristic: ")
