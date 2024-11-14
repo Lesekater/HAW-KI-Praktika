@@ -138,18 +138,23 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
     if piece.value < 3 and piece.value > 0:
         newPosX = x+xMod+xMod
         newPosY = y+yMod+yMod
+        print("new posX: " + str(newPosX) + " new posY: " + str(newPosY))
+        print("inbounds: " + str(checkForInBounds(board, newPosX, newPosY)))
         # WALK
         if dia[0] == EPiece.EMPTY:
+            print("WALK")
             move = board.swap(x, y, x+xMod, y+yMod)
             moves.append(move)
             return moves, 0
         # FIGHT
-        elif checkForInBounds(board, newPosX, newPosY) and dia[1] == EPiece.EMPTY:
+        elif not checkForInBounds(board, newPosX, newPosY) and dia[1] == EPiece.EMPTY:
+            print("FIGHT")
             capturedPieces += 1
             move = board.swap(x, y, newPosX, newPosY).strikePiece(x+xMod, y+yMod)
             furtherMoves = getMovesForPosition(move,newPosX, newPosY)
         # ???
         else:
+            print("??? 0")
             return moves, -1
     # Dame
     elif piece.value > 2 and piece.value < 5:
