@@ -9,6 +9,9 @@ class heurisitcTypes(Enum):
     CountOfPiecesAtEndOfBoard = 4
     ProgressPiecesOnBoard = 5
     CountOfPicesNotInDraw = 6
+    CountOfPiecesOfOtherPlayer = 7
+    CountOfDamesOfOtherPlayer = 8
+    CountOfPiecesAndDamesOfOtherPlayer = 9
     Random = 7
 
 def calculateHeuristic(board: Board, usedHeuristic: heurisitcTypes) -> float:
@@ -19,16 +22,22 @@ def calculateHeuristic(board: Board, usedHeuristic: heurisitcTypes) -> float:
             return countOfDames(board)
         case heurisitcTypes.CountOfPiecesAndDames:
             return countOfPiecesAndDames(board)
+        case heurisitcTypes.CountOfPiecesOfOtherPlayer:
+            return countOfPiecesOfOtherPlayer(board)
+        case heurisitcTypes.CountOfDamesOfOtherPlayer:
+            return countOfDamesOfOtherPlayer(board)
+        case heurisitcTypes.CountOfPiecesAndDamesOfOtherPlayer:
+            return countOfPiecesAndDamesOfOtherPlayer(board)
         # case heurisitcTypes.CountOfPiecesToEliminate:
         #     return countOfPiecesToEliminate(board)
         case heurisitcTypes.CountOfPiecesAtEndOfBoard:
             return countOfPiecesAtEndOfBoard(board)
-        # case heurisitcTypes.ProgressPiecesOnBoard:
-        #     return progressPiecesOnBoard(board)
+        case heurisitcTypes.ProgressPiecesOnBoard:
+            return progressPiecesOnBoard(board)
         # case heurisitcTypes.CountOfPicesNotInDraw:
         #     return countOfPicesNotInDraw(board)
-        # case heurisitcTypes.Random:
-        #     return random(board)
+        case heurisitcTypes.Random:
+            return random(board)
         case _:
             return 0.0
 
@@ -75,3 +84,50 @@ def countOfPiecesAtEndOfBoard(board):
                 count += 1
 
     return count
+
+# for each pice on the board count how many moves it took to the end of the board and sum them
+# (if piece is at first row it gets 0 points, if it is at the last row it gets 7 points)
+def progressPiecesOnBoard(board):
+    currentPlayer = board.player1
+    count = 0
+    for y, row in enumerate(board.data):
+        for x, piece in enumerate(row):
+            if currentPlayer:
+                if piece == EPiece.DEFAULT_P1:
+                    count += y
+            else:
+                if piece == EPiece.DEFAULT_P2:
+                    count += 7 - y
+
+    return count
+
+# the less pieces the other player has the more points we get
+def countOfPiecesOfOtherPlayer(board, maxPieces=12):
+    currentPlayer = board.player1
+    count = 0
+    for row in board.data:
+        for piece in row:
+            if piece == EPiece.DEFAULT_P1 and not currentPlayer:
+                count += 1
+            elif piece == EPiece.DEFAULT_P2 and currentPlayer:
+                count += 1
+
+    return maxPieces - count
+
+def countOfDamesOfOtherPlayer(board, maxPieces=12):
+    currentPlayer = board.player1
+    count = 0
+    for row in board.data:
+        for piece in row:
+            if piece == EPiece.DAME_P1 and not currentPlayer:
+                count += 1
+            elif piece == EPiece.DAME_P2 and currentPlayer:
+                count += 1
+
+    return maxPieces - count
+
+def countOfPiecesAndDamesOfOtherPlayer(board):
+    return countOfPiecesOfOtherPlayer(board) + countOfDamesOfOtherPlayer(board)
+
+def random(board):
+    return random.random() * 10
