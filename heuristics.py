@@ -15,14 +15,14 @@ def calculateHeuristic(board: Board, usedHeuristic: heurisitcTypes) -> float:
     match usedHeuristic:
         case heurisitcTypes.CountOfPieces:
             return countOfPieces(board)
-        # case heurisitcTypes.CountOfDames:
-        #     return countOfDames(board)
-        # case heurisitcTypes.CountOfPiecesAndDames:
-        #     return countOfPiecesAndDames(board)
+        case heurisitcTypes.CountOfDames:
+            return countOfDames(board)
+        case heurisitcTypes.CountOfPiecesAndDames:
+            return countOfPiecesAndDames(board)
         # case heurisitcTypes.CountOfPiecesToEliminate:
         #     return countOfPiecesToEliminate(board)
-        # case heurisitcTypes.CountOfPiecesAtEndOfBoard:
-        #     return countOfPiecesAtEndOfBoard(board)
+        case heurisitcTypes.CountOfPiecesAtEndOfBoard:
+            return countOfPiecesAtEndOfBoard(board)
         # case heurisitcTypes.ProgressPiecesOnBoard:
         #     return progressPiecesOnBoard(board)
         # case heurisitcTypes.CountOfPicesNotInDraw:
@@ -52,6 +52,26 @@ def countOfDames(board):
             if piece == EPiece.DAME_P1 and currentPlayer:
                 count += 1
             elif piece == EPiece.DAME_P2 and not currentPlayer:
+                count += 1
+
+    return count
+
+def countOfPiecesAndDames(board):
+    return countOfPieces(board) + countOfDames(board)
+
+def countOfPiecesAtEndOfBoard(board):
+    currentPlayer = board.player1
+    count = 0
+    for row in board.data:
+        if currentPlayer:
+            if row[0] == EPiece.DEFAULT_P1:
+                count += 1
+            if row[-1] == EPiece.DEFAULT_P1:
+                count += 1
+        else:
+            if row[0] == EPiece.DEFAULT_P2:
+                count += 1
+            if row[-1] == EPiece.DEFAULT_P2:
                 count += 1
 
     return count
