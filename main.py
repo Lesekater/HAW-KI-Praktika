@@ -1,13 +1,14 @@
 import copy
 import signal
 import sys
+from algorithm import makeMove
 from const import Board, EPiece
 from typing import List, Tuple
 from enum import Enum
 
 from heuristics import calculateHeuristic, heurisitcTypes
 from piece import getMoves
-from util import convertPiecesToEmoji, formatBoard, formatBoardWithCoords
+from util import convertPiecesToEmoji, formatBoard, formatBoardWithCoords, printWinningPath
 
 signalCtlC = False
 
@@ -134,51 +135,6 @@ def letUserChooseMove(board: Board) -> Board:
 
     return board
 
-def makeMove(nodeToExpand: Board, 
-             openList: List[Board], 
-             closedList: List[Board],
-             usedHeuristic: heurisitcTypes = heurisitcTypes.CountOfPieces
-             ) -> Tuple[bool, Board]:
-    (possibleMoves, isWinningMove) = getMoves(
-        board=nodeToExpand, player1=nodeToExpand.player1
-    )
-
-    if isWinningMove:
-        # found goal
-        winningBoard = possibleMoves[0]
-        winningBoard.parent = nodeToExpand
-        return True, winningBoard
-
-    for move in possibleMoves:
-        move.player1 = not nodeToExpand.player1
-        move.parent = nodeToExpand
-
-        # calculate g
-        move.g = nodeToExpand.g + 1
-
-        # calculate f
-        heuristic = calculateHeuristic(move, usedHeuristic)
-        move.f = move.g + heuristic
-
-        # check open list
-        for openNode in openList:
-            if move.g == openNode.g and move.f > openNode.f:
-                continue
-
-        # check closed list
-        for closedNode in closedList:
-            if move.g == closedNode.g and move.f > closedNode.f:
-                continue
-
-        # add to open list at position relative to f
-        openList.append(move)
-        openList.sort(key=lambda x: x.f)
-
-    closedList.append(nodeToExpand)
-
-    # did not find goal
-    return False, None   
-
 def checkForStaleMateByRepetition(currentMove: Board) -> bool:
     hasStaleMate = False
     repeatedMove = 0
@@ -206,17 +162,6 @@ def checkForStaleMateByRepetition(currentMove: Board) -> bool:
         currentMove = currentMove.parent
     
     return repeatedMove == 2
-
-def printWinningPath(winningBoard: Board, initalBoard: Board, heuristic1: heurisitcTypes = None, heuristic2: heurisitcTypes = None):
-    print("\n")
-    print("Total moves: " + str(winningBoard.g))
-    print ("Full Game: ")
-    print("---END---")
-    while winningBoard.parent is not None and winningBoard.g != 0.0:
-        print(formatBoard(winningBoard, True, heuristic1 if winningBoard.player1 else heuristic2))
-        winningBoard = winningBoard.parent
-    print(formatBoard(initalBoard, True, heuristic1 if initalBoard.player1 else heuristic2))
-    print("---START---")
 
 def checkForHeuristicValidity(heuristic):
     # check if heuristic is valid & implemented

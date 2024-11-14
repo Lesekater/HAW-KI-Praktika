@@ -39,3 +39,14 @@ def formatBoardWithCoords(board: Board) -> str:
         formattedBoard += "\n"
     formattedBoard += "  0 1 2 3 4 5 6 7\n"
     return formattedBoard
+
+def printWinningPath(winningBoard: Board, initalBoard: Board, heuristic1: heurisitcTypes = None, heuristic2: heurisitcTypes = None):
+    print("\n")
+    print("Total moves: " + str(winningBoard.g))
+    print ("Full Game: ")
+    print("---END---")
+    while winningBoard.parent is not None and winningBoard.g != 0.0:
+        print(formatBoard(winningBoard, True, heuristic1 if winningBoard.player1 else heuristic2))
+        winningBoard = winningBoard.parent
+    print(formatBoard(initalBoard, True, heuristic1 if initalBoard.player1 else heuristic2))
+    print("---START---")

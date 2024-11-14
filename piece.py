@@ -163,7 +163,6 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
     # print("self: " + str(piece) + ", opponent: " + str(dia[0]))
     # print("checkIfPiecesOppose(piece, dia[0]): " + str(checkIfPiecesOppose(piece, dia[0])))
 
-    # TODO: check -> I removed the if "not" -- is this correct?
     if checkIfPiecesOppose(piece, dia[0]):
         return moves, 0
 
