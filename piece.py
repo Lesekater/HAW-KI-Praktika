@@ -25,20 +25,22 @@ def getMoves(board: Board, player1: bool) -> tuple[list[Board], bool]:
     highestKDR: int = -1
     for yIdx, y in enumerate(board.data):
         for xIdx, p in enumerate(y):
-            if not checkIfPiecesOppose(p ,hypotheticalPiece):
+            if not checkIfPiecesOppose(p ,hypotheticalPiece) and p != EPiece.EMPTY:
+                # print("checking piece at x: " + str(xIdx) + " y: " + str(yIdx))
                 mFP = getMovesForPosition(board, xIdx, yIdx)
-                if mFP[1] > highestKDR:
-                    highestKDRList = []
-                if mFP[1] >= highestKDR:
-                    for m in mFP[0]:
-                        highestKDRList.append(m)
+                ## TODO: Fix this for moves without Kill rates (just walking)
+                # if mFP[1] > highestKDR:
+                #     highestKDRList = []
+                # if mFP[1] >= highestKDR:
+                #     for m in mFP[0]:
+                #         highestKDRList.append(m)
+                for m in mFP[0]:
+                    highestKDRList.append(m)
 
 
     for m in highestKDRList:
         if checkForWinningBoard(m):
             return [m], True
-
-
 
     return highestKDRList, False
 
@@ -68,10 +70,10 @@ def getMovesForPosition(board: Board, x: int, y: int) -> tuple[list[Board], int]
     # I REAAALY WANT TO DO THIS RIGHT KNOW. BUT I AM VERY EEPY. THE DUALITY OF EEPYNESS :3
 
     # Create a list with all the diagonal directions we need to check for a given piece
-    print("pieceToMove: " + str(pieceToMove))
-    print("piece position: x: " + str(x) + " y: " + str(y))
+    # print("pieceToMove: " + str(pieceToMove))
+    # print("piece position: x: " + str(x) + " y: " + str(y))
     if pieceToMove == EPiece.EMPTY:
-        print("Cannot check moves for an empty spot")
+        # print("Cannot check moves for an empty spot")
         return possibleMoves, -1
     if pieceToMove == EPiece.DEFAULT_P1 or pieceToMove.value > 2: #Check for these Directions if it's a player 1 piece or a dame
         directionsToCheck.append(Direction.Down_Left)
@@ -80,8 +82,8 @@ def getMovesForPosition(board: Board, x: int, y: int) -> tuple[list[Board], int]
         directionsToCheck.append(Direction.Up_Left)
         directionsToCheck.append(Direction.Up_Right)
 
-    print("x: " + str(x) + " y: " + str(y))
-    print("directionsToCheck: " + str(directionsToCheck))
+    # print("x: " + str(x) + " y: " + str(y))
+    # print("directionsToCheck: " + str(directionsToCheck))
 
     # Check those diagonals
     diaToCheck: dict[Direction, list[EPiece]] = getDiagonalContent(board, directionsToCheck, x, y)
@@ -92,7 +94,7 @@ def getMovesForPosition(board: Board, x: int, y: int) -> tuple[list[Board], int]
     if not diaToCheck:
         return possibleMoves, -1
     
-    print("diaToCheck: " + str(diaToCheck))
+    # print("diaToCheck: " + str(diaToCheck))
 
     # Do sick moves
     map: dict[int, list[Board]] = {}
@@ -100,7 +102,7 @@ def getMovesForPosition(board: Board, x: int, y: int) -> tuple[list[Board], int]
     for d in diaToCheck:
         moves: tuple[list[Board], int] = checkDirection(board, d, diaToCheck[d], pieceToMove, x, y)
 
-        print("moves: " + str(moves))
+        # print("moves: " + str(moves))
 
         if moves[1] > highestKDR:
             highestKDR = moves[1]
@@ -116,8 +118,8 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
     moves: list[Board] = []
     capturedPieces: int = 0
 
-    print("self: " + str(piece) + ", opponent: " + str(dia[0]))
-    print("checkIfPiecesOppose(piece, dia[0]): " + str(checkIfPiecesOppose(piece, dia[0])))
+    # print("self: " + str(piece) + ", opponent: " + str(dia[0]))
+    # print("checkIfPiecesOppose(piece, dia[0]): " + str(checkIfPiecesOppose(piece, dia[0])))
 
     # TODO: check -> I removed the if "not" -- is this correct?
     if checkIfPiecesOppose(piece, dia[0]):
@@ -132,29 +134,29 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
     furtherMoves: tuple[list[Board], int] = ([], -1)
     move: Board = board
 
-    print("piece: " + str(piece))
+    # print("piece: " + str(piece))
 
     # Default
     if piece.value < 3 and piece.value > 0:
         newPosX = x+xMod+xMod
         newPosY = y+yMod+yMod
-        print("new posX: " + str(newPosX) + " new posY: " + str(newPosY))
-        print("inbounds: " + str(checkForInBounds(board, newPosX, newPosY)))
+        # print("new posX: " + str(newPosX) + " new posY: " + str(newPosY))
+        # print("inbounds: " + str(checkForInBounds(board, newPosX, newPosY)))
         # WALK
         if dia[0] == EPiece.EMPTY:
-            print("WALK")
+            # print("WALK")
             move = board.swap(x, y, x+xMod, y+yMod)
             moves.append(move)
             return moves, 0
         # FIGHT
         elif not checkForInBounds(board, newPosX, newPosY) and dia[1] == EPiece.EMPTY:
-            print("FIGHT")
+            # print("FIGHT")
             capturedPieces += 1
             move = board.swap(x, y, newPosX, newPosY).strikePiece(x+xMod, y+yMod)
             furtherMoves = getMovesForPosition(move,newPosX, newPosY)
         # ???
         else:
-            print("??? 0")
+            # print("??? 0")
             return moves, -1
     # Dame
     elif piece.value > 2 and piece.value < 5:
@@ -163,21 +165,21 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
         newPosX = x+multiplyer*xMod+xMod
         newPosY = y+multiplyer*yMod+yMod
         # The next Piece on diagonal is friendly or only empty, WALK
-        print("new posX: " + str(newPosX) + " new posY: " + str(newPosY))
+        # print("new posX: " + str(newPosX) + " new posY: " + str(newPosY))
         if (firstPiece[0] > 0 or firstPiece[1] == EPiece.EMPTY) and not checkIfPiecesOppose(piece, firstPiece[1]):
-            print("WALK")
+            # print("WALK")
             rangeToEnd = len(dia) if firstPiece[0] == -1 else firstPiece[0]
-            print("rangeToEnd: " + str(rangeToEnd))
+            # print("rangeToEnd: " + str(rangeToEnd))
             for i in range(rangeToEnd):
                 i += 1
-                print("i: " + str(i) + " xMod: " + str(xMod) + " yMod: " + str(yMod))
-                print("x: " + str(x+i*xMod) + " y: " + str(y+i*yMod))
+                # print("i: " + str(i) + " xMod: " + str(xMod) + " yMod: " + str(yMod))
+                # print("x: " + str(x+i*xMod) + " y: " + str(y+i*yMod))
                 move = board.swap(x, y, x+i*xMod, y+i*yMod)
                 moves.append(move)
             return moves, 0
         # Next piece on diagonal is enemy, FIGHT
         elif not checkForInBounds(board, newPosX, newPosY) and dia[firstPiece[0]+1] == EPiece.EMPTY and not checkIfPiecesOppose(piece, firstPiece[1]):
-            print("FIGHT")
+            # print("FIGHT")
             move = board.swap(x, y, newPosX, newPosY).strikePiece(newPosX-xMod, newPosY-yMod)
             capturedPieces += 1
             furtherMoves = getMovesForPosition(move,newPosX, newPosY)
@@ -206,12 +208,12 @@ def checkForInBounds(board: Board, x: int, y:int) -> bool:
     size_y = len(board.data)
 
     if (x < 0 or x >= size_x) or (y < 0 or y >= size_y):
-        print("OUT OF BOUNDS")
+        # print("OUT OF BOUNDS")
         return True
     return False
 
 def checkIfPiecesOppose(f: EPiece, s: EPiece) -> bool:
-    print("f: " + str(f) + " s: " + str(s))
+    # print("f: " + str(f) + " s: " + str(s))
     if s == EPiece.EMPTY:
         return False
     elif (f in {EPiece.DEFAULT_P1, EPiece.DAME_P1} and s in {EPiece.DEFAULT_P1, EPiece.DAME_P1}) or \
