@@ -8,7 +8,7 @@ from enum import Enum
 
 from heuristics import calculateHeuristic, heurisitcTypes
 from piece import getMoves
-from util import convertPiecesToEmoji, formatBoard, formatBoardWithCoords, printWinningPath
+from util import convertPiecesToEmoji, formatBoard, formatBoardWithCoords, printWinningPath, writeStatsToFile
 
 signalCtlC = False
 
@@ -27,10 +27,10 @@ testBoard1 = Board.fromIntList([
     [0, 2, 0, 2, 0, 2, 0, 2]])
 
 testBoard2 = Board.fromIntList([
-    [1, 0, 0, 1],
+    [1, 0, 0, 0],
     [0, 0, 0, 0],
     [0, 0, 0, 0],
-    [2, 0, 0, 2]])
+    [0, 0, 0, 2]])
 
 testBoard3 = Board.fromIntList([
     [1, 1, 0, 0],
@@ -88,10 +88,12 @@ def main(openList: List[Board] = [testBoard1],
     if foundGoal:
         print("Goal found!")
         printWinningPath(winningBoard, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
+        writeStatsToFile(winningBoard, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
     else:
         print("Goal not found!")
         print("Game up to now:")
         printWinningPath(nodeToExpand, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
+        writeStatsToFile(nodeToExpand, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
 
     return foundGoal, openList, closedList
 
@@ -170,6 +172,16 @@ def checkForHeuristicValidity(heuristic):
             sys.exit(1)
 
 if __name__ == "__main__":
+
+    # skip via arguments
+    if len(sys.argv) > 1:
+        # if first argument is help output possible args
+        if sys.argv[1] == "help":
+            print("Usage: python3 main.py [board number] [heuristic1] [heuristic2] or just python3 main.py for interactive mode.")
+        else:
+            main([testBoards[int(sys.argv[1])]], [], heurisitcTypes(int(sys.argv[2])), heurisitcTypes(int(sys.argv[3])))
+        sys.exit(0)
+
     print("Choose mode to start (1: interactive, 2: automatic):")
     mode = input("Enter mode: ")
     if mode == "1":

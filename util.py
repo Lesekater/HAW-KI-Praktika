@@ -1,5 +1,5 @@
 from const import Board
-from heuristics import heurisitcTypes
+from heuristics import countOfDames, countOfPieces, heurisitcTypes
 
 def convertPiecesToEmoji(piece: int) -> str:
     if piece == 0:
@@ -50,3 +50,24 @@ def printWinningPath(winningBoard: Board, initalBoard: Board, heuristic1: heuris
         winningBoard = winningBoard.parent
     print(formatBoard(initalBoard, True, heuristic1 if initalBoard.player1 else heuristic2))
     print("---START---")
+
+def writeStatsToFile(winningBoard: Board, initalBoard: Board, heuristic1: heurisitcTypes = None, heuristic2: heurisitcTypes = None):
+    with open("stats.txt", "w") as file:
+        # winner (1/2)
+        # total moves
+        # count of pieces player 1 at end
+        # count of pieces player 2 at end
+        # count of dames player 1 at end
+        # count of dames player 2 at end
+        
+        file.write("Winner: " + ("Player 1" if winningBoard.player1 else "Player 2") + "\n")
+        file.write("Total moves: " + str(winningBoard.g) + "\n")
+        winningBoard.player1 = True
+        file.write("Count of pieces player 1 at end: " + str(countOfPieces(winningBoard)) + "\n")
+        winningBoard.player1 = False
+        file.write("Count of pieces player 2 at end: " + str(countOfPieces(winningBoard)) + "\n")
+        winningBoard.player1 = True
+        file.write("Count of dames player 1 at end: " + str(countOfDames(winningBoard)) + "\n")
+        winningBoard.player1 = False
+        file.write("Count of dames player 2 at end: " + str(countOfDames(winningBoard)) + "\n")
+        
