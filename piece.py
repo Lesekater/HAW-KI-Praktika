@@ -49,6 +49,7 @@ def getMoves(board: Board, player1: bool) -> tuple[list[Board], bool]:
     return highestKDRList, False
 
 def checkForWinningBoard(b: Board) -> bool:
+    # one player has no pieces left
     foundP1: bool = False
     foundP2: bool = False
     for y in b.data:
@@ -58,7 +59,27 @@ def checkForWinningBoard(b: Board) -> bool:
             if x == EPiece.DEFAULT_P2 or x == EPiece.DAME_P2:
                 foundP2 = True
 
-    return not(foundP1 and foundP2)
+    onePlayerHasNoPiecesLeft = not foundP1 or not foundP2
+
+    # both players have only one dame left and no other pieces
+    countP1Pieces: int = 0
+    countP1Dames: int = 0
+    countP2Pieces: int = 0
+    countP2Dames: int = 0
+    for y in b.data:
+        for x in y:
+            if x == EPiece.DEFAULT_P1:
+                countP1Pieces += 1
+            if x == EPiece.DAME_P1:
+                countP1Dames += 1
+            if x == EPiece.DEFAULT_P2:
+                countP2Pieces += 1
+            if x == EPiece.DAME_P2:
+                countP2Dames += 1
+
+    bothPlayersHaveOnlyOneDameLeft = (countP1Pieces == 0 and countP1Dames == 1) and (countP2Pieces == 0 and countP2Dames == 1)
+
+    return onePlayerHasNoPiecesLeft or bothPlayersHaveOnlyOneDameLeft
 
 def checkForPromotions(board: Board) -> Board:
     hasPromotions: bool = False
