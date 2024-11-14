@@ -69,7 +69,7 @@ def main(openList: List[Board] = [testBoard1],
         highestG = max(highestG, nodeToExpand.g)
 
         # check for stalemate
-        if nodeToExpand.g > 100 or checkForStaleMateByRepetition(nodeToExpand):
+        if nodeToExpand.g > 150 or checkForStaleMateByRepetition(nodeToExpand):
             print("Stalemate detected!")
             break
 
