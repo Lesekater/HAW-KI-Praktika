@@ -37,6 +37,10 @@ def getMoves(board: Board, player1: bool) -> tuple[list[Board], bool]:
                 for m in mFP[0]:
                     highestKDRList.append(m)
 
+    for m in highestKDRList:
+        promotedBoard = checkForPromotions(m)
+        if promotedBoard is not None:
+            m = promotedBoard
 
     for m in highestKDRList:
         if checkForWinningBoard(m):
@@ -55,12 +59,29 @@ def checkForWinningBoard(b: Board) -> bool:
                 foundP2 = True
 
     return not(foundP1 and foundP2)
+
+def checkForPromotions(board: Board) -> Board:
+    hasPromotions: bool = False
+    for yIdx, y in enumerate(board.data):
+        for xIdx, p in enumerate(y):
+            if p == EPiece.DEFAULT_P1 and yIdx == len(board.data)-1:
+                hasPromotions = True
+                board.data[yIdx][xIdx] = EPiece.DAME_P1
+            if p == EPiece.DEFAULT_P2 and yIdx == 0:
+                hasPromotions = True
+                board.data[yIdx][xIdx] = EPiece.DAME_P2
+
+    if hasPromotions:
+        return board
+    else:
+        return None
+
 # Player1 is odd  numbers (1 and 3) (Black)
 # Player2 is even numbers (2 and 4) (White)
 
 # Player1 moves in positive direction (down)
 # Player2 moves in negative direction (up)
-def getMovesForPosition(board: Board, x: int, y: int) -> tuple[list[Board], int]:
+def getMovesForPosition(board: Board, x: int, y: int, onlyFight: bool = False) -> tuple[list[Board], int]:
     """Returns the possible Moves for a single piece on a board"""
     possibleMoves: list[Board] = []
     pieceToMove: EPiece = board.data[y][x]
@@ -153,7 +174,7 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
             # print("FIGHT")
             capturedPieces += 1
             move = board.swap(x, y, newPosX, newPosY).strikePiece(x+xMod, y+yMod)
-            furtherMoves = getMovesForPosition(move,newPosX, newPosY)
+            furtherMoves = getMovesForPosition(move,newPosX, newPosY, onlyFight=True)
         # ???
         else:
             # print("??? 0")
@@ -182,14 +203,14 @@ def checkDirection(board: Board, direction: Direction, dia: list[EPiece], piece:
             # print("FIGHT")
             move = board.swap(x, y, newPosX, newPosY).strikePiece(newPosX-xMod, newPosY-yMod)
             capturedPieces += 1
-            furtherMoves = getMovesForPosition(move,newPosX, newPosY)
+            furtherMoves = getMovesForPosition(move,newPosX, newPosY, onlyFight=True)
         # ???
         else:
-            print("??? 1")
+            # print("??? 1")
             return moves, -1
     #???
     else:
-        print("??? 2")
+        # print("??? 2")
         return moves, -1
 
 
