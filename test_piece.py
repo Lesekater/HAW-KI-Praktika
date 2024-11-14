@@ -221,38 +221,42 @@ def test_getMovesForPosition_dame_strike():
 # # moving pieces -- multiple moves
 # ###################################
 
-# def test_getMoves_simple():
-#     testBoard = Board.fromIntList([[0, 0, 0, 0, 0],
-#                                 [0, 0, 0, 0, 0],
-#                                 [0, 0, 0, 0, 0],
-#                                 [0, 0, 0, 0, 0],
-#                                 [1, 0, 1, 0, 1]])
+def test_getMoves_simple():
+    testBoard = Board.fromIntList([[1, 0, 1, 0, 1],
+                                [0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0],
+                                [0, 0, 2, 0, 0]])
     
-#     result = getMoves(testBoard, False)
+    result = getMoves(testBoard, False)
 
-#     # assert
-#     board1 = Board.fromIntList([[0, 0, 0, 0, 0],
-#                                 [0, 0, 0, 0, 0],
-#                                 [0, 0, 0, 0, 0],
-#                                 [0, 1, 0, 0, 0],
-#                                 [0, 0, 1, 0, 1]])
+    # assert
+    board1 = Board.fromIntList([[0, 0, 1, 0, 1],
+                                [0, 1, 0, 0, 0],
+                                [0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0],
+                                [0, 0, 2, 0, 0]])
     
-#     board2 = Board.fromIntList([[0, 0, 0, 0, 0],
-#                                 [0, 0, 0, 0, 0],
-#                                 [0, 0, 0, 0, 0],
-#                                 [0, 1, 0, 0, 0],
-#                                 [1, 0, 0, 0, 1]])
+    board2 = Board.fromIntList([[1, 0, 0, 0, 1],
+                                [0, 1, 0, 0, 0],
+                                [0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0],
+                                [0, 0, 2, 0, 0]])
     
-#     board3 = Board.fromIntList([[0, 0, 0, 0, 0],
-#                                 [0, 0, 0, 0, 0],
-#                                 [0, 0, 0, 0, 0],
-#                                 [0, 0, 0, 1, 0],
-#                                 [1, 0, 0, 0, 1]])
+    board3 = Board.fromIntList([[1, 0, 0, 0, 1],
+                                [0, 0, 0, 1, 0],
+                                [0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0],
+                                [0, 0, 2, 0, 0]])
     
-#     board4 = Board.fromIntList([[0, 0, 0, 0, 0],
-#                                 [0, 0, 0, 0, 0],
-#                                 [0, 0, 0, 0, 0],
-#                                 [0, 0, 0, 1, 0],
-#                                 [1, 0, 1, 0, 0]])
+    board4 = Board.fromIntList([[1, 0, 1, 0, 0],
+                                [0, 0, 0, 1, 0],
+                                [0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0],
+                                [0, 0, 2, 0, 0]])
+
+    for i in range(len(result[0])):
+        print("formatBoard(result[0][i]): \n", formatBoard(result[0][i]))
+        print("formatBoard([board1, board2, board3, board4][i]): \n", formatBoard([board1, board2, board3, board4][i]))
+        assert result[0][i].data == [board1, board2, board3, board4][i].data
     
-#     assert result == [board1, board2, board3, board4]
