@@ -1,3 +1,4 @@
+import random
 from const import Board, EPiece
 from enum import Enum
 
@@ -12,7 +13,7 @@ class heurisitcTypes(Enum):
     CountOfPiecesOfOtherPlayer = 7
     CountOfDamesOfOtherPlayer = 8
     CountOfPiecesAndDamesOfOtherPlayer = 9
-    Random = 7
+    Random = 10
 
 def calculateHeuristic(board: Board, usedHeuristic: heurisitcTypes) -> float:
     match usedHeuristic:
@@ -28,16 +29,18 @@ def calculateHeuristic(board: Board, usedHeuristic: heurisitcTypes) -> float:
             return countOfDamesOfOtherPlayer(board)
         case heurisitcTypes.CountOfPiecesAndDamesOfOtherPlayer:
             return countOfPiecesAndDamesOfOtherPlayer(board)
-        # case heurisitcTypes.CountOfPiecesToEliminate:
-        #     return countOfPiecesToEliminate(board)
+        case heurisitcTypes.CountOfPiecesToEliminate:
+            return "unimplemented"
+            # return countOfPiecesToEliminate(board)
         case heurisitcTypes.CountOfPiecesAtEndOfBoard:
             return countOfPiecesAtEndOfBoard(board)
         case heurisitcTypes.ProgressPiecesOnBoard:
             return progressPiecesOnBoard(board)
-        # case heurisitcTypes.CountOfPicesNotInDraw:
-        #     return countOfPicesNotInDraw(board)
+        case heurisitcTypes.CountOfPicesNotInDraw:
+            return "unimplemented"
+            # return countOfPicesNotInDraw(board)
         case heurisitcTypes.Random:
-            return random(board)
+            return randomHeuristic(board)
         case _:
             return 0.0
 
@@ -129,5 +132,5 @@ def countOfDamesOfOtherPlayer(board, maxPieces=12):
 def countOfPiecesAndDamesOfOtherPlayer(board):
     return countOfPiecesOfOtherPlayer(board) + countOfDamesOfOtherPlayer(board)
 
-def random(board):
-    return random.random() * 10
+def randomHeuristic(board):
+    return random.randint(0, 10)
