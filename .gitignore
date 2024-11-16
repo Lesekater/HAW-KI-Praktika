@@ -163,3 +163,4 @@ cython_debug/
 
 # Praktikum 01
 stats.txt
+/runs

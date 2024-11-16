@@ -1,6 +1,7 @@
 import copy
 import signal
 import sys
+import uuid
 from algorithm import makeMove
 from const import Board, EPiece
 from typing import List, Tuple
@@ -8,9 +9,10 @@ from enum import Enum
 
 from heuristics import calculateHeuristic, heurisitcTypes
 from piece import getMoves
-from util import convertPiecesToEmoji, formatBoard, formatBoardWithCoords, printWinningPath, writeStatsToFile
+from util import convertPiecesToEmoji, createFileStructure, formatBoard, formatBoardWithCoords, printWinningPath, saveBoardToFile, writeStatsToFile
 
 signalCtlC = False
+runUUID = None
 
 def signal_handler(sig, frame):
     global signalCtlC
@@ -63,10 +65,14 @@ def main(openList: List[Board] = [testBoard1],
     # register signal handler
     signal.signal(signal.SIGINT, signal_handler)
 
+    # create file structure for run
+    runUUID = uuid.uuid4()
+    createFileStructure(runUUID)
+
     while not foundGoal and len(openList) > 0:
         nodeToExpand = openList.pop()
         usedHeuristic = usedHeuristicPlayer1 if nodeToExpand.player1 else usedHeuristicPlayer2
-        (foundGoal, winningBoard) = makeMove(nodeToExpand, openList, closedList, usedHeuristic)
+        (foundGoal, winningBoard) = makeMove(nodeToExpand, openList, closedList, usedHeuristic, runUUID)
         highestG = max(highestG, nodeToExpand.g)
 
         # check for stalemate

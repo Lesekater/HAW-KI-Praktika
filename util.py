@@ -1,3 +1,5 @@
+import os
+from uuid import UUID
 from const import Board
 from heuristics import countOfDames, countOfPieces, heurisitcTypes
 
@@ -71,3 +73,19 @@ def writeStatsToFile(winningBoard: Board, initalBoard: Board, heuristic1: heuris
         winningBoard.player1 = False
         file.write("Count of dames player 2 at end: " + str(countOfDames(winningBoard)) + "\n")
         
+def createFileStructure(uuid: UUID):
+    # check if runs folder exists
+    if not os.path.exists("runs"):
+        os.makedirs("runs")
+
+    # check if folder for this run exists
+    if not os.path.exists("runs/" + str(uuid)):
+        os.makedirs("runs/" + str(uuid))
+
+def saveBoardToFile(board: Board, uuid: UUID, numBoard: int):
+    # check if board depth folder exists
+    if not os.path.exists("runs/" + str(uuid) + "/" + str(board.g)):
+        os.makedirs("runs/" + str(uuid) + "/" + str(board.g))
+
+    with open("runs/" + str(uuid) + "/" + str(board.g) + "/" + str(board.id) + str(numBoard) + ".txt", "w") as file:
+        file.write(formatBoard(board))

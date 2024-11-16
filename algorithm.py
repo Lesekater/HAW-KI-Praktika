@@ -1,16 +1,23 @@
 from typing import List, Tuple
+from uuid import UUID
 from const import Board
 from heuristics import calculateHeuristic, heurisitcTypes
 from piece import getMoves
+from util import formatBoard, saveBoardToFile
 
 def makeMove(nodeToExpand: Board, 
              openList: List[Board], 
              closedList: List[Board],
-             usedHeuristic: heurisitcTypes = heurisitcTypes.CountOfPieces
-             ) -> Tuple[bool, Board]:
+             usedHeuristic: heurisitcTypes = heurisitcTypes.CountOfPieces,
+             runID: UUID = None) -> Tuple[bool, Board]:
     (possibleMoves, isWinningMove) = getMoves(
         board=nodeToExpand, player1=nodeToExpand.player1
     )
+
+    for (i, move) in enumerate(possibleMoves):
+        print("Move (uuid: " + str(move.id) + ")")
+        print(formatBoard(move))
+        saveBoardToFile(move, runID, i)
 
     if isWinningMove:
         # found goal
