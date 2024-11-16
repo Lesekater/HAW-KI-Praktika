@@ -1,4 +1,5 @@
 import os
+from typing import List
 from uuid import UUID
 from const import Board
 from heuristics import countOfDames, countOfPieces, heurisitcTypes
@@ -89,3 +90,24 @@ def saveBoardToFile(board: Board, uuid: UUID, numBoard: int):
 
     with open("runs/" + str(uuid) + "/" + str(board.g) + "/" + str(board.id) + str(numBoard) + ".txt", "w") as file:
         file.write(formatBoard(board))
+
+def formatMultipleBoardsInARow(boards: List[Board]) -> str:
+    formattedBoards = ""
+    firstBoard = boards[0]
+    for (i, row) in enumerate(firstBoard.data):
+        # print all pieces of all boards of this row with spaces in between boards
+        for board in boards:
+            for piece in board.data[i]:
+                formattedBoards += convertPiecesToEmoji(piece.value)
+            formattedBoards += " "
+        formattedBoards += "\n"
+    return formattedBoards
+
+# prints a list of strings that contain multiple lines side by side
+def printStringsSideBySide(listOfStrings: List[str]) -> str:
+    formattedStrings = ""
+    for i in range(len(listOfStrings[0].split("\n"))):
+        for string in listOfStrings:
+            formattedStrings += string.split("\n")[i] + " "
+        formattedStrings += "\n"
+    return formattedStrings

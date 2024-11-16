@@ -15,8 +15,6 @@ def makeMove(nodeToExpand: Board,
     )
 
     for (i, move) in enumerate(possibleMoves):
-        print("Move (uuid: " + str(move.id) + ")")
-        print(formatBoard(move))
         saveBoardToFile(move, runID, i)
 
     if isWinningMove:

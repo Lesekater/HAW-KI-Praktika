@@ -1,4 +1,5 @@
 import copy
+import os
 import signal
 import sys
 import uuid
@@ -9,7 +10,7 @@ from enum import Enum
 
 from heuristics import calculateHeuristic, heurisitcTypes
 from piece import getMoves
-from util import convertPiecesToEmoji, createFileStructure, formatBoard, formatBoardWithCoords, printWinningPath, saveBoardToFile, writeStatsToFile
+from util import convertPiecesToEmoji, createFileStructure, formatBoard, formatBoardWithCoords, printStringsSideBySide, printWinningPath, saveBoardToFile, writeStatsToFile
 
 signalCtlC = False
 runUUID = None
@@ -188,11 +189,11 @@ if __name__ == "__main__":
             main([testBoards[int(sys.argv[1])]], [], heurisitcTypes(int(sys.argv[2])), heurisitcTypes(int(sys.argv[3])))
         sys.exit(0)
 
-    print("Choose mode to start (1: interactive, 2: automatic):")
+    print("Choose mode to start (1: interactive, 2: automatic, 3: visualize run):")
     mode = input("Enter mode: ")
     if mode == "1":
         interactiveMain()
-    else:
+    if mode == "2":
         print("Choose heuristic to use for Player 1 (colors: " + convertPiecesToEmoji(EPiece.DEFAULT_P1.value) + ", " + convertPiecesToEmoji(EPiece.DAME_P1.value) + "):")
         for i, heuristic in enumerate(heurisitcTypes):
             print(str(i) + ": " + heuristic.name)
@@ -212,3 +213,30 @@ if __name__ == "__main__":
         board = input("Enter board: ")
 
         main([testBoards[int(board)]], [], heurisitcTypes(int(heuristic1)), heurisitcTypes(int(heuristic2)))
+
+    if mode == "3":
+        print("Choose run to visualize:")
+        runs = os.listdir("runs")
+        for i, run in enumerate(runs):
+            print(str(i) + ": " + run)
+        run = input("Enter run: ")
+        depth = 0.0
+        # check if folder for this depth exists
+        while os.path.exists("runs/" + runs[int(run)] + "/" + str(depth)):
+            depth += 1.0
+        
+        for depth in range(0, int(depth)):
+            boardsOfDepth = os.listdir("runs/" + runs[int(run)] + "/" + str(float(depth)))
+            dataOfDepth = []
+            for board in boardsOfDepth:
+                with open("runs/" + runs[int(run)] + "/" + str(float(depth)) + "/" + board, "r") as file:
+                    dataOfDepth.append(file.read())
+            print("Depth: " + str(depth))
+            print(printStringsSideBySide(dataOfDepth))
+            
+            # wait for user input
+            input("Press Enter to continue...")
+
+    else:
+        print("Invalid mode.")
+        sys.exit(1)
