@@ -12,9 +12,9 @@ class Direction(Enum):
 
 ###
 # Piece
-# @return Possible Moves, isWinningMove
+# @return Possible Moves
 ###
-def getMoves(board: Board, player1: bool) -> tuple[list[Board], bool]:
+def getMoves(board: Board, player1: bool) -> list[Board]:
     """Returns all possible moves for a player, given a specifiv board. Also specifies if a move would be a winning one"""
 
     hypotheticalPiece: EPiece = EPiece.DEFAULT_P2
@@ -42,11 +42,7 @@ def getMoves(board: Board, player1: bool) -> tuple[list[Board], bool]:
         if promotedBoard is not None:
             m = promotedBoard
 
-    for m in highestKDRList:
-        if checkForWinningBoard(m):
-            return [m], True
-
-    return highestKDRList, False
+    return highestKDRList
 
 def checkForWinningBoard(b: Board) -> bool:
     # one player has no pieces left
