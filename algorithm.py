@@ -33,7 +33,7 @@ def makeMove(nodeToExpand: Board,
 
         # add to open list at position relative to f
         openList.append(move)
-        openList.sort(key=lambda x: x.f)
+        openList.sort(key=lambda x: x.f, reverse=True)
 
     closedList.append(nodeToExpand)
 

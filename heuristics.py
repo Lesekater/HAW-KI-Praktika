@@ -44,7 +44,7 @@ def calculateHeuristic(board: Board, usedHeuristic: heurisitcTypes) -> float:
         case _:
             return 0.0
 
-def countOfPieces(board: Board) -> float:
+def countOfPieces(board: Board, maxPieces=12):
     currentPlayer = board.player1
     count = 0
     for row in board.data:
@@ -53,10 +53,9 @@ def countOfPieces(board: Board) -> float:
                 count += 1
             elif piece == EPiece.DEFAULT_P2 and not currentPlayer:
                 count += 1
+    return maxPieces - count
 
-    return count
-
-def countOfDames(board):
+def countOfDames(board, maxPieces=12):
     currentPlayer = board.player1
     count = 0
     for row in board.data:
@@ -66,7 +65,7 @@ def countOfDames(board):
             elif piece == EPiece.DAME_P2 and not currentPlayer:
                 count += 1
 
-    return count
+    return maxPieces - count
 
 def countOfPiecesAndDames(board):
     return countOfPieces(board) + countOfDames(board)
@@ -74,6 +73,9 @@ def countOfPiecesAndDames(board):
 def countOfPiecesAtEndOfBoard(board):
     currentPlayer = board.player1
     count = 0
+
+    maxPiecesAtEnd = len(board.data[0])
+
     for row in board.data:
         if currentPlayer:
             if row[0] == EPiece.DEFAULT_P1:
@@ -86,26 +88,26 @@ def countOfPiecesAtEndOfBoard(board):
             if row[-1] == EPiece.DEFAULT_P2:
                 count += 1
 
-    return count
+    return maxPiecesAtEnd - count
 
-# for each pice on the board count how many moves it took to the end of the board and sum them
-# (if piece is at first row it gets 0 points, if it is at the last row it gets 7 points)
 def progressPiecesOnBoard(board):
+    lengthOfBoard = len(board.data[0])
+
     currentPlayer = board.player1
     count = 0
-    for y, row in enumerate(board.data):
-        for x, piece in enumerate(row):
+
+    for row in board.data:
+        for (i, piece) in enumerate(row):
             if currentPlayer:
                 if piece == EPiece.DEFAULT_P1:
-                    count += y
+                    count += lengthOfBoard - i
             else:
                 if piece == EPiece.DEFAULT_P2:
-                    count += 7 - y
+                    count += lengthOfBoard - i
 
     return count
 
-# the less pieces the other player has the more points we get
-def countOfPiecesOfOtherPlayer(board, maxPieces=12):
+def countOfPiecesOfOtherPlayer(board):
     currentPlayer = board.player1
     count = 0
     for row in board.data:
@@ -115,9 +117,9 @@ def countOfPiecesOfOtherPlayer(board, maxPieces=12):
             elif piece == EPiece.DEFAULT_P2 and currentPlayer:
                 count += 1
 
-    return maxPieces - count
+    return count
 
-def countOfDamesOfOtherPlayer(board, maxPieces=12):
+def countOfDamesOfOtherPlayer(board):
     currentPlayer = board.player1
     count = 0
     for row in board.data:
@@ -127,7 +129,7 @@ def countOfDamesOfOtherPlayer(board, maxPieces=12):
             elif piece == EPiece.DAME_P2 and currentPlayer:
                 count += 1
 
-    return maxPieces - count
+    return count
 
 def countOfPiecesAndDamesOfOtherPlayer(board):
     return countOfPiecesOfOtherPlayer(board) + countOfDamesOfOtherPlayer(board)
