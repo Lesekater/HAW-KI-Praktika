@@ -42,16 +42,23 @@ testBoard4 = Board.fromIntList([
     [0, 1, 0, 1, 0],
     [0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0],
-    [2, 0, 2, 0, 2],
-    [0, 2, 0, 2, 0]])
+    [0, 2, 0, 2, 0],
+    [2, 0, 2, 0, 2]])
 
-testBoards = [testBoard1, testBoard2, testBoard3, testBoard4]
+testBoard5 = Board.fromIntList([
+    [1, 0, 1, 0],
+    [0, 1, 0, 1],
+    [0, 0, 0, 0],
+    [0, 2, 0, 2],
+    [2, 0, 2, 0]])
+
+testBoards = [testBoard1, testBoard2, testBoard3, testBoard4, testBoard5]
 
 def main(openList: List[Board] = [testBoard1],
          closedList: List[Board] = [], 
          usedHeuristicPlayer1: heurisitcTypes = heurisitcTypes.CountOfPieces,
-         usedHeuristicPlayer2: heurisitcTypes = heurisitcTypes.CountOfPieces
-         ) -> Tuple[bool, List[Board], List[Board]]:
+         usedHeuristicPlayer2: heurisitcTypes = heurisitcTypes.CountOfPieces,
+         debug: bool = False) -> Tuple[bool, List[Board], List[Board]]:
     foundGoal = False
     highestG = 0
     initalBoard = copy.copy(openList[0])
@@ -76,10 +83,11 @@ def main(openList: List[Board] = [testBoard1],
         (foundGoal, winningBoard) = makeMove(nodeToExpand, openList, closedList, usedHeuristic)
         highestG = max(highestG, nodeToExpand.g)
 
-        print("Latest board:")
-        print("position in tree: " + str(nodeToExpand.g) + " (current highest: " + str(highestG) + ")")
-        print("size ol: " + str(len(openList)) + " size cl: " + str(len(closedList)))
-        print(formatBoard(nodeToExpand))
+        if debug:
+            print("Latest board:")
+            print("position in tree: " + str(nodeToExpand.g) + " (current highest: " + str(highestG) + ")")
+            print("size ol: " + str(len(openList)) + " size cl: " + str(len(closedList)))
+            print(formatBoard(nodeToExpand))
 
         # on ctl+c print winning path
         if signalCtlC:
@@ -176,14 +184,19 @@ def checkForHeuristicValidity(heuristic):
             sys.exit(1)
 
 if __name__ == "__main__":
+    debug = False
 
     # skip via arguments
     if len(sys.argv) > 1:
         # if first argument is help output possible args
         if sys.argv[1] == "help":
             print("Usage: python3 main.py [board number] [heuristic1] [heuristic2] or just python3 main.py for interactive mode.")
+            print("Use --debug flag to enable debug mode.")
+        elif sys.argv[1] == "--debug":
+            debug = True
+            main([testBoards[int(sys.argv[2])]], [], heurisitcTypes(int(sys.argv[3])), heurisitcTypes(int(sys.argv[4])), debug=debug)
         else:
-            main([testBoards[int(sys.argv[1])]], [], heurisitcTypes(int(sys.argv[2])), heurisitcTypes(int(sys.argv[3])))
+            main([testBoards[int(sys.argv[1])]], [], heurisitcTypes(int(sys.argv[2])), heurisitcTypes(int(sys.argv[3])), debug=debug)
         sys.exit(0)
 
     print("Choose mode to start (1: interactive, 2: automatic):")
@@ -209,4 +222,4 @@ if __name__ == "__main__":
             print(str(i) + ": \n" + formatBoard(board))
         board = input("Enter board: ")
 
-        main([testBoards[int(board)]], [], heurisitcTypes(int(heuristic1)), heurisitcTypes(int(heuristic2)))
+        main([testBoards[int(board)]], [], heurisitcTypes(int(heuristic1)), heurisitcTypes(int(heuristic2)), debug=True)
