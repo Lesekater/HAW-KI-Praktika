@@ -54,6 +54,64 @@ testBoard5 = Board.fromIntList([
 
 testBoards = [testBoard1, testBoard2, testBoard3, testBoard4, testBoard5]
 
+# def main(openList: List[Board] = [testBoard1],
+#          closedList: List[Board] = [], 
+#          usedHeuristicPlayer1: heurisitcTypes = heurisitcTypes.CountOfPieces,
+#          usedHeuristicPlayer2: heurisitcTypes = heurisitcTypes.CountOfPieces
+#          ) -> Tuple[bool, List[Board], List[Board]]:
+#     foundGoal = False
+#     highestG = 0
+#     initalBoard = copy.copy(openList[0])
+
+#     # increase recursion limit
+#     # print(print(sys.getrecursionlimit()))
+#     sys.setrecursionlimit(2000)
+
+#     # register signal handler
+#     signal.signal(signal.SIGINT, signal_handler)
+
+#     while not foundGoal and len(openList) > 0:
+#         nodeToExpand = openList.pop()
+#         usedHeuristic = usedHeuristicPlayer1 if nodeToExpand.player1 else usedHeuristicPlayer2
+
+#         # check for winning board
+#         if checkForWinningBoard(nodeToExpand):
+#             foundGoal = True
+#             winningBoard = nodeToExpand
+#             break
+
+#         # check for stalemate
+#         if nodeToExpand.g > 150 or checkForStaleMateByRepetition(nodeToExpand):
+#             print("Stalemate detected!")
+#             break
+        
+#         # expand node
+#         makeMove(nodeToExpand, openList, closedList, usedHeuristic)
+#         highestG = max(highestG, nodeToExpand.g)
+
+#         print("Latest board:")
+#         print("position in tree: " + str(nodeToExpand.g) + " (current highest: " + str(highestG) + ")")
+#         print("size ol: " + str(len(openList)) + " size cl: " + str(len(closedList)))
+#         print(formatBoard(nodeToExpand))
+
+#         # on ctl+c print winning path
+#         if signalCtlC:
+#             winningBoard = nodeToExpand
+#             printWinningPath(winningBoard, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
+#             return foundGoal, openList, closedList
+
+#     if foundGoal:
+#         print("Goal found!")
+#         printWinningPath(winningBoard, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
+#         writeStatsToFile(winningBoard, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
+#     else:
+#         print("Goal not found!")
+#         print("Game up to now:")
+#         printWinningPath(nodeToExpand, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
+#         writeStatsToFile(nodeToExpand, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
+
+#     return foundGoal, openList, closedList
+
 def main(openList: List[Board] = [testBoard1],
          closedList: List[Board] = [], 
          usedHeuristicPlayer1: heurisitcTypes = heurisitcTypes.CountOfPieces,
@@ -70,18 +128,29 @@ def main(openList: List[Board] = [testBoard1],
     # register signal handler
     signal.signal(signal.SIGINT, signal_handler)
 
+    fullGame = [initalBoard]
+    winningBoard = None
+
     while not foundGoal and len(openList) > 0:
         nodeToExpand = openList.pop()
         usedHeuristic = usedHeuristicPlayer1 if nodeToExpand.player1 else usedHeuristicPlayer2
 
-        # check for stalemate
-        if nodeToExpand.g > 150 or checkForStaleMateByRepetition(nodeToExpand):
-            print("Stalemate detected!")
-            break
-        
-        # expand node
-        (foundGoal, winningBoard) = makeMove(nodeToExpand, openList, closedList, usedHeuristic)
-        highestG = max(highestG, nodeToExpand.g)
+        # move 40 iterations deep and backtrack to best move
+        for i in range(0, 40):
+            # check for winning board
+            if checkForWinningBoard(nodeToExpand):
+                foundGoal = True
+                winningBoard = nodeToExpand
+                break
+
+            # check for stalemate
+            if nodeToExpand.g > 150 or checkForStaleMateByRepetition(nodeToExpand):
+                print("Stalemate detected!")
+                break
+            
+            # expand node
+            makeMove(nodeToExpand, openList, closedList, usedHeuristic)
+            highestG = max(highestG, nodeToExpand.g)
 
         if debug:
             print("Latest board:")
@@ -89,23 +158,51 @@ def main(openList: List[Board] = [testBoard1],
             print("size ol: " + str(len(openList)) + " size cl: " + str(len(closedList)))
             print(formatBoard(nodeToExpand))
 
-        # on ctl+c print winning path
-        if signalCtlC:
-            winningBoard = nodeToExpand
-            printWinningPath(winningBoard, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
-            return foundGoal, openList, closedList
+            # on ctl+c print winning path
+            if signalCtlC:
+                winningBoard = nodeToExpand
+                printWinningPath(winningBoard, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
+                return foundGoal, openList, closedList
+            
+        if winningBoard is not None:
+            break
+        
+        # backtrack to best move
+        while len(openList) == 0 and len(closedList) > 0:
+            # print("backtracking (size cl: " + str(len(closedList)) + ")")
+            currentMove = closedList.pop()
+            # print("player1 closed: " + str(currentMove.player1))
+            if currentMove.player1 != nodeToExpand.player1:
+                openList = [currentMove]
+                break
+        if len(closedList) == 0:
+            # print("backtracking failed")
+            break
+        currentMove = openList[0]
+        while currentMove.parent is not None and currentMove.parent.parent is not None:
+            currentMove = currentMove.parent
+        fullGameBoard = copy.deepcopy(currentMove)
+        fullGameBoard.parent = fullGame[-1]
+        fullGame.append(fullGameBoard)
+        openList = [currentMove]
+        currentMove.parent = None
+        closedList = []
 
     if foundGoal:
+        print("fullgame size: " + str(len(fullGame)))
+        winningBoard.parent = fullGame[-1]
         print("Goal found!")
         printWinningPath(winningBoard, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
         writeStatsToFile(winningBoard, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
     else:
         print("Goal not found!")
         print("Game up to now:")
+        nodeToExpand.parent = fullGame[-1]
         printWinningPath(nodeToExpand, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
         writeStatsToFile(nodeToExpand, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
 
     return foundGoal, openList, closedList
+        
 
 def interactiveMain():
     openList = [testBoard1]
