@@ -40,7 +40,7 @@ TODO: Tests machen?
     - CountOfPiecesAndDamesOfOtherPlayer sorgt gefühlt am zuverlässigsten für einen Sieg
     - CountOfPiecesAndDames ist sehr zurückhaltend, sorgt aber bei Sieg oft für einen Sieg mit wenig "verlusten".
     - ProgressPiecesOnBoard sorgt nicht zwinged für einen Sieg, bringt die Pieces aber zuverlässig nach vorne.
-- Die meisten Heuristiken gewinnnen gegen Random
+- Die meisten Heuristiken gewinnnen gegen Random: https://docs.google.com/spreadsheets/d/170CFpr8RLiGMvOxHPpSI5cPoWAZjzb6XiXbXhXjNTGs/edit?usp=sharing
 
 ## Kritische Reflexion (Erenntnisse und Herausforderunge) schriftlich beantwortet
 - Testen des Algorithmus ohne implementation des Spiels schwierig
