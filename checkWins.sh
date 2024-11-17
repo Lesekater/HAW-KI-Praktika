@@ -15,7 +15,7 @@ for heuristic in {0..9}; do
     player1_wins=0
     player2_wins=0
     for i in $(seq 1 $iterations); do
-        python main.py 4 10 $heuristic
+        python3.10 main.py 4 $heuristic 10
         if [ ! -f /home/elias/Coding/training/Studium/KI/HAW-KI-Praktika/stats.txt ]; then
             echo "stats.txt not found!"
             exit 1
