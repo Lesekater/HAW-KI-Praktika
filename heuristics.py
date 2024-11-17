@@ -134,5 +134,8 @@ def countOfDamesOfOtherPlayer(board):
 def countOfPiecesAndDamesOfOtherPlayer(board):
     return countOfPiecesOfOtherPlayer(board) + countOfDamesOfOtherPlayer(board)
 
-def randomHeuristic(board):
-    return random.randint(0, 10)
+def randomHeuristic(board: Board):
+    random.seed(
+        hash(str(board.data))
+    )
+    return random.randint(0, 100)
