@@ -7,8 +7,11 @@ def makeMove(nodeToExpand: Board,
              openList: List[Board], 
              closedList: List[Board],
              usedHeuristic: heurisitcTypes = heurisitcTypes.CountOfPieces
-             ) -> Board:
-    possibleMoves = getMoves(board=nodeToExpand, player1=nodeToExpand.player1)
+             ) -> tuple[Board, bool]:
+    (possibleMoves, isWinningMove) = getMoves(board=nodeToExpand, player1=nodeToExpand.player1)
+
+    if isWinningMove:
+        return isWinningMove, possibleMoves[0]
 
     for move in possibleMoves:
         move.player1 = not nodeToExpand.player1

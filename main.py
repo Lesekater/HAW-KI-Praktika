@@ -67,19 +67,13 @@ def main(openList: List[Board] = [testBoard1],
         nodeToExpand = openList.pop()
         usedHeuristic = usedHeuristicPlayer1 if nodeToExpand.player1 else usedHeuristicPlayer2
 
-        # check for winning board
-        if checkForWinningBoard(nodeToExpand):
-            foundGoal = True
-            winningBoard = nodeToExpand
-            break
-
         # check for stalemate
         if nodeToExpand.g > 150 or checkForStaleMateByRepetition(nodeToExpand):
             print("Stalemate detected!")
             break
         
         # expand node
-        makeMove(nodeToExpand, openList, closedList, usedHeuristic)
+        (foundGoal, winningBoard) = makeMove(nodeToExpand, openList, closedList, usedHeuristic)
         highestG = max(highestG, nodeToExpand.g)
 
         print("Latest board:")
@@ -118,11 +112,10 @@ def interactiveMain():
         for i in range(0, 60):
             nodeToExpand = openList.pop()
 
-            # check for winning board
-            if checkForWinningBoard(nodeToExpand):
-                break
+            (foundGoal, winningBoard) = makeMove(nodeToExpand, openList, closedList, usedHeuristic)
 
-            makeMove(nodeToExpand, openList, closedList, usedHeuristic)
+            if foundGoal:
+                break
         currentMove = openList[0]
         while currentMove.parent is not userMove:
             currentMove = currentMove.parent
