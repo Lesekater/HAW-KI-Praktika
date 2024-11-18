@@ -1,13 +1,13 @@
 # Erstellung eines Dame-Algorithmus mithilfe von A*
 
 ## Forschungsfrage
-Welche Heuristik (oder auch Heuristikart) ist am besten fuer das Brettspiel "Dame"?
-Gibt es Aspekte/Variabeln vom Spiel, auf die man sich am besten fokusieren sollte, um die Gewinnchance zu erhoehen?
-Kann man anhand der Heuristiken und deren Bewertung aussagen ueber ein Spiel treffen?
+Welche Heuristik (oder auch Heuristikart) ist am besten für das Brettspiel "Dame"?
+Gibt es Aspekte/Variabeln vom Spiel, auf die man sich am besten fokussieren sollte, um die Gewinnchance zu erhöhen?
+Kann man anhand der Heuristiken und deren Bewertung aussagen über ein Spiel treffen?
 
 ## Theorie
-Wir erwarten hierbei das nartuerlich Heuristiken die direkt oder indirekt die Anzahl der Damen betreffen besonders gut abschneiden, da die Dame offensichtlich der staerkere Spielstein ist.
-Auch anzunehmen ist, dass eine Heuristik die Steine welche naeher am Gegnerischen Ende des Spielbrets sind bevorzugt gut abschneidet, da vorgeschrittene Steine nicht nur zu Damen werden, sondern auch Gegnerische Steine schlagen.
+Wir erwarten, dass Heuristiken, die direkt oder indirekt die Anzahl der Damen beeinflussen, besonders effektiv sind, da die Dame offensichtlich die stärkste Spielfigur darstellt.
+Auch anzunehmen ist, dass eine Heuristik, die Bretter bevorzugt, auf denen Steine näher am gegnerischen Ende des Spielbretts stehen, gut abschneidet, da vorgeschrittene Steine nicht nur zu Damen werden, sondern auch gegnerische Steine schlagen können.
 
 ## Quellen
 - [Die Spielregeln von Dame](https://www.brettspielnetz.de/spielregeln/dame.php)
@@ -19,7 +19,7 @@ Die Implementation besteht aus 3 wesentlichen Teilen:
 - Den [Heuristiken](heuristics.py) für den Algorithmus
 - Der [Implementierung des Dame-Spiels](piece.py)
 
-Zudem wurde noch ein wrapper in Form eines
+Zudem wurde noch ein Wrapper in Form eines
 a. Interaktiven Spiel-Modus gebaut
 b. "Automatischen" Modus in welchen der Algorithmus gegen sich selbst spielt
     
@@ -49,17 +49,18 @@ Der A*-Algorithmus wurde folgendermaßen implementiert:
    - Der erweiterte Knoten wird zur CL hinzugefügt.
 
 ### Heuristiken
-Es wurden verschiedene Heuristiken verwendet, um einen Spielstand zu bewerten.
-Die meisten bestehen bewerten die Anzahl der Steine auf dem Spielfeld. Entweder durch das Zaehlen der eigenen Steine (Normale und Damen) oder durch das Zaehlen der gegnerischen Steine. Also wird entweder nach dem Erhalt der eigenen Spielsteine, oder nach dem Verlust des Gegners optimiert.
-Andere Heuristiken bewerten den Vortschritt der eigenen Steine auf dem Spielfeld, wobei Felder mit weiter vortgeschritten Steinen, preferieren.
+Es wurden verschiedene Heuristiken eingesetzt, um einen Spielstand zu bewerten. 
+Viele dieser Heuristiken konzentrieren sich auf die Anzahl der Steine auf dem Spielfeld, entweder durch das Zählen der eigenen Steine (normale Steine und Damen) oder der gegnerischen. 
+Dadurch wird entweder der Erhalt der eigenen Steine oder die Reduktion der gegnerischen optimiert.
+Andere Heuristiken bewerten den Fortschritt der eigenen Steine auf dem Spielfeld, wobei Felder mit weiter fortgeschrittenen Steinen bevorzugt werden.
 
 ### Implementierung des Dame-Spiels
-Ein Spielzustand wird representiert als 2D-Array von Integern repraesentiert. Moegliche zuege werden als vollzogener Zug dargestellt.
-Der Alogrithmus bewertet also eine Liste an 2D-Arrays.
-In einem Spielzustand repraesentiert sind leere Felder mit 0 gekenzeichnet. Spieler 1 werden ungerade zahlen zugeordnet (1 und 3), wohingegen spieler 2 die geraden (2 und 4) als Steine besitzt.
-Die niedrigere Zahl repraesentiert hier jeweils einen normalen Stein und die hoehere eine Dame.
-Entsprechend der Regeln werden fuer einen Ausgangszustand alle volgezustaende berechnet. Das bedeutet entweder jede moegliche Bewegung aller Steine, oder wenn es einen oder mehrere Zuege gibt, welche gegnerische Steine schlagen, werden nur die Zuege als moegliche Zuege weitergegeben, welche entweder ueberhaupt Steine, oder die meisten Steine schlagen.
-
+Ein Spielzustand wird als 2D-Array von Integern repräsentiert, und mögliche Züge werden als eine Liste von Spielzuständen zurückgegeben.
+In einem Spielzustand sind leere Felder mit der Zahl 0 gekennzeichnet. Spieler 1 werden ungerade Zahlen (1 und 3) zugeordnet, während Spieler 2 die geraden Zahlen (2 und 4) besitzt. Die niedrigere Zahl repräsentiert dabei einen normalen Stein, die höhere eine Dame.
+Entsprechend den Regeln werden für einen Ausgangszustand alle möglichen Folgezustände berechnet:
+1. Zunächst werden sämtliche Züge für alle Steine ermittelt.
+2. Falls Züge existieren, bei denen gegnerische Steine geschlagen werden, werden nur diese berücksichtigt.
+3. Von diesen Zügen werden diejenigen bevorzugt, die entweder einen oder, falls mehrere Züge diese Bedingung erfüllen, die meisten gegnerischen Steine schlagen.
 
 ## Beantwortung der Forschungsfrage
 Die drei Heuristiken die am erfolgreichsten waren, sind:
@@ -69,8 +70,8 @@ Die drei Heuristiken die am erfolgreichsten waren, sind:
 
 Anzumerken ist hierbei, dass der Fortschritt der Steine als Heuristik nicht gut abgeschnitten hat.
 Es ist also anzunehmen, dass die Anzahl der Steine deutlich relevanter ist, als die Position der Steine.
-Die Anzahl der Gegnerischen Steine zu reduzieren sorgt am zuverlässigsten fuer einen Sieg. Was zu erwarten ist, da die Gegnerischen Steine auf 0 zu reduzieren die Gewinnkondition des Spieles ist. Wenn jedoch die Anzahl der Eigenen Steine als Heuristik verwendet wird, ergeben sich Siege die wenig verluste haben.
+Die Reduktion der gegnerischen Steine ist der effektivste Weg, um einen Sieg zu erzielen, da das Ziel des Spiels darin besteht, alle gegnerischen Steine zu schlagen. Wird hingegen die Anzahl der eigenen Steine als Heuristik genutzt, führt dies in der Regel zu Siegen mit weniger Verlusten.
 
-Die Annahme, dass Heuristiken die die Anzahl der Damen betreffen besser abschneiden ist bestaetigt. Jedoch stellte sich herraus, dass weiter vortgeschrittene Steine zu preferieren nicht optimal ist. Dies kann unteranderem daran liegen, dass Damen sobald sie auf dem Spielfeld sind in alle Richtungen ziehen koennen. Und wenn diese Eigenschaft voll ausgenutzt wird, die Damen besser verwendet werden. Dies tut eine Heuristik nartuerlich nicht, die alle Spielsteine ans andere Ende bewegen moechte.
+Die Annahme, dass Heuristiken die die Anzahl der Damen betreffen besser abschneiden ist bestätigt. Es stellte sich jedoch heraus, dass das Bevorzugen weiter fortgeschrittener Steine nicht optimal ist. Ein möglicher Grund dafür ist, dass Damen, sobald sie das Spielfeld erreichen, sich in alle Richtungen bewegen können. Wird diese Fähigkeit vollständig ausgenutzt, erweist sich der Einsatz der Damen als vorteilhafter. Eine Heuristik, die darauf abzielt, alle Steine ans andere Ende des Spielfelds zu bewegen, berücksichtigt diese Dynamik jedoch nicht.
 
-Anhand der Gewinnchance der Heuristiken haben sich simple und auch intuitive Aussagen ueber das Spiel Dame ergeben, aber das Verfahren koennte auf komplexere Spiele angewandt werden, um ein Strategisches Verstaendnis zu entwickeln.
+Durch die Analyse der Gewinnwahrscheinlichkeit der Heuristiken haben wir einfache, aber wichtige Erkenntnisse über das Spiel Dame gewonnen. Dieses Verfahren könnte auch auf komplexere Spiele angewendet werden, um besseres strategisches Verständnis zu entwickeln.
