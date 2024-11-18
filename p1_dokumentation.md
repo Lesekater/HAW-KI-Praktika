@@ -51,7 +51,7 @@ Der A*-Algorithmus wurde folgendermaßen implementiert:
 ### Heuristiken
 Es wurden verschiedene Heuristiken verwendet, um einen Spielstand zu bewerten.
 Die meisten bestehen bewerten die Anzahl der Steine auf dem Spielfeld. Entweder durch das Zaehlen der eigenen Steine (Normale und Damen) oder durch das Zaehlen der gegnerischen Steine. Also wird entweder nach dem Erhalt der eigenen Spielsteine, oder nach dem Verlust des Gegners optimiert.
-Andere Heuristiken bewerten den Vortschritt der eigenen Steine auf dem Spielfeld, wobei Steine die weiter Vortgeschritten sind und somit naeher am Start des Gegners sind, preferiert werden.
+Andere Heuristiken bewerten den Vortschritt der eigenen Steine auf dem Spielfeld, wobei Felder mit weiter vortgeschritten Steinen, preferieren.
 
 ### Implementierung des Dame-Spiels
 Ein Spielzustand wird representiert als 2D-Array von Integern repraesentiert. Moegliche zuege werden als vollzogener Zug dargestellt.
