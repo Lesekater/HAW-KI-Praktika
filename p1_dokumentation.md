@@ -58,6 +58,7 @@ Ein Spielzustand wird representiert als 2D-Array von Integern repraesentiert. Mo
 Der Alogrithmus bewertet also eine Liste an 2D-Arrays.
 In einem Spielzustand repraesentiert sind leere Felder mit 0 gekenzeichnet. Spieler 1 werden ungerade zahlen zugeordnet (1 und 3), wohingegen spieler 2 die geraden (2 und 4) als Steine besitzt.
 Die niedrigere Zahl repraesentiert hier jeweils einen normalen Stein und die hoehere eine Dame.
+Entsprechend der Regeln werden fuer einen Ausgangszustand alle volgezustaende berechnet. Das bedeutet entweder jede moegliche Bewegung aller Steine, oder wenn es einen oder mehrere Zuege gibt, welche gegnerische Steine schlagen, werden nur die Zuege als moegliche Zuege weitergegeben, welche entweder ueberhaupt Steine, oder die meisten Steine schlagen.
 
 
 ## Beantwortung der Forschungsfrage
