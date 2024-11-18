@@ -69,7 +69,7 @@ Die drei Heuristiken die am erfolgreichsten waren, sind:
 
 Anzumerken ist hierbei, dass der Fortschritt der Steine als Heuristik nicht gut abgeschnitten hat.
 Es ist also anzunehmen, dass die Anzahl der Steine deutlich relevanter ist, als die Position der Steine.
-Die Anzahl der Gegnerischen Steine zu reduzieren sorgt am zuverlässigsten fuer einen Sieg. Was irgendwo zu erwarten ist, da die Gegnerischen Steine auf 0 zu reduzieren die Gewinnkondition des Spieles ist. Wenn jedoch die Anzahl der Eigenen Steine als Heuristik verwendet wird, ergeben sich Siege die wenig verluste haben.
+Die Anzahl der Gegnerischen Steine zu reduzieren sorgt am zuverlässigsten fuer einen Sieg. Was zu erwarten ist, da die Gegnerischen Steine auf 0 zu reduzieren die Gewinnkondition des Spieles ist. Wenn jedoch die Anzahl der Eigenen Steine als Heuristik verwendet wird, ergeben sich Siege die wenig verluste haben.
 
 Die Annahme, dass Heuristiken die die Anzahl der Damen betreffen besser abschneiden ist bestaetigt. Jedoch stellte sich herraus, dass weiter vortgeschrittene Steine zu preferieren nicht optimal ist. Dies kann unteranderem daran liegen, dass Damen sobald sie auf dem Spielfeld sind in alle Richtungen ziehen koennen. Und wenn diese Eigenschaft voll ausgenutzt wird, die Damen besser verwendet werden. Dies tut eine Heuristik nartuerlich nicht, die alle Spielsteine ans andere Ende bewegen moechte.
 
