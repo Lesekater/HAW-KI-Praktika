@@ -24,7 +24,24 @@ Usage: python3 main.py [board number] [heuristic1] [heuristic2] or just python3 
 ```
 
 ### Algorithmus
-Der Algorithmus \[...] TODO
+
+Der A*-Algorithmus wurde folgendermaßen implementiert:
+
+1. **Initialisierung**: Zwei Listen werden erstellt:
+   - **Offene Liste (OL)**: Enthält Knoten, die noch erweitert werden müssen.
+   - **Geschlossene Liste (CL)**: Enthält bereits erweiterte Knoten.
+
+2. **Hauptschleife**: Solange die offene Liste nicht leer ist:
+   - Der **nächste Knoten** (`NodeToExpand`) wird aus der OL entfernt (niedrigster f-Wert).
+   - **Erzeugung neuer Zustände**:
+     - Gültige Züge werden mithilfe der Funktion `getMoves()` generiert.
+       - Vor erweitern des Knoten, wird geprüft, ob mit diesem das Ziel erreicht ist. (`checkForWinningBoard()`).
+     - Für jeden Zustand werden die Werte **g**, **h** (mit einer methode aus [Heuristiken](#heuristiken)) und **f** berechnet
+       und **g** und **f** werden in dem Board gespeichert.
+   - **Hinzufügen neuer Zustände**:
+     - Ein neuer Zustand wird nur dann der OL hinzugefügt, wenn kein Knoten mit dem gleichen **g-Wert** und einem **kleineren f-Wert** bereits in OL oder CL existiert.
+   - Die OL wird nach den **f-Werten** sortiert.
+   - Der erweiterte Knoten wird zur CL hinzugefügt.
 
 ### Heuristiken
 TODO
