@@ -73,4 +73,4 @@ Die Anzahl der Gegnerischen Steine zu reduzieren sorgt am zuverlässigsten fuer 
 
 Die Annahme, dass Heuristiken die die Anzahl der Damen betreffen besser abschneiden ist bestaetigt. Jedoch stellte sich herraus, dass weiter vortgeschrittene Steine zu preferieren nicht optimal ist. Dies kann unteranderem daran liegen, dass Damen sobald sie auf dem Spielfeld sind in alle Richtungen ziehen koennen. Und wenn diese Eigenschaft voll ausgenutzt wird, die Damen besser verwendet werden. Dies tut eine Heuristik nartuerlich nicht, die alle Spielsteine ans andere Ende bewegen moechte.
 
-Aus der Performance der Heuristiken haben sich simple und auch intuitive Aussagen ueber das Spiel Dame ergeben, aber das Verfahren koennte auf komplexere Spiele angewandt werden, um ein Strategisches Verstaendnis zu entwickeln.
+Anhand der Gewinnchance der Heuristiken haben sich simple und auch intuitive Aussagen ueber das Spiel Dame ergeben, aber das Verfahren koennte auf komplexere Spiele angewandt werden, um ein Strategisches Verstaendnis zu entwickeln.
