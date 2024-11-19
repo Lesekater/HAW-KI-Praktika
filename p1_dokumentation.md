@@ -2,7 +2,7 @@
 
 ## Forschungsfrage
 Welche Heuristik (oder auch Heuristikart) ist am besten für das Brettspiel "Dame"?
-Gibt es Aspekte/Variabeln vom Spiel, auf die man sich am besten fokussieren sollte, um die Gewinnchance zu erhöhen?
+Gibt es Aspekte/Variabeln vom Spiel, auf die man sich **am besten**(Unwissenschaftlich) fokussieren sollte, um die Gewinnchance zu erhöhen?
 Kann man anhand der Heuristiken und deren Bewertung aussagen über ein Spiel treffen?
 
 ## Theorie
