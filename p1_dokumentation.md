@@ -1,9 +1,7 @@
 # Erstellung eines Dame-Algorithmus mithilfe von A*
 
 ## Forschungsfrage
-Welche Heuristik (oder auch Heuristikart) ist am besten für das Brettspiel "Dame"?
-Gibt es Aspekte/Variabeln vom Spiel, auf die man sich **am besten**(Unwissenschaftlich) fokussieren sollte, um die Gewinnchance zu erhöhen?
-Kann man anhand der Heuristiken und deren Bewertung aussagen über ein Spiel treffen?
+Wie verhalten sich verschiedene Heuristiken im Brettspiel "Dame" im Hinblick auf ihre Effektivität? Welche Aspekte oder Variablen des Spiels beeinflussen die Leistungsfähigkeit dieser Heuristiken, und welche Rückschlüsse lassen sich daraus auf das Spiel selbst ziehen?
 
 ## Theorie
 Wir erwarten, dass Heuristiken, die direkt oder indirekt die Anzahl der Damen beeinflussen, besonders effektiv sind, da die Dame offensichtlich die stärkste Spielfigur darstellt.
