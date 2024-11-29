@@ -74,7 +74,7 @@ Der A*-Algorithmus wurde folgendermaßen implementiert:
    - Der erweiterte Knoten wird zur CL hinzugefügt.
 
 ## Implementation
-Die Implementation besteht aus 3 wesentlichen Teilen:
+Die Implementation besteht aus 3 wesentlichen Teilen, welche auf dem angehängten UML Diagramm visuell dargestellt werden [Bild 02]:
 - Dem [Algorithmus](algorithm.py)
 - Den [Heuristiken](heuristics.py) für den Algorithmus
 - Der [Implementierung des Dame-Spiels](piece.py)
@@ -91,19 +91,13 @@ Usage: python3 main.py [board number] [heuristic1] [heuristic2] or just python3 
 ### Implementierung des Dame-Spiels
 Ein Spielzustand wird als 2D-Array von Integern repräsentiert, und mögliche Züge werden als eine Liste von Spielzuständen zurückgegeben.
 In einem Spielzustand sind leere Felder mit der Zahl 0 gekennzeichnet. Spieler 1 werden ungerade Zahlen (1 und 3) zugeordnet, während Spieler 2 die geraden Zahlen (2 und 4) besitzt. Die niedrigere Zahl repräsentiert dabei einen normalen Stein, die höhere eine Dame.
-Entsprechend den Regeln werden für einen Ausgangszustand alle möglichen Folgezustände berechnet:
+Wie auf [Bild 01] dargestellt, werden entsprechend den Regeln für einen Ausgangszustand alle möglichen Folgezustände berechnet:
 1. Zunächst werden sämtliche Züge für alle Steine ermittelt.
 2. Falls Züge existieren, bei denen gegnerische Steine geschlagen werden, werden nur diese berücksichtigt.
 3. Von diesen Zügen werden diejenigen bevorzugt, die entweder einen oder, falls mehrere Züge diese Bedingung erfüllen, die meisten gegnerischen Steine schlagen.
 
-#### Ablaufdiagramm
-![Ablaufdiagramm](https://github.com/user-attachments/assets/e9cd2996-4dd1-4f03-a01d-00be8232c22d)
-
-#### UML Diagramm der Softawre
-<img width="5830" alt="Uml_KI_01" src="https://github.com/user-attachments/assets/adb57119-fab2-4834-a863-22ed2e34fd7c">
-
 ## Beantwortung der Forschungsfrage
-Die drei Heuristiken die am erfolgreichsten waren, sind:
+Wie auf dem Diagramm der Ergebnisse [Bild 03] zu sehen, sind die drei Heuristiken die am erfolgreichsten waren:
 - Die Anzahl der gegnerischen Damen und Steine
 - Die Anzahl der eigenen Damen und Steine
 - Die Anzahl der eigenen Steine
@@ -124,3 +118,11 @@ Durch die Analyse der Gewinnwahrscheinlichkeit der Heuristiken haben wir einfach
 - [A* Algorithm](https://www.geeksforgeeks.org/a-search-algorithm/)
 - [Evolutionary-based heuristic generators for checkers and give-away checkers](https://pages.mini.pw.edu.pl/~mandziukj/PRACE/es_init.pdf)[1]
 - [Project Repository](https://github.com/Lesekater/HAW-KI-Praktika)
+
+## Bilder
+### 01 - Ablaufdiagramm Software
+![Ablaufdiagramm](https://github.com/user-attachments/assets/e9cd2996-4dd1-4f03-a01d-00be8232c22d)
+### 02 - UML Diagramm der Softawre
+<img width="5830" alt="Uml_KI_01" src="https://github.com/user-attachments/assets/adb57119-fab2-4834-a863-22ed2e34fd7c">
+### 03 - Ergebnisse Tests verschiedene Heuristiken gegen Zufall
+![Ergebnisse](https://github.com/user-attachments/assets/44fd1b21-4305-457b-951a-8c4bfb9e5568)
