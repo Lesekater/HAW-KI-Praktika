@@ -97,28 +97,7 @@ Entsprechend den Regeln werden für einen Ausgangszustand alle möglichen Folgez
 3. Von diesen Zügen werden diejenigen bevorzugt, die entweder einen oder, falls mehrere Züge diese Bedingung erfüllen, die meisten gegnerischen Steine schlagen.
 
 #### Ablaufdiagramm
-```mermaid
-flowchart TD
-   A[Start] --> B["Initialisierung: Erstelle Offene Liste (OL) und Geschlossene Liste (CL)"]
-   B --> C[Spielzustand: 2D-Array als Startzustand einfügen]
-   C --> D{Offene Liste leer?}
-   D -->|Ja| E[Ende: Kein weiterer Zug möglich]
-   D -->|Nein| F[Entferne Knoten mit niedrigstem f-Wert aus OL]
-   F --> G["Prüfe, ob Zielzustand erreicht ist (checkForWinningBoard)"]
-   G -->|Ja| E[Ende: Ziel erreicht]
-   G -->|Nein| H["Generiere gültige Züge (getMoves)"]
-   H --> I{Züge mit Schlagen vorhanden?}
-   I -->|Ja| J[Bevorzuge Züge mit maximalem Schlagen]
-   I -->|Nein| K[Betrachte alle möglichen Züge]
-   J --> L[Berechne g, h und f für jeden neuen Zustand]
-   K --> L[Berechne g, h und f für jeden neuen Zustand]
-   L --> M{Neuer Zustand in OL oder CL mit kleinerem f-Wert vorhanden?}
-   M -->|Ja| N[Verwerfe Zustand]
-   M -->|Nein| O[Füge Zustand der OL hinzu]
-   O --> P[Sortiere OL nach f-Werten]
-   P --> Q[Füge erweiterten Knoten der CL hinzu]
-   Q --> D
-```
+![Ablaufdiagramm](https://github.com/user-attachments/assets/e9cd2996-4dd1-4f03-a01d-00be8232c22d)
 
 #### UML Diagramm der Softawre
 <img width="5830" alt="Uml_KI_01" src="https://github.com/user-attachments/assets/adb57119-fab2-4834-a863-22ed2e34fd7c">
