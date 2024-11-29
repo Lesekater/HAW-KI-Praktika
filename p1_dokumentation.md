@@ -1,32 +1,17 @@
 # Erstellung eines Dame-Algorithmus mithilfe von A*
 
 ## Forschungsfrage
-Welche Heuristik (oder auch Heuristikart) ist am besten für das Brettspiel "Dame"?
-Gibt es Aspekte/Variabeln vom Spiel, auf die man sich **am besten**(Unwissenschaftlich) fokussieren sollte, um die Gewinnchance zu erhöhen?
-Kann man anhand der Heuristiken und deren Bewertung aussagen über ein Spiel treffen?
+Wie verhalten sich verschiedene Heuristiken im Brettspiel “Dame” im
+Hinblick auf ihre Effektivität? Und welche Rückschlüsse koennen 
+aus der Effektivität der Heuristiken auf das Spiel Dame geschlossen werden?
+
 
 ## Theorie
-Wir erwarten, dass Heuristiken, die direkt oder indirekt die Anzahl der Damen beeinflussen, besonders effektiv sind, da die Dame offensichtlich die stärkste Spielfigur darstellt.
-Auch anzunehmen ist, dass eine Heuristik, die Bretter bevorzugt, auf denen Steine näher am gegnerischen Ende des Spielbretts stehen, gut abschneidet, da vorgeschrittene Steine nicht nur zu Damen werden, sondern auch gegnerische Steine schlagen können.
-
-## Quellen
-- [Die Spielregeln von Dame](https://www.brettspielnetz.de/spielregeln/dame.php)
-- [A* Algorithm](https://www.geeksforgeeks.org/a-search-algorithm/)
-
-## Versuch implementiert und dokumentiert
-Die Implementation besteht aus 3 wesentlichen Teilen:
-- Dem [Algorithmus](algorithm.py)
-- Den [Heuristiken](heuristics.py) für den Algorithmus
-- Der [Implementierung des Dame-Spiels](piece.py)
-
-Zudem wurde noch ein Wrapper in Form eines
-a. Interaktiven Spiel-Modus gebaut
-b. "Automatischen" Modus in welchen der Algorithmus gegen sich selbst spielt
-    
-```
-❯ python main.py help
-Usage: python3 main.py [board number] [heuristic1] [heuristic2] or just python3 main.py for interactive mode.
-```
+Wir erwarten, dass Heuristiken, die direkt oder indirekt die Anzahl der Damen beeinflussen,
+besonders effektiv sind, da die Dame offensichtlich die stärkste Spielfigur darstellt.
+Auch anzunehmen ist, dass eine Heuristik, die Bretter bevorzugt,
+auf denen Steine näher am gegnerischen Ende des Spielbretts stehen, gut abschneidet,
+da vorgeschrittene Steine nicht nur zu Damen werden, sondern auch gegnerische Steine schlagen können.
 
 ### Algorithmus
 
@@ -47,6 +32,21 @@ Der A*-Algorithmus wurde folgendermaßen implementiert:
      - Ein neuer Zustand wird nur dann der OL hinzugefügt, wenn kein Knoten mit dem gleichen **g-Wert** und einem **kleineren f-Wert** bereits in OL oder CL existiert.
    - Die OL wird nach den **f-Werten** sortiert.
    - Der erweiterte Knoten wird zur CL hinzugefügt.
+
+## Implementation
+Die Implementation besteht aus 3 wesentlichen Teilen:
+- Dem [Algorithmus](algorithm.py)
+- Den [Heuristiken](heuristics.py) für den Algorithmus
+- Der [Implementierung des Dame-Spiels](piece.py)
+
+Zudem wurde noch ein Wrapper in Form eines
+a. Interaktiven Spiel-Modus gebaut
+b. "Automatischen" Modus in welchen der Algorithmus gegen sich selbst spielt
+    
+```
+❯ python main.py help
+Usage: python3 main.py [board number] [heuristic1] [heuristic2] or just python3 main.py for interactive mode.
+```
 
 ### Heuristiken
 Es wurden verschiedene Heuristiken eingesetzt, um einen Spielstand zu bewerten. 
@@ -75,3 +75,7 @@ Die Reduktion der gegnerischen Steine ist der effektivste Weg, um einen Sieg zu 
 Die Annahme, dass Heuristiken die die Anzahl der Damen betreffen besser abschneiden ist bestätigt. Es stellte sich jedoch heraus, dass das Bevorzugen weiter fortgeschrittener Steine nicht optimal ist. Ein möglicher Grund dafür ist, dass Damen, sobald sie das Spielfeld erreichen, sich in alle Richtungen bewegen können. Wird diese Fähigkeit vollständig ausgenutzt, erweist sich der Einsatz der Damen als vorteilhafter. Eine Heuristik, die darauf abzielt, alle Steine ans andere Ende des Spielfelds zu bewegen, berücksichtigt diese Dynamik jedoch nicht.
 
 Durch die Analyse der Gewinnwahrscheinlichkeit der Heuristiken haben wir einfache, aber wichtige Erkenntnisse über das Spiel Dame gewonnen. Dieses Verfahren könnte auch auf komplexere Spiele angewendet werden, um besseres strategisches Verständnis zu entwickeln.
+
+## Quellen
+- [Die Spielregeln von Dame](https://www.brettspielnetz.de/spielregeln/dame.php)
+- [A* Algorithm](https://www.geeksforgeeks.org/a-search-algorithm/)
