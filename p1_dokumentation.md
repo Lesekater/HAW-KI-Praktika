@@ -122,7 +122,9 @@ Durch die Analyse der Gewinnwahrscheinlichkeit der Heuristiken haben wir einfach
 ## Bilder
 ### 01 - Ablaufdiagramm Software
 ![Ablaufdiagramm](https://github.com/user-attachments/assets/e9cd2996-4dd1-4f03-a01d-00be8232c22d)
+
 ### 02 - UML Diagramm der Softawre
 <img width="5830" alt="Uml_KI_01" src="https://github.com/user-attachments/assets/adb57119-fab2-4834-a863-22ed2e34fd7c">
+
 ### 03 - Ergebnisse Tests verschiedene Heuristiken gegen Zufall
-![Ergebnisse](https://github.com/user-attachments/assets/44fd1b21-4305-457b-951a-8c4bfb9e5568)
+<img alt="Ergebnisse" src="https://github.com/user-attachments/assets/44fd1b21-4305-457b-951a-8c4bfb9e5568">
