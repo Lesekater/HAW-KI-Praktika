@@ -63,13 +63,13 @@ Der A*-Algorithmus wurde folgendermaßen implementiert:
 
 2. **Hauptschleife**: Solange die offene Liste nicht leer ist:
    - Der **nächste Knoten** (`NodeToExpand`) wird aus der OL entfernt (niedrigster f-Wert).
-   - **Erzeugung neür Zustände**:
+   - **Erzeugung neuer Zustände**:
      - Gültige Züge werden mithilfe der Funktion `getMoves()` generiert.
        - Vor erweitern des Knoten, wird geprüft, ob mit diesem das Ziel erreicht ist. (`checkForWinningBoard()`).
      - Für jeden Zustand werden die Werte **g**, **h** (mit einer methode aus [Heuristiken](#heuristiken)) und **f** berechnet
        und **g** und **f** werden in dem Board gespeichert.
-   - **Hinzufügen neür Zustände**:
-     - Ein neür Zustand wird nur dann der OL hinzugefügt, wenn kein Knoten mit dem gleichen **g-Wert** und einem **kleineren f-Wert** bereits in OL oder CL existiert.
+   - **Hinzufügen neuer Zustände**:
+     - Ein neuer Zustand wird nur dann der OL hinzugefügt, wenn kein Knoten mit dem gleichen **g-Wert** und einem **kleineren f-Wert** bereits in OL oder CL existiert.
    - Die OL wird nach den **f-Werten** sortiert.
    - Der erweiterte Knoten wird zur CL hinzugefügt.
 
@@ -110,9 +110,9 @@ flowchart TD
    H --> I{Züge mit Schlagen vorhanden?}
    I -->|Ja| J[Bevorzuge Züge mit maximalem Schlagen]
    I -->|Nein| K[Betrachte alle möglichen Züge]
-   J --> L[Berechne g, h und f für jeden neün Zustand]
-   K --> L[Berechne g, h und f für jeden neün Zustand]
-   L --> M{Neür Zustand in OL oder CL mit kleinerem f-Wert vorhanden?}
+   J --> L[Berechne g, h und f für jeden neuen Zustand]
+   K --> L[Berechne g, h und f für jeden neuen Zustand]
+   L --> M{Neuer Zustand in OL oder CL mit kleinerem f-Wert vorhanden?}
    M -->|Ja| N[Verwerfe Zustand]
    M -->|Nein| O[Füge Zustand der OL hinzu]
    O --> P[Sortiere OL nach f-Werten]
