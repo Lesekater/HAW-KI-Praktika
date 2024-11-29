@@ -5,6 +5,33 @@ Wie verhalten sich verschiedene Heuristiken im Brettspiel “Dame” im
 Hinblick auf ihre Effektivität? Und welche Rückschlüsse koennen 
 aus der Effektivität der Heuristiken auf das Spiel Dame geschlossen werden?
 
+## Heurisitken
+### Anzahl der eigenen Steine
+Die Heuristik weist eine höhere Effektivität auf, wenn eine größere Anzahl eigener Steine auf dem Spielfeld vorhanden ist.
+
+### Anzahl der eigenen Damen
+Die Heuristik weist eine höhere Effektivität auf, wenn eine größere Anzahl eigener Damen auf dem Spielfeld vorhanden ist.
+
+### Anzahl der eigenen Steine und Damen
+Die Heuristik weist eine höhere Effektivität auf, wenn eine größere Anzahl eigener Steine und Damen auf dem Spielfeld vorhanden ist.
+
+### Anzahl der Steine am Ende vom Board
+Die Heuristik weist eine höhere Effektivität auf, wenn eine größere Anzahl eigener Steine sich am Ende vom Board befinden.
+
+### Fortschritt der Steine auf dem Board
+Die Heuristik weist eine höhere Effektivität auf, je weiter die eigenen Steine auf dem Board fortgeschritten sind.
+
+### Anzahl der generischen Steine
+Die Heuristik weist eine höhere Effektivität auf, wenn eine kleinere Anzahl gegnerischer Steine auf dem Spielfeld vorhanden ist.
+
+### Anzahl der generischen Damen
+Die Heuristik weist eine höhere Effektivität auf, wenn eine kleinere Anzahl gegnerischer Damen auf dem Spielfeld vorhanden ist.
+
+### Anzahl der generischen Steine und Damen
+Die Heuristik weist eine höhere Effektivität auf, wenn eine kleinere Anzahl gegnerischer Steine und Damen auf dem Spielfeld vorhanden ist.
+
+### Zufall
+Die Heuristik ist zufällig generiert für tests.
 
 ## Theorie
 Wir erwarten, dass Heuristiken, die direkt oder indirekt die Anzahl der Damen beeinflussen,
