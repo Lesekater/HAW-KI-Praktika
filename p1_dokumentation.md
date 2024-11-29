@@ -16,7 +16,7 @@ wobei Felder mit weiter fortgeschrittenen Steinen bevorzugt werden.
 
 ### Zulaessigkeit
 Die Zulaessigkeit der Heurisitken ist schwer zu bewerten aufgrund der Komplexitaet des Spiels, sowie der Tatsache,
-dass die Anzahl der Steine nicht mit der Restanzahl der moeglichen Zuege in korrelation steht und
+dass die Anzahl der Steine nicht mit der Restanzahl der moeglichen Züge in korrelation steht und
 die meisten unserer Heurisitken sich auf die Anzahl der Steine beziehen.
 
 ### Anzahl der eigenen Steine
@@ -63,13 +63,13 @@ Der A*-Algorithmus wurde folgendermaßen implementiert:
 
 2. **Hauptschleife**: Solange die offene Liste nicht leer ist:
    - Der **nächste Knoten** (`NodeToExpand`) wird aus der OL entfernt (niedrigster f-Wert).
-   - **Erzeugung neuer Zustände**:
+   - **Erzeugung neür Zustände**:
      - Gültige Züge werden mithilfe der Funktion `getMoves()` generiert.
        - Vor erweitern des Knoten, wird geprüft, ob mit diesem das Ziel erreicht ist. (`checkForWinningBoard()`).
      - Für jeden Zustand werden die Werte **g**, **h** (mit einer methode aus [Heuristiken](#heuristiken)) und **f** berechnet
        und **g** und **f** werden in dem Board gespeichert.
-   - **Hinzufügen neuer Zustände**:
-     - Ein neuer Zustand wird nur dann der OL hinzugefügt, wenn kein Knoten mit dem gleichen **g-Wert** und einem **kleineren f-Wert** bereits in OL oder CL existiert.
+   - **Hinzufügen neür Zustände**:
+     - Ein neür Zustand wird nur dann der OL hinzugefügt, wenn kein Knoten mit dem gleichen **g-Wert** und einem **kleineren f-Wert** bereits in OL oder CL existiert.
    - Die OL wird nach den **f-Werten** sortiert.
    - Der erweiterte Knoten wird zur CL hinzugefügt.
 
@@ -110,9 +110,9 @@ flowchart TD
    H --> I{Züge mit Schlagen vorhanden?}
    I -->|Ja| J[Bevorzuge Züge mit maximalem Schlagen]
    I -->|Nein| K[Betrachte alle möglichen Züge]
-   J --> L[Berechne g, h und f für jeden neuen Zustand]
-   K --> L[Berechne g, h und f für jeden neuen Zustand]
-   L --> M{Neuer Zustand in OL oder CL mit kleinerem f-Wert vorhanden?}
+   J --> L[Berechne g, h und f für jeden neün Zustand]
+   K --> L[Berechne g, h und f für jeden neün Zustand]
+   L --> M{Neür Zustand in OL oder CL mit kleinerem f-Wert vorhanden?}
    M -->|Ja| N[Verwerfe Zustand]
    M -->|Nein| O[Füge Zustand der OL hinzu]
    O --> P[Sortiere OL nach f-Werten]
@@ -133,14 +133,14 @@ Anzumerken ist hierbei, dass der Fortschritt der Steine als Heuristik nicht gut 
 Es ist also anzunehmen, dass die Anzahl der Steine deutlich relevanter ist, als die Position der Steine.
 Die Reduktion der gegnerischen Steine ist der effektivste Weg, um einen Sieg zu erzielen, da das Ziel des Spiels darin besteht, alle gegnerischen Steine zu schlagen. Wird hingegen die Anzahl der eigenen Steine als Heuristik genutzt,
 führt dies in der Regel zu Siegen mit weniger Verlusten. \
-Eine Erklaerung hierfuer, ist dass das Spiel Dame in Verschiedene Phasen unterteilt werden kann [1]. Und Heurisitken fuer jede der drei Phasen optimal sind. Die Heuristik die den Vortschritt der eigenen Steine verwendet ist nur in den Anfangsphasen hilfreich und wird spaeter eher zur Hindernis.
+Eine Erklaerung hierfür, ist dass das Spiel Dame in Verschiedene Phasen unterteilt werden kann [1]. Und Heurisitken für jede der drei Phasen optimal sind. Die Heuristik die den Vortschritt der eigenen Steine verwendet ist nur in den Anfangsphasen hilfreich und wird spaeter eher zur Hindernis.
 
 
 Die Annahme, dass Heuristiken die die Anzahl der Damen betreffen besser abschneiden ist bestätigt. Es stellte sich jedoch heraus, dass das Bevorzugen weiter fortgeschrittener Steine nicht optimal ist. Ein möglicher Grund dafür ist, dass Damen, sobald sie das Spielfeld erreichen, sich in alle Richtungen bewegen können. Wird diese Fähigkeit vollständig ausgenutzt, erweist sich der Einsatz der Damen als vorteilhafter. Eine Heuristik, die darauf abzielt, alle Steine ans andere Ende des Spielfelds zu bewegen, berücksichtigt diese Dynamik jedoch nicht.
 
 Durch die Analyse der Gewinnwahrscheinlichkeit der Heuristiken haben wir einfache, aber wichtige Erkenntnisse über das Spiel Dame gewonnen. Dieses Verfahren könnte auch auf komplexere Spiele angewendet werden, um besseres strategisches Verständnis zu entwickeln.
 
-## Quellen
+## Qüllen
 - [Die Spielregeln von Dame](https://www.brettspielnetz.de/spielregeln/dame.php)
 - [A* Algorithm](https://www.geeksforgeeks.org/a-search-algorithm/)
 - [Evolutionary-based heuristic generators for checkers and give-away checkers](https://pages.mini.pw.edu.pl/~mandziukj/PRACE/es_init.pdf)[1]
