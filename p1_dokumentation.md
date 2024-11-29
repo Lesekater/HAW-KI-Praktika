@@ -101,9 +101,9 @@ Um den Erfolg einer Heuristik zu messen, wurde diese mehrwach gegen einen Gegner
 aus der Liste der moeglichen Zuege auswaehlt. Hierbei wird nochmal betont, dass wenn die Implementation des Spiels Zuege findet, welche Steine des Gegners schlagen, nur die Zuege zurueck gibt, welche die meisten Steine schlagen, ganz nach den Regeln von Dame. Der zufaellig entscheidene Gegner hat also manchmal keine andere moeglichkeit, ausser optimal zu spielen.
 Dame hat einen inherenten Vorteil fuer den Spieler, welcher als erstes zieht. Also muss jede Paarung von Heuristik gegen Zufallsentscheidungen nicht nur mehrwach gegeneinander wiederholt werden, sondern auch mehrwach mit getauschter Startreinfolge.
 Von allen Spielen die eine Heuristik gespielt hat wird der Durchschnitt gebildet.
-Der letztendliche Erfolg ist die durchsnittliche Gewinnwahrscheinlichkeit gegem Random unter einbezog des Startvorteils.
+Der letztendliche Erfolg ist die durchsnittliche Gewinnwahrscheinlichkeit gegen Random unter einbezog des Startvorteils.
 
-Expliziet wurde jede Heurisik 2000 mal gegen Random getestet. Die eine haelfte Startet die Heuristik, waehrend der zufallsbasierte Gegner in den anderen 1000 Spielen den ersten Zug bekommt.
+Explizit wurde jede Heurisik 2000 mal gegen Random getestet. Die eine haelfte Startet die Heuristik, waehrend der zufallsbasierte Gegner in den anderen 1000 Spielen den ersten Zug bekommt.
 
 Wie auf dem Diagramm der Ergebnisse im Bild 03 [Bild 03] oder in der detailiertern Tabelle [2] zu sehen, sind die drei Heuristiken die am erfolgreichsten waren:
 - Die Anzahl der gegnerischen Damen und Steine
