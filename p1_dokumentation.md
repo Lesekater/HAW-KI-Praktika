@@ -140,7 +140,7 @@ Die Annahme, dass Heuristiken die die Anzahl der Damen betreffen besser abschnei
 
 Durch die Analyse der Gewinnwahrscheinlichkeit der Heuristiken haben wir einfache, aber wichtige Erkenntnisse über das Spiel Dame gewonnen. Dieses Verfahren könnte auch auf komplexere Spiele angewendet werden, um besseres strategisches Verständnis zu entwickeln.
 
-## Qüllen
+## Quellen
 - [Die Spielregeln von Dame](https://www.brettspielnetz.de/spielregeln/dame.php)
 - [A* Algorithm](https://www.geeksforgeeks.org/a-search-algorithm/)
 - [Evolutionary-based heuristic generators for checkers and give-away checkers](https://pages.mini.pw.edu.pl/~mandziukj/PRACE/es_init.pdf)[1]
