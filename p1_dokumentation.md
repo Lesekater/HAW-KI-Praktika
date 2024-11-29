@@ -97,7 +97,15 @@ Wie auf [Bild 01] dargestellt, werden entsprechend den Regeln für einen Ausgang
 3. Von diesen Zügen werden diejenigen bevorzugt, die entweder einen oder, falls mehrere Züge diese Bedingung erfüllen, die meisten gegnerischen Steine schlagen.
 
 ## Beantwortung der Forschungsfrage
-Wie auf dem Diagramm der Ergebnisse [Bild 03] zu sehen, sind die drei Heuristiken die am erfolgreichsten waren:
+Um den Erfolg einer Heuristik zu messen, wurde diese mehrwach gegen einen Gegner, welcher immer einen Zufaelligen Zug,
+aus der Liste der moeglichen Zuege auswaehlt. Hierbei wird nochmal betont, dass wenn die Implementation des Spiels Zuege findet, welche Steine des Gegners schlagen, nur die Zuege zurueck gibt, welche die meisten Steine schlagen, ganz nach den Regeln von Dame. Der zufaellig entscheidene Gegner hat also manchmal keine andere moeglichkeit, ausser optimal zu spielen.
+Dame hat einen inherenten Vorteil fuer den Spieler, welcher als erstes zieht. Also muss jede Paarung von Heuristik gegen Zufallsentscheidungen nicht nur mehrwach gegeneinander wiederholt werden, sondern auch mehrwach mit getauschter Startreinfolge.
+Von allen Spielen die eine Heuristik gespielt hat wird der Durchschnitt gebildet.
+Der letztendliche Erfolg ist die durchsnittliche Gewinnwahrscheinlichkeit gegem Random unter einbezog des Startvorteils.
+
+Expliziet wurde jede Heurisik 2000 mal gegen Random getestet. Die eine haelfte Startet die Heuristik, waehrend der zufallsbasierte Gegner in den anderen 1000 Spielen den ersten Zug bekommt.
+
+Wie auf dem Diagramm der Ergebnisse im Bild 03 [Bild 03] oder in der detailiertern Tabelle [2] zu sehen, sind die drei Heuristiken die am erfolgreichsten waren:
 - Die Anzahl der gegnerischen Damen und Steine
 - Die Anzahl der eigenen Damen und Steine
 - Die Anzahl der eigenen Steine
@@ -118,6 +126,8 @@ Durch die Analyse der Gewinnwahrscheinlichkeit der Heuristiken haben wir einfach
 - [A* Algorithm](https://www.geeksforgeeks.org/a-search-algorithm/)
 - [Evolutionary-based heuristic generators for checkers and give-away checkers](https://pages.mini.pw.edu.pl/~mandziukj/PRACE/es_init.pdf)[1]
 - [Project Repository](https://github.com/Lesekater/HAW-KI-Praktika)
+- [Gewinnwahrscheinlichkeit Tabelle](https://docs.google.com/spreadsheets/d/170CFpr8RLiGMvOxHPpSI5cPoWAZjzb6XiXbXhXjNTGs/edit?usp=sharing
+)[2]
 
 ## Bilder
 ### 01 - Ablaufdiagramm Software
