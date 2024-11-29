@@ -1,9 +1,35 @@
 # Erstellung eines Dame-Algorithmus mithilfe von A*
 
 ## Forschungsfrage
-Welche Heuristik (oder auch Heuristikart) ist am besten für das Brettspiel "Dame"?
-Gibt es Aspekte/Variabeln vom Spiel, auf die man sich **am besten**(Unwissenschaftlich) fokussieren sollte, um die Gewinnchance zu erhöhen?
-Kann man anhand der Heuristiken und deren Bewertung aussagen über ein Spiel treffen?
+Wie verhalten sich verschiedene Heuristiken im Brettspiel “Dame” im Hinblick auf ihre Effektivität? Welche Aspekte oder Variablen des Spiels beeinflussen die Leistungsfähigkeit dieser Heuristiken, und welche Rückschlüsse lassen sich daraus auf das Spiel selbst ziehen?
+
+## Heurisitken
+### Anzahl der eigenen Steine
+Die Heuristik weist eine höhere Effektivität auf, wenn eine größere Anzahl eigener Steine auf dem Spielfeld vorhanden ist.
+
+### Anzahl der eigenen Damen
+Die Heuristik weist eine höhere Effektivität auf, wenn eine größere Anzahl eigener Damen auf dem Spielfeld vorhanden ist.
+
+### Anzahl der eigenen Steine und Damen
+Die Heuristik weist eine höhere Effektivität auf, wenn eine größere Anzahl eigener Steine und Damen auf dem Spielfeld vorhanden ist.
+
+### Anzahl der Steine am Ende vom Board
+Die Heuristik weist eine höhere Effektivität auf, wenn eine größere Anzahl eigener Steine sich am Ende vom Board befinden.
+
+### Fortschritt der Steine auf dem Board
+Die Heuristik weist eine höhere Effektivität auf, je weiter die eigenen Steine auf dem Board fortgeschritten sind.
+
+### Anzahl der generischen Steine
+Die Heuristik weist eine höhere Effektivität auf, wenn eine kleinere Anzahl gegnerischer Steine auf dem Spielfeld vorhanden ist.
+
+### Anzahl der generischen Damen
+Die Heuristik weist eine höhere Effektivität auf, wenn eine kleinere Anzahl gegnerischer Damen auf dem Spielfeld vorhanden ist.
+
+### Anzahl der generischen Steine und Damen
+Die Heuristik weist eine höhere Effektivität auf, wenn eine kleinere Anzahl gegnerischer Steine und Damen auf dem Spielfeld vorhanden ist.
+
+### Zufall
+Die Heuristik ist zufällig generiert für tests.
 
 ## Theorie
 Wir erwarten, dass Heuristiken, die direkt oder indirekt die Anzahl der Damen beeinflussen, besonders effektiv sind, da die Dame offensichtlich die stärkste Spielfigur darstellt.
