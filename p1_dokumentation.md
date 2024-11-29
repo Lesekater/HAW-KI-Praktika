@@ -89,6 +89,9 @@ Entsprechend den Regeln werden für einen Ausgangszustand alle möglichen Folgez
 2. Falls Züge existieren, bei denen gegnerische Steine geschlagen werden, werden nur diese berücksichtigt.
 3. Von diesen Zügen werden diejenigen bevorzugt, die entweder einen oder, falls mehrere Züge diese Bedingung erfüllen, die meisten gegnerischen Steine schlagen.
 
+#### UML Diagramm der Soft
+<img width="5830" alt="Uml_KI_01" src="https://github.com/user-attachments/assets/adb57119-fab2-4834-a863-22ed2e34fd7c">
+
 ## Beantwortung der Forschungsfrage
 Die drei Heuristiken die am erfolgreichsten waren, sind:
 - Die Anzahl der gegnerischen Damen und Steine
