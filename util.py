@@ -1,5 +1,6 @@
 from const import Board
 from heuristics import countOfDames, countOfPieces, heurisitcTypes
+import os
 
 def convertPiecesToEmoji(piece: int) -> str:
     if piece == 0:
@@ -71,3 +72,20 @@ def writeStatsToFile(winningBoard: Board, initalBoard: Board, heuristic1: heuris
         winningBoard.player1 = False
         file.write("Count of dames player 2 at end: " + str(countOfDames(winningBoard)) + "\n")
         
+def writeMiniMaxStatsToFile(minimaxType: str, player1: bool, heuristic: heurisitcTypes, evaluatedNodes: int, totalMoves: int):
+    file_exists = os.path.isfile("minimax_stats.txt")
+    with open("minimax_stats.txt", "a") as file:
+        if not file_exists:
+            file.write(f"MinimaxType: {minimaxType}\n")
+            file.write("\n")
+        file.write(f"Player {1 if player1 else 2} ({heuristic.name}):\n")
+        file.write(f"Evaluated nodes: {evaluatedNodes}\n")
+        file.write(f"Total moves: {totalMoves}\n")
+        file.write("\n")
+
+def writeMiniMaxStatsToCSV(minimaxType: str, player1: bool, heuristic: heurisitcTypes, evaluatedNodes: int, totalMoves: int):
+    file_exists = os.path.isfile("minimax_stats.csv")
+    with open("minimax_stats.csv", "a") as file:
+        if not file_exists:
+            file.write("MinimaxType,Player,Heuristic,EvaluatedNodes,TotalMoves\n")
+        file.write(f"{minimaxType},{1 if player1 else 2},{heuristic.name},{evaluatedNodes},{totalMoves}\n")

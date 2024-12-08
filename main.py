@@ -1,15 +1,18 @@
 import copy
 import signal
 import sys
+from uuid import UUID
+import uuid
 from algorithm import makeMove
 from minimax import makeMove as makeMMMove
+from minimax_abp import makeMove as makeMMABP
 from const import Board, EPiece
 from typing import List, Tuple
 from enum import Enum
 
 from heuristics import calculateHeuristic, heurisitcTypes
 from piece import checkForWinningBoard
-from util import convertPiecesToEmoji, formatBoard, formatBoardWithCoords, printWinningPath, writeStatsToFile
+from util import convertPiecesToEmoji, formatBoard, formatBoardWithCoords, printWinningPath, writeMiniMaxStatsToCSV, writeStatsToFile
 
 signalCtlC = False
 
@@ -73,6 +76,8 @@ def main(openList: List[Board] = [testBoard1],
     # register signal handler
     signal.signal(signal.SIGINT, signal_handler)
 
+    runId: int = uuid.uuid4()
+
     while not foundGoal and len(openList) > 0:
         nodeToExpand = openList.pop()
         usedHeuristic = usedHeuristicPlayer1 if nodeToExpand.player1 else usedHeuristicPlayer2
@@ -87,28 +92,40 @@ def main(openList: List[Board] = [testBoard1],
             (foundGoal, winningBoard) = makeMove(nodeToExpand, openList, closedList, usedHeuristic)
         elif usedAlgorithm == makeMMMove:
             heuristic = usedHeuristicPlayer1 if nodeToExpand.player1 else usedHeuristicPlayer2
-            (foundGoal, winningBoard) = makeMMMove(nodeToExpand, heuristic)
+            (foundGoal, winningBoard, evaluatedNodes) = makeMMMove(nodeToExpand, heuristic)
+        elif usedAlgorithm == makeMMABP:
+            heuristic = usedHeuristicPlayer1 if nodeToExpand.player1 else usedHeuristicPlayer2
+            (foundGoal, winningBoard, evaluatedNodes) = makeMMABP(nodeToExpand, heuristic)
+        else:
+            print("Invalid algorithm.")
+            sys.exit(1)
+
+        # append board to closed list
+        # and flip player and add to open list
+        if usedAlgorithm == makeMMMove or usedAlgorithm == makeMMABP:
             # formattedBoard = formatBoard(winningBoard)
             # print(formattedBoard)
             # flip player and add to open list
             winningBoard.player1 = not winningBoard.player1
             openList.append(winningBoard)
             # nodeToExpand.parent = winningBoard
-            # nodeToExpand.g += 1
+            nodeToExpand.g += 1
             closedList.append(nodeToExpand)
-        else:
-            print("Invalid algorithm.")
-            sys.exit(1)
+
+            # type in string
+            type = "minimax" if usedAlgorithm == makeMMMove else "minimax_abp"
+            type = str(runId) + "_" + type
+            writeMiniMaxStatsToCSV(type, nodeToExpand.player1, heuristic, evaluatedNodes, winningBoard.g)
 
         highestG = max(highestG, nodeToExpand.g)
 
         if debug:
-            print("Player 1 (⚫, 🔴): " + usedHeuristicPlayer1.name)
-            print("Player 2 (⚪, 🔵): " + usedHeuristicPlayer2.name)
+            # print("Player 1 (⚫, 🔴): " + usedHeuristicPlayer1.name)
+            # print("Player 2 (⚪, 🔵): " + usedHeuristicPlayer2.name)
             print("Latest board:")
             print("position in tree: " + str(nodeToExpand.g) + " (current highest: " + str(highestG) + ")")
             print("size ol: " + str(len(openList)) + " size cl: " + str(len(closedList)))
-            print(formatBoard(nodeToExpand))
+            print(formatBoard(nodeToExpand, True, usedHeuristicPlayer1 if nodeToExpand.player1 else usedHeuristicPlayer2))
 
         # on ctl+c print winning path
         if signalCtlC:
@@ -225,11 +242,13 @@ if __name__ == "__main__":
     if mode == "1":
         interactiveMain()
     else:
-        print("Choose algorithm to use (1: minimax, 2: a*):")
+        print("Choose algorithm to use (1: minimax, 2: minimax with alpha beta pruning, 3: a*):")
         algorithm = input("Enter algorithm: ")
         if algorithm == "1":
             usedAlgorithm = makeMMMove
         elif algorithm == "2":
+            usedAlgorithm = makeMMABP
+        elif algorithm == "3":
             usedAlgorithm = makeMove
         else:
             print("Invalid algorithm.")
