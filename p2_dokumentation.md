@@ -45,7 +45,7 @@ Die Ergebnisse zeigen, dass Alpha-Beta-Pruning die Anzahl der betrachteten Knote
 
 ## Fazit
 
-Die Implementierung des Minimax-Algorithmus mit Alpha-Beta-Pruning hat gezeigt, dass die Effizienz des Algorithmus erheblich verbessert werden kann. Im Vergleich zur ursprünglichen A*-Implementierung aus Praktikum 1 ist der Algorithmus nun besser an die Anforderungen von Spielen mit großen Suchbäumen angepasst. Insbesondere auf kleineren Spielfeldern wird die Optimierung durch Alpha-Beta-Pruning deutlich.
+Die Implementierung des Minimax-Algorithmus mit Alpha-Beta-Pruning hat gezeigt, dass die Effizienz des Algorithmus erheblich verbessert werden kann. Im Vergleich zur ursprünglichen A*-Implementierung aus Praktikum 1 ist der Algorithmus nun besser an die Anforderungen von Spielen mit großen Suchbäumen angepasst.
 
 ## Quellen
 
