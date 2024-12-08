@@ -2,6 +2,7 @@ import copy
 import signal
 import sys
 from algorithm import makeMove
+from minimax import makeMove as makeMMMove
 from const import Board, EPiece
 from typing import List, Tuple
 from enum import Enum
@@ -54,6 +55,8 @@ testBoard5 = Board.fromIntList([
 
 testBoards = [testBoard1, testBoard2, testBoard3, testBoard4, testBoard5]
 
+usedAlgorithm = None
+
 def main(openList: List[Board] = [testBoard1],
          closedList: List[Board] = [], 
          usedHeuristicPlayer1: heurisitcTypes = heurisitcTypes.CountOfPieces,
@@ -80,10 +83,28 @@ def main(openList: List[Board] = [testBoard1],
             break
         
         # expand node
-        (foundGoal, winningBoard) = makeMove(nodeToExpand, openList, closedList, usedHeuristic)
+        if usedAlgorithm == makeMove:
+            (foundGoal, winningBoard) = makeMove(nodeToExpand, openList, closedList, usedHeuristic)
+        elif usedAlgorithm == makeMMMove:
+            heuristic = usedHeuristicPlayer1 if nodeToExpand.player1 else usedHeuristicPlayer2
+            (foundGoal, winningBoard) = makeMMMove(nodeToExpand, heuristic)
+            # formattedBoard = formatBoard(winningBoard)
+            # print(formattedBoard)
+            # flip player and add to open list
+            winningBoard.player1 = not winningBoard.player1
+            openList.append(winningBoard)
+            # nodeToExpand.parent = winningBoard
+            # nodeToExpand.g += 1
+            closedList.append(nodeToExpand)
+        else:
+            print("Invalid algorithm.")
+            sys.exit(1)
+
         highestG = max(highestG, nodeToExpand.g)
 
         if debug:
+            print("Player 1 (⚫, 🔴): " + usedHeuristicPlayer1.name)
+            print("Player 2 (⚪, 🔵): " + usedHeuristicPlayer2.name)
             print("Latest board:")
             print("position in tree: " + str(nodeToExpand.g) + " (current highest: " + str(highestG) + ")")
             print("size ol: " + str(len(openList)) + " size cl: " + str(len(closedList)))
@@ -204,6 +225,16 @@ if __name__ == "__main__":
     if mode == "1":
         interactiveMain()
     else:
+        print("Choose algorithm to use (1: minimax, 2: a*):")
+        algorithm = input("Enter algorithm: ")
+        if algorithm == "1":
+            usedAlgorithm = makeMMMove
+        elif algorithm == "2":
+            usedAlgorithm = makeMove
+        else:
+            print("Invalid algorithm.")
+            sys.exit(1)
+
         print("Choose heuristic to use for Player 1 (colors: " + convertPiecesToEmoji(EPiece.DEFAULT_P1.value) + ", " + convertPiecesToEmoji(EPiece.DAME_P1.value) + "):")
         for i, heuristic in enumerate(heurisitcTypes):
             print(str(i) + ": " + heuristic.name)
