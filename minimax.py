@@ -5,6 +5,9 @@ from piece import getMoves
 
 initialDepth = 10
 evaluatedNodes = 0  # Counter for evaluated nodes
+MAX_THREADS = 4  # Limit the number of threads
+
+import concurrent.futures
 
 def minimax(node: Board, depth: int, maximizingPlayer: bool, usedHeuristic: heurisitcTypes) -> Tuple[float, Board, bool]:
     global evaluatedNodes
@@ -15,27 +18,34 @@ def minimax(node: Board, depth: int, maximizingPlayer: bool, usedHeuristic: heur
         global initialDepth
         return calculateHeuristic(node, usedHeuristic), node, (isWinningMove and depth == initialDepth)
 
+    def evaluate_move(child):
+        return minimax(child, depth - 1, not maximizingPlayer, usedHeuristic)
+
     if maximizingPlayer:
         minEval = float('inf')  # Initialize to positive infinity for minimizing heuristic
         bestMove = None
-        for child in possibleMoves:
-            eval, _, childIsWinning = minimax(child, depth - 1, False, usedHeuristic)
-            if eval < minEval:  # Lower heuristic value is better
-                minEval = eval
-                bestMove = child
-            if childIsWinning:
-                return minEval, bestMove, True
+        with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
+            futures = {executor.submit(evaluate_move, child): child for child in possibleMoves}
+            for future in concurrent.futures.as_completed(futures):
+                eval, _, childIsWinning = future.result()
+                if eval < minEval:  # Lower heuristic value is better
+                    minEval = eval
+                    bestMove = futures[future]
+                if childIsWinning:
+                    return minEval, bestMove, True
         return minEval, bestMove, False
     else:
         maxEval = float('-inf')  # Initialize to negative infinity for maximizing heuristic
         bestMove = None
-        for child in possibleMoves:
-            eval, _, childIsWinning = minimax(child, depth - 1, True, usedHeuristic)
-            if eval > maxEval:  # Higher heuristic value is worse
-                maxEval = eval
-                bestMove = child
-            if childIsWinning:
-                return maxEval, bestMove, True
+        with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_THREADS) as executor:
+            futures = {executor.submit(evaluate_move, child): child for child in possibleMoves}
+            for future in concurrent.futures.as_completed(futures):
+                eval, _, childIsWinning = future.result()
+                if eval > maxEval:  # Higher heuristic value is worse
+                    maxEval = eval
+                    bestMove = futures[future]
+                if childIsWinning:
+                    return maxEval, bestMove, True
         return maxEval, bestMove, False
 
 def makeMove(nodeToExpand: Board, usedHeuristic) -> Tuple[bool, Board, int]:
