@@ -3,147 +3,20 @@ import signal
 import sys
 from uuid import UUID
 import uuid
-from algorithm import makeMove
-from minimax import makeMove as makeMMMove
-from minimax_abp import makeMove as makeMMABP
-from const import Board, EPiece
 from typing import List, Tuple
 from enum import Enum
 
+from algorithm import makeMove
+from minimax import makeMove as makeMMMove
+from minimax_abp import makeMove as makeMMABP
+from const import Board, EPiece, testBoard1, testBoards
 from heuristics import calculateHeuristic, heurisitcTypes
 from piece import checkForWinningBoard
 from util import convertPiecesToEmoji, formatBoard, formatBoardWithCoords, printWinningPath, writeMiniMaxStatsToCSV, writeStatsToFile
-
-signalCtlC = False
-
-def signal_handler(sig, frame):
-    global signalCtlC
-    signalCtlC = True
-
-testBoard1 = Board.fromIntList([
-    [1, 0, 1, 0, 1, 0, 1, 0],
-    [0, 1, 0, 1, 0, 1, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [2, 0, 2, 0, 2, 0, 2, 0],
-    [0, 2, 0, 2, 0, 2, 0, 2]])
-
-testBoard2 = Board.fromIntList([
-    [1, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 2]])
-
-testBoard3 = Board.fromIntList([
-    [1, 1, 0, 0],
-    [0, 0, 0, 0],
-    [2, 0, 2, 2]])
-
-testBoard4 = Board.fromIntList([
-    [1, 0, 1, 0, 1],
-    [0, 1, 0, 1, 0],
-    [0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0],
-    [0, 2, 0, 2, 0],
-    [2, 0, 2, 0, 2]])
-
-testBoard5 = Board.fromIntList([
-    [1, 0, 1, 0],
-    [0, 1, 0, 1],
-    [0, 0, 0, 0],
-    [0, 2, 0, 2],
-    [2, 0, 2, 0]])
-
-testBoards = [testBoard1, testBoard2, testBoard3, testBoard4, testBoard5]
+from main_a_star import main as main_a_star
+from main_minimax import main as main_minimax
 
 usedAlgorithm = None
-
-def main(openList: List[Board] = [testBoard1],
-         closedList: List[Board] = [], 
-         usedHeuristicPlayer1: heurisitcTypes = heurisitcTypes.CountOfPieces,
-         usedHeuristicPlayer2: heurisitcTypes = heurisitcTypes.CountOfPieces,
-         debug: bool = False) -> Tuple[bool, List[Board], List[Board]]:
-    foundGoal = False
-    highestG = 0
-    initalBoard = copy.copy(openList[0])
-
-    # increase recursion limit
-    # print(print(sys.getrecursionlimit()))
-    sys.setrecursionlimit(2000)
-
-    # register signal handler
-    signal.signal(signal.SIGINT, signal_handler)
-
-    runId: int = uuid.uuid4()
-
-    while not foundGoal and len(openList) > 0:
-        nodeToExpand = openList.pop()
-        usedHeuristic = usedHeuristicPlayer1 if nodeToExpand.player1 else usedHeuristicPlayer2
-
-        # check for stalemate
-        if nodeToExpand.g > 150 or checkForStaleMateByRepetition(nodeToExpand):
-            print("Stalemate detected!")
-            break
-        
-        # expand node
-        if usedAlgorithm == makeMove:
-            (foundGoal, winningBoard) = makeMove(nodeToExpand, openList, closedList, usedHeuristic)
-        elif usedAlgorithm == makeMMMove:
-            heuristic = usedHeuristicPlayer1 if nodeToExpand.player1 else usedHeuristicPlayer2
-            (foundGoal, winningBoard, evaluatedNodes) = makeMMMove(nodeToExpand, heuristic)
-        elif usedAlgorithm == makeMMABP:
-            heuristic = usedHeuristicPlayer1 if nodeToExpand.player1 else usedHeuristicPlayer2
-            (foundGoal, winningBoard, evaluatedNodes) = makeMMABP(nodeToExpand, heuristic)
-        else:
-            print("Invalid algorithm.")
-            sys.exit(1)
-
-        # append board to closed list
-        # and flip player and add to open list
-        if usedAlgorithm == makeMMMove or usedAlgorithm == makeMMABP:
-            # formattedBoard = formatBoard(winningBoard)
-            # print(formattedBoard)
-            # flip player and add to open list
-            winningBoard.player1 = not winningBoard.player1
-            openList.append(winningBoard)
-            # nodeToExpand.parent = winningBoard
-            nodeToExpand.g += 1
-            closedList.append(nodeToExpand)
-
-            # type in string
-            type = "minimax" if usedAlgorithm == makeMMMove else "minimax_abp"
-            type = str(runId) + "_" + type
-            writeMiniMaxStatsToCSV(type, nodeToExpand.player1, heuristic, evaluatedNodes, winningBoard.g)
-
-        highestG = max(highestG, nodeToExpand.g)
-
-        if debug:
-            # print("Player 1 (⚫, 🔴): " + usedHeuristicPlayer1.name)
-            # print("Player 2 (⚪, 🔵): " + usedHeuristicPlayer2.name)
-            print("Latest board:")
-            print("position in tree: " + str(nodeToExpand.g) + " (current highest: " + str(highestG) + ")")
-            print("size ol: " + str(len(openList)) + " size cl: " + str(len(closedList)))
-            print(formatBoard(nodeToExpand, True, usedHeuristicPlayer1 if nodeToExpand.player1 else usedHeuristicPlayer2))
-
-        # on ctl+c print winning path
-        if signalCtlC:
-            winningBoard = nodeToExpand
-            printWinningPath(winningBoard, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
-            return foundGoal, openList, closedList
-
-    if foundGoal:
-        print("Goal found!")
-        printWinningPath(winningBoard, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
-        writeStatsToFile(winningBoard, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
-    else:
-        print("Goal not found!")
-        print("Game up to now:")
-        printWinningPath(nodeToExpand, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
-        writeStatsToFile(nodeToExpand, initalBoard, usedHeuristicPlayer1, usedHeuristicPlayer2)
-
-    return foundGoal, openList, closedList
 
 def interactiveMain():
     openList = [testBoard1]
@@ -187,39 +60,20 @@ def letUserChooseMove(board: Board) -> Board:
 
     return board
 
-def checkForStaleMateByRepetition(currentMove: Board) -> bool:
-    hasStaleMate = False
-    repeatedMove = 0
-    # check if move has been repeated 2 times by the same player
-    for i in range(1, 10):
-        if currentMove.parent is None or currentMove.parent.parent is None \
-            or currentMove.parent.parent.parent is None or currentMove.parent.parent.parent.parent is None:
-            break
-        if currentMove.player1:
-            # check for every piece of player 1 if it has the same position has 4 moves ago
-            for y in range(0, len(currentMove.data)):
-                for x in range(0, len(currentMove.data[y])):
-                    if currentMove.data[y][x] != currentMove.parent.parent.parent.parent.data[y][x]:
-                        repeatedMove = 0
-                        break
-                    repeatedMove += 1
-        else:
-            # check for every piece of player 2 if it has the same position has 4 moves ago
-            for y in range(0, len(currentMove.data)):
-                for x in range(0, len(currentMove.data[y])):
-                    if currentMove.data[y][x] != currentMove.parent.parent.parent.parent.data[y][x]:
-                        repeatedMove = 0
-                        break
-                    repeatedMove += 1
-        currentMove = currentMove.parent
-    
-    return repeatedMove == 2
-
 def checkForHeuristicValidity(heuristic):
     # check if heuristic is valid & implemented
         if int(heuristic) >= len(heurisitcTypes) or calculateHeuristic(testBoard1, heurisitcTypes(int(heuristic))) == "unimplemented":
             print("Heuristic not implemented or invalid.")
             sys.exit(1)
+
+def runMain(algorithm: int, board_number: int, heuristic1: int, heuristic2: int, debug: int):
+    if (algorithm == 1): # minimax without alpha beta pruning
+        main_minimax(makeMMMove, testBoards[board_number], heurisitcTypes(heuristic1), heurisitcTypes(heuristic2), debug=debug)
+    elif (algorithm == 2): # minimax with alpha beta pruning
+        print("inital board: " + str(testBoards[board_number]))
+        main_minimax(makeMMABP, testBoards[board_number], heurisitcTypes(heuristic1), heurisitcTypes(heuristic2), debug=debug)
+    elif (algorithm == 3): # a*
+        main_a_star([testBoards[board_number]], [], heurisitcTypes(heuristic1), heurisitcTypes(heuristic2), debug=debug)
 
 if __name__ == "__main__":
     debug = False
@@ -232,9 +86,9 @@ if __name__ == "__main__":
             print("Use --debug flag to enable debug mode.")
         elif sys.argv[1] == "--debug":
             debug = True
-            main([testBoards[int(sys.argv[2])]], [], heurisitcTypes(int(sys.argv[3])), heurisitcTypes(int(sys.argv[4])), debug=debug)
+            runMain(int(sys.argv[5]), int(sys.argv[2]), int(sys.argv[3]), int(sys.argv[4]), debug)
         else:
-            main([testBoards[int(sys.argv[1])]], [], heurisitcTypes(int(sys.argv[2])), heurisitcTypes(int(sys.argv[3])), debug=debug)
+            runMain(int(sys.argv[4]), int(sys.argv[1]), int(sys.argv[2]), int(sys.argv[3]), debug)
         sys.exit(0)
 
     print("Choose mode to start (1: interactive, 2: automatic):")
@@ -244,13 +98,7 @@ if __name__ == "__main__":
     else:
         print("Choose algorithm to use (1: minimax, 2: minimax with alpha beta pruning, 3: a*):")
         algorithm = input("Enter algorithm: ")
-        if algorithm == "1":
-            usedAlgorithm = makeMMMove
-        elif algorithm == "2":
-            usedAlgorithm = makeMMABP
-        elif algorithm == "3":
-            usedAlgorithm = makeMove
-        else:
+        if int(algorithm) < 1 or int(algorithm) > 3:
             print("Invalid algorithm.")
             sys.exit(1)
 
@@ -272,4 +120,4 @@ if __name__ == "__main__":
             print(str(i) + ": \n" + formatBoard(board))
         board = input("Enter board: ")
 
-        main([testBoards[int(board)]], [], heurisitcTypes(int(heuristic1)), heurisitcTypes(int(heuristic2)), debug=True)
+        runMain(int(algorithm), int(board), int(heuristic1), int(heuristic2), debug)

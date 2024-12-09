@@ -42,3 +42,31 @@ def makeMove(nodeToExpand: Board,
 
     # did not find goal
     return False, None   
+
+def checkForStaleMateByRepetition(currentMove: Board) -> bool:
+    hasStaleMate = False
+    repeatedMove = 0
+    # check if move has been repeated 2 times by the same player
+    for i in range(1, 10):
+        if currentMove.parent is None or currentMove.parent.parent is None \
+            or currentMove.parent.parent.parent is None or currentMove.parent.parent.parent.parent is None:
+            break
+        if currentMove.player1:
+            # check for every piece of player 1 if it has the same position has 4 moves ago
+            for y in range(0, len(currentMove.data)):
+                for x in range(0, len(currentMove.data[y])):
+                    if currentMove.data[y][x] != currentMove.parent.parent.parent.parent.data[y][x]:
+                        repeatedMove = 0
+                        break
+                    repeatedMove += 1
+        else:
+            # check for every piece of player 2 if it has the same position has 4 moves ago
+            for y in range(0, len(currentMove.data)):
+                for x in range(0, len(currentMove.data[y])):
+                    if currentMove.data[y][x] != currentMove.parent.parent.parent.parent.data[y][x]:
+                        repeatedMove = 0
+                        break
+                    repeatedMove += 1
+        currentMove = currentMove.parent
+    
+    return repeatedMove == 2

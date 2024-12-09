@@ -54,3 +54,41 @@ class Board:
     g: float = 0.0
     player1: bool = True
     parent: 'Board' = None
+
+testBoard1 = Board.fromIntList([
+    [1, 0, 1, 0, 1, 0, 1, 0],
+    [0, 1, 0, 1, 0, 1, 0, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [2, 0, 2, 0, 2, 0, 2, 0],
+    [0, 2, 0, 2, 0, 2, 0, 2]])
+
+testBoard2 = Board.fromIntList([
+    [1, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 2]])
+
+testBoard3 = Board.fromIntList([
+    [1, 1, 0, 0],
+    [0, 0, 0, 0],
+    [2, 0, 2, 2]])
+
+testBoard4 = Board.fromIntList([
+    [1, 0, 1, 0, 1],
+    [0, 1, 0, 1, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 2, 0, 2, 0],
+    [2, 0, 2, 0, 2]])
+
+testBoard5 = Board.fromIntList([
+    [1, 0, 1, 0],
+    [0, 1, 0, 1],
+    [0, 0, 0, 0],
+    [0, 2, 0, 2],
+    [2, 0, 2, 0]])
+
+testBoards = [testBoard1, testBoard2, testBoard3, testBoard4, testBoard5]

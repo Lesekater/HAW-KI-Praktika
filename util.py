@@ -89,3 +89,9 @@ def writeMiniMaxStatsToCSV(minimaxType: str, player1: bool, heuristic: heurisitc
         if not file_exists:
             file.write("MinimaxType,Player,Heuristic,EvaluatedNodes,TotalMoves\n")
         file.write(f"{minimaxType},{1 if player1 else 2},{heuristic.name},{evaluatedNodes},{totalMoves}\n")
+
+signalCtlC = False
+
+def signal_handler(sig, frame):
+    global signalCtlC
+    signalCtlC = True
