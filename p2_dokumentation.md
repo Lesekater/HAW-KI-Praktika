@@ -8,11 +8,16 @@ Wie beeinflusst die Verwendung von Alpha-Beta-Pruning die Effizienz des Minimax-
 
 ### Minimax-Algorithmus
 
-Der Minimax-Algorithmus ist ein Entscheidungsalgorithmus, der verwendet wird, um optimale Spielzüge in Spielen mit zwei Spielern zu finden. Ziel ist es, die Gewinnchancen des einen Spielers zu maximieren, während die des Gegners minimiert werden.
+Der Minimax-Algorithmus ist ein Entscheidungsalgorithmus, der verwendet wird, um optimale Spielzüge in Spielen mit zwei Spielern zu finden. Ziel ist es, die Gewinnchancen des einen Spielers zu maximieren, während die des Gegners minimiert werden. Wie im Ablaufdiagramm [B3] zu sehen, wird dabei, über alle möglichen Züge iteriert, der beste (maximierer) bzw. der schlechteste (minimierer) gespeichert und dies wird so oft wiederhohlt, bis eine vorher angegebene maximale Tiefe erreicht wird.
 
 ### Alpha-Beta-Pruning
 
 Alpha-Beta-Pruning ist eine Optimierung des Minimax-Algorithmus. Es reduziert die Anzahl der zu bewertenden Knoten im Suchbaum, indem es Zweige abschneidet, die nicht zum optimalen Zug beitragen. Dadurch wird die Effizienz deutlich gesteigert, ohne die Genauigkeit der Entscheidungen zu beeinträchtigen.
+Wie im Ablaufdiagramm [B4] zu sehen, werden dafür 2 Werte alpha und beta initialisiert, welche als obere und untere Schranke dienen. Nun wird wie bei dem Standard Minimax Algorithmus über die möglichen Züge iteriert, diese werden bewertet und das Feld mit der besten (maximierer) bzw. der schlechtesten (minimierer) Bewertung wird gespeichert. Bei jedem Durchlauf wird nun nach jedem Feld bei
+- minimierer: der kleinere wert zwischen beta und der Bewertung des aktuellen Felds als beta gespeichert
+- maximierer: der größere wert zwischen alpha und der Bewertung des aktuellen Felds als alpha gespeichert
+Ist beta kleiner gleich alpha, wird die Suche auf dem aktuellen branch abgebrochen.
+Ansonsten wird die Suche so lange fortgeführt, bis eine vorher angegebene maximale Tiefe erreicht wird.
 
 ## Implementierung
 
@@ -56,4 +61,4 @@ Die Implementierung des Minimax-Algorithmus mit Alpha-Beta-Pruning hat gezeigt, 
 [B1] ![Testergebnisse mit 8x8 Feld](8x8_field_abp_test.png)
 [B2] ![Testergebnisse mit 4x5 Feld](4x5_field_abp_test.png)
 [B3] ![Ablaufdiagramm Minimax ohne ABP](ablauf_minimax.png)
-[B3] ![Ablaufdiagramm Minimax mit ABP](ablauf_minimax_abp.png)
+[B4] ![Ablaufdiagramm Minimax mit ABP](ablauf_minimax_abp.png)
