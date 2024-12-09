@@ -30,16 +30,15 @@ Das Grundgerüst des Dame-Spiels sowie die grundlegenden Bewertungsfunktionen wu
 
 ### 8×8 Spielfeld
 
-Bei einem vollständigen Spielfeld (8×8) wurden folgende Ergebnisse erzielt:
-- **Mit Alpha-Beta-Pruning**: Durchschnittlich wurden pro Zug maximal 8.000 Knoten betrachtet, und die Berechnung dauerte ca. 2 Minuten.
+Wie auf dem Diagramm [B1] zu sehen, wurden auf einem vollständigen Spielfeld (8×8) folgende Ergebnisse erzielt:
 - **Ohne Alpha-Beta-Pruning**: Bis zu 143.000 Knoten wurden analysiert, und die Berechnung dauerte über 20 Minuten.
+- **Mit Alpha-Beta-Pruning**: Durchschnittlich wurden pro Zug maximal 8.000 Knoten betrachtet, und die Berechnung dauerte ca. 2 Minuten.
 
 ### 4×5 Spielfeld
 
-Zur Durchführung von 1.000 Simulationen wurde ein reduziertes Spielfeld (4×5) verwendet. Dabei zeigte sich:
-TODO
-- **Mit Alpha-Beta-Pruning**: \( <platzhalterA> \) Sekunden durchschnittliche Rechenzeit.
-- **Ohne Alpha-Beta-Pruning**: \( <platzhalterB> \) Sekunden durchschnittliche Rechenzeit.
+Zur Durchführung von 1.000 Simulationen wurde ein reduziertes Spielfeld (4×5) verwendet. Wie auf dem Diagramm [B2] zu sehen, zeigte sich dabei:
+- **Ohne Alpha-Beta-Pruning**: Bis zu 650 Knoten wurden analysiert.
+- **Mit Alpha-Beta-Pruning**: Durchschnittlich wurden pro Zug maximal 250 Knoten betrachtet.
 
 Die Ergebnisse zeigen, dass Alpha-Beta-Pruning die Anzahl der betrachteten Knoten sowie die Rechenzeit drastisch reduziert.
 
