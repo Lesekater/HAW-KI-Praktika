@@ -55,6 +55,6 @@ Die Implementierung des Minimax-Algorithmus mit Alpha-Beta-Pruning hat gezeigt, 
 ## Bilder
 
 [B1] ![Testergebnisse mit 8x8 Feld](8x8_field_abp_test.png)
-[B2] ![Testergebnisse mit 4x5 Feld](TODO)
-[B3] ![Ablaufdiagramm  Minimax ohne ABP](TODO)
-[B3] ![Ablaufdiagramm  Minimax mit ABP](TODO)
+[B2] ![Testergebnisse mit 4x5 Feld](4x5_field_abp_test.png)
+[B3] ![Ablaufdiagramm Minimax ohne ABP](ablauf_minimax.png)
+[B3] ![Ablaufdiagramm Minimax mit ABP](ablauf_minimax_abp.png)
