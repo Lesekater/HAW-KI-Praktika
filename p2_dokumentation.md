@@ -6,11 +6,11 @@ Wie beeinflusst die Verwendung von Alpha-Beta-Pruning die Effizienz des Minimax-
 
 ## Theorie
 
-### Minimax-Algorithmus
+### Minimax-Algorithmus [Q1, 8.2.2]
 
 Der Minimax-Algorithmus ist ein Entscheidungsalgorithmus, der verwendet wird, um optimale Spielzüge in Spielen mit zwei Spielern zu finden. Ziel ist es, die Gewinnchancen des einen Spielers zu maximieren, während die des Gegners minimiert werden. Wie im Ablaufdiagramm [B3] zu sehen, wird dabei, über alle möglichen Züge iteriert, der beste (maximierer) bzw. der schlechteste (minimierer) gespeichert und dies wird so oft wiederhohlt, bis eine vorher angegebene maximale Tiefe erreicht wird.
 
-### Alpha-Beta-Pruning
+### Alpha-Beta-Pruning [Q1, 8.3.3]
 
 Alpha-Beta-Pruning ist eine Optimierung des Minimax-Algorithmus. Es reduziert die Anzahl der zu bewertenden Knoten im Suchbaum, indem es Zweige abschneidet, die nicht zum optimalen Zug beitragen. Dadurch wird die Effizienz deutlich gesteigert, ohne die Genauigkeit der Entscheidungen zu beeinträchtigen.
 Wie im Ablaufdiagramm [B4] zu sehen, werden dafür 2 Werte alpha und beta initialisiert, welche als obere und untere Schranke dienen. Nun wird wie bei dem Standard Minimax Algorithmus über die möglichen Züge iteriert, diese werden bewertet und das Feld mit der besten (maximierer) bzw. der schlechtesten (minimierer) Bewertung wird gespeichert. Bei jedem Durchlauf wird nun nach jedem Feld bei
@@ -51,10 +51,12 @@ Die Ergebnisse zeigen, dass Alpha-Beta-Pruning die Anzahl der betrachteten Knote
 
 Die Implementierung des Minimax-Algorithmus mit Alpha-Beta-Pruning hat gezeigt, dass die Effizienz des Algorithmus erheblich verbessert werden kann. Im Vergleich zur ursprünglichen A*-Implementierung aus Praktikum 1 ist der Algorithmus nun besser an die Anforderungen von Spielen mit großen Suchbäumen angepasst.
 
-## Quellen
+## Quellen & Referenzen
 
-[Q1] TODO Grundlagen zum Minimax-Algorithmus und Alpha-Beta-Pruning \
+[Q1] Algorithmen in Python: 32 Klassiker vom Damenproblem bis zu neuronalen Netzen
+Kopec, David; 1. Aufl; ISBN: 978-3-8362-7749-5
 [Q2] Implementierungsdetails aus Praktikum 1 (siehe [Dokumentation P1](p1_dokumentation.md))
+[R1] Quellcode Dame Anwendung (https://github.com/Lesekater/HAW-KI-Praktika.git)
 
 ## Bilder
 
