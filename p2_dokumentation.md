@@ -1,5 +1,8 @@
 # Implementierung des Minimax-Algorithmus mit Alpha-Beta-Pruning
 
+09.12.2024 \
+Elias Wernicke, Lars Janssen
+
 ## Forschungsfrage
 
 Wie beeinflusst die Verwendung von Alpha-Beta-Pruning die Effizienz des Minimax-Algorithmus beim Spielen von Dame?
