@@ -8,15 +8,15 @@ Wie beeinflusst die Verwendung von Alpha-Beta-Pruning die Effizienz des Minimax-
 
 ### Minimax-Algorithmus [Q1, 8.2.2]
 
-Der Minimax-Algorithmus ist ein Entscheidungsalgorithmus, der verwendet wird, um optimale Spielzüge in Spielen mit zwei Spielern zu finden. Ziel ist es, die Gewinnchancen des einen Spielers zu maximieren, während die des Gegners minimiert werden. Wie im Ablaufdiagramm [B3] zu sehen, wird dabei, über alle möglichen Züge iteriert, der beste (maximierer) bzw. der schlechteste (minimierer) gespeichert und dies wird so oft wiederhohlt, bis eine vorher angegebene maximale Tiefe erreicht wird.
+Der Minimax-Algorithmus ist ein Entscheidungsalgorithmus, der verwendet wird, um optimale Spielzüge in Spielen mit zwei Spielern zu finden. Ziel ist es, die Gewinnchancen des einen Spielers zu maximieren, während die des Gegners minimiert werden. Wie im Ablaufdiagramm [B3] zu sehen, wird über alle möglichen Züge iteriert, der beste (Maximierer) bzw. der schlechteste (Minimierer) Zug gespeichert, und dies wird so oft wiederholt, bis eine vorher angegebene maximale Tiefe erreicht wird.
 
 ### Alpha-Beta-Pruning [Q1, 8.3.3]
 
 Alpha-Beta-Pruning ist eine Optimierung des Minimax-Algorithmus. Es reduziert die Anzahl der zu bewertenden Knoten im Suchbaum, indem es Zweige abschneidet, die nicht zum optimalen Zug beitragen. Dadurch wird die Effizienz deutlich gesteigert, ohne die Genauigkeit der Entscheidungen zu beeinträchtigen.
-Wie im Ablaufdiagramm [B4] zu sehen, werden dafür 2 Werte alpha und beta initialisiert, welche als obere und untere Schranke dienen. Nun wird wie bei dem Standard Minimax Algorithmus über die möglichen Züge iteriert, diese werden bewertet und das Feld mit der besten (maximierer) bzw. der schlechtesten (minimierer) Bewertung wird gespeichert. Bei jedem Durchlauf wird nun nach jedem Feld bei
-- minimierer: der kleinere wert zwischen beta und der Bewertung des aktuellen Felds als beta gespeichert
-- maximierer: der größere wert zwischen alpha und der Bewertung des aktuellen Felds als alpha gespeichert
-Ist beta kleiner gleich alpha, wird die Suche auf dem aktuellen branch abgebrochen.
+Wie im Ablaufdiagramm [B4] zu sehen, werden dafür zwei Werte, alpha und beta, initialisiert, die als obere und untere Schranke dienen. Nun wird, wie beim Standard-Minamax-Algorithmus, über die möglichen Züge iteriert, diese werden bewertet und das Feld mit der besten (Maximierer) bzw. der schlechtesten (Minimierer) Bewertung wird gespeichert. Bei jedem Durchlauf wird nun nach jedem Feld bei
+- Minimierer: der kleinere Wert zwischen beta und der Bewertung des aktuellen Felds als beta gespeichert
+- Maximierer: der größere Wert zwischen alpha und der Bewertung des aktuellen Felds als alpha gespeichert
+Ist beta kleiner oder gleich alpha, wird die Suche auf dem aktuellen Zweig abgebrochen.
 Ansonsten wird die Suche so lange fortgeführt, bis eine vorher angegebene maximale Tiefe erreicht wird.
 
 ## Implementierung
