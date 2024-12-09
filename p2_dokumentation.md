@@ -12,11 +12,11 @@ Der Minimax-Algorithmus ist ein Entscheidungsalgorithmus, der verwendet wird, um
 
 ### Alpha-Beta-Pruning [Q1, 8.3.3]
 
-Alpha-Beta-Pruning ist eine Optimierung des Minimax-Algorithmus. Es reduziert die Anzahl der zu bewertenden Knoten im Suchbaum, indem es Zweige abschneidet, die nicht zum optimalen Zug beitragen. Dadurch wird die Effizienz deutlich gesteigert, ohne die Genauigkeit der Entscheidungen zu beeinträchtigen.
-Wie im Ablaufdiagramm [B4] zu sehen, werden dafür zwei Werte, alpha und beta, initialisiert, die als obere und untere Schranke dienen. Nun wird, wie beim Standard-Minamax-Algorithmus, über die möglichen Züge iteriert, diese werden bewertet und das Feld mit der besten (Maximierer) bzw. der schlechtesten (Minimierer) Bewertung wird gespeichert. Bei jedem Durchlauf wird nun nach jedem Feld bei
-- Minimierer: der kleinere Wert zwischen beta und der Bewertung des aktuellen Felds als beta gespeichert
-- Maximierer: der größere Wert zwischen alpha und der Bewertung des aktuellen Felds als alpha gespeichert
-Ist beta kleiner oder gleich alpha, wird die Suche auf dem aktuellen Zweig abgebrochen.
+Alpha-Beta-Pruning ist eine Optimierung des Minimax-Algorithmus. Es reduziert die Anzahl der zu bewertenden Knoten im Suchbaum, indem es Zweige abschneidet, die nicht zum optimalen Zug beitragen. Dadurch wird die Effizienz deutlich gesteigert, ohne die Genauigkeit der Entscheidungen zu beeinträchtigen.  
+Wie im Ablaufdiagramm [B4] zu sehen, werden dafür zwei Werte, alpha und beta, initialisiert, die als obere und untere Schranke dienen. Nun wird, wie beim Standard-Minamax-Algorithmus, über die möglichen Züge iteriert, diese werden bewertet und das Feld mit der besten (Maximierer) bzw. der schlechtesten (Minimierer) Bewertung wird gespeichert. Bei jedem Durchlauf wird nun nach jedem Feld bei:  
+- Minimierer: der kleinere Wert zwischen beta und der Bewertung des aktuellen Feldes als beta gespeichert  
+- Maximierer: der größere Wert zwischen alpha und der Bewertung des aktuellen Feldes als alpha gespeichert  
+Ist beta kleiner oder gleich alpha, wird die Suche auf dem aktuellen Zweig abgebrochen.  
 Ansonsten wird die Suche so lange fortgeführt, bis eine vorher angegebene maximale Tiefe erreicht wird.
 
 ## Implementierung
@@ -25,11 +25,11 @@ Ansonsten wird die Suche so lange fortgeführt, bis eine vorher angegebene maxim
 
 Das Grundgerüst des Dame-Spiels sowie die grundlegenden Bewertungsfunktionen wurden aus Praktikum 1 übernommen. Die Modifikation betrifft die Implementierung des Algorithmus: Anstelle von A* wurde der Minimax-Algorithmus mit und ohne Alpha-Beta-Pruning verwendet.
 
-### Ablauf Tests
+### Ablauf der Tests
 
 1. **Initialisierung**: Die Spielfeldgröße wurde auf 8×8 festgelegt, um die Performance des Algorithmus auf einem realistischen Spielfeld zu testen. Aufgrund der hohen Rechenzeit wurden für wiederholte Tests kleinere Spielfelder mit 4×5 Feldern verwendet.
 2. **Zugbewertung**: Der Algorithmus bewertet die möglichen Spielzüge rekursiv, basierend auf einer definierten Bewertungsfunktion für Spielstände.
-3. **Optimierung**: Beim Alpha-Beta-Pruning werden Grenzwerte _alpha_ und _beta_ eingeführt, um die Suche einzuschränken.
+3. **Optimierung**: Beim Alpha-Beta-Pruning werden die Grenzwerte _alpha_ und _beta_ eingeführt, um die Suche einzuschränken.
 
 ## Testergebnisse
 
@@ -49,18 +49,18 @@ Die Ergebnisse zeigen, dass Alpha-Beta-Pruning die Anzahl der betrachteten Knote
 
 ## Fazit
 
-Die Implementierung des Minimax-Algorithmus mit Alpha-Beta-Pruning hat gezeigt, dass die Effizienz des Algorithmus erheblich verbessert werden kann. Es müssen im Mittel wie in [B2] zu sehen deutlich weniger Züge betrachtet werden und dadurch erhöht sich die Berechnungsgeschwindigkeit deutlich. Außerdem konnte im Vergleich zum 1. Praktikum mit diesem Algorithmus im Gegensatz zum A* Algo. auch das volle 8x8 Dame Feld in wenigen Minuten "gelöst" werden.
+Die Implementierung des Minimax-Algorithmus mit Alpha-Beta-Pruning hat gezeigt, dass die Effizienz des Algorithmus erheblich verbessert werden kann. Es müssen im Durchschnitt, wie in [B2] zu sehen, deutlich weniger Züge betrachtet werden, und dadurch erhöht sich die Berechnungsgeschwindigkeit erheblich. Außerdem konnte im Vergleich zum ersten Praktikum mit diesem Algorithmus, im Gegensatz zum A*-Algorithmus, auch das volle 8×8 Dame-Feld in wenigen Minuten "gelöst" werden.
 
 ## Quellen & Referenzen
 
-[Q1] Algorithmen in Python: 32 Klassiker vom Damenproblem bis zu neuronalen Netzen
-Kopec, David; 1. Aufl; ISBN: 978-3-8362-7749-5 \
-[Q2] Implementierungsdetails aus Praktikum 1 (siehe [Dokumentation P1](p1_dokumentation.md)) \
-[R1] Quellcode Dame Anwendung (https://github.com/Lesekater/HAW-KI-Praktika.git)
+[Q1] Algorithmen in Python: 32 Klassiker vom Damenproblem bis zu neuronalen Netzen  
+Kopec, David; 1. Aufl.; ISBN: 978-3-8362-7749-5  
+[Q2] Implementierungsdetails aus Praktikum 1 (siehe [Dokumentation P1](p1_dokumentation.md))  
+[R1] Quellcode Dame-Anwendung (https://github.com/Lesekater/HAW-KI-Praktika.git)
 
 ## Bilder
 
-[B1] ![Testergebnisse mit 8x8 Feld](8x8_field_abp_test.png)
-[B2] ![Testergebnisse mit 4x5 Feld](4x5_field_abp_test.png)
-[B3] ![Ablaufdiagramm Minimax ohne ABP](ablauf_minimax.png)
+[B1] ![Testergebnisse mit 8×8 Feld](8x8_field_abp_test.png)  
+[B2] ![Testergebnisse mit 4×5 Feld](4x5_field_abp_test.png)  
+[B3] ![Ablaufdiagramm Minimax ohne ABP](ablauf_minimax.png)  
 [B4] ![Ablaufdiagramm Minimax mit ABP](ablauf_minimax_abp.png)
