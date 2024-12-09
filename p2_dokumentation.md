@@ -49,13 +49,13 @@ Die Ergebnisse zeigen, dass Alpha-Beta-Pruning die Anzahl der betrachteten Knote
 
 ## Fazit
 
-Die Implementierung des Minimax-Algorithmus mit Alpha-Beta-Pruning hat gezeigt, dass die Effizienz des Algorithmus erheblich verbessert werden kann. Im Vergleich zur ursprünglichen A*-Implementierung aus Praktikum 1 ist der Algorithmus nun besser an die Anforderungen von Spielen mit großen Suchbäumen angepasst.
+Die Implementierung des Minimax-Algorithmus mit Alpha-Beta-Pruning hat gezeigt, dass die Effizienz des Algorithmus erheblich verbessert werden kann. Es müssen im Mittel wie in [B2] zu sehen deutlich weniger Züge betrachtet werden und dadurch erhöht sich die Berechnungsgeschwindigkeit deutlich. Außerdem konnte im Vergleich zum 1. Praktikum mit diesem Algorithmus im Gegensatz zum A* Algo. auch das volle 8x8 Dame Feld in wenigen Minuten "gelöst" werden.
 
 ## Quellen & Referenzen
 
 [Q1] Algorithmen in Python: 32 Klassiker vom Damenproblem bis zu neuronalen Netzen
-Kopec, David; 1. Aufl; ISBN: 978-3-8362-7749-5
-[Q2] Implementierungsdetails aus Praktikum 1 (siehe [Dokumentation P1](p1_dokumentation.md))
+Kopec, David; 1. Aufl; ISBN: 978-3-8362-7749-5 \
+[Q2] Implementierungsdetails aus Praktikum 1 (siehe [Dokumentation P1](p1_dokumentation.md)) \
 [R1] Quellcode Dame Anwendung (https://github.com/Lesekater/HAW-KI-Praktika.git)
 
 ## Bilder
