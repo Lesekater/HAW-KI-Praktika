@@ -67,7 +67,7 @@ def checkForHeuristicValidity(heuristic):
             print("Heuristic not implemented or invalid.")
             sys.exit(1)
 
-def runMain(algorithm: int, board_number: int, heuristic1: int, heuristic2: int, debug: int):
+def runMain(algorithm: int, board_number: int, heuristic1: int, heuristic2: int, debug: bool):
     if (algorithm == 1): # minimax without alpha beta pruning
         main_minimax(makeMMMove, testBoards[board_number], heurisitcTypes(heuristic1), heurisitcTypes(heuristic2), debug=debug)
     elif (algorithm == 2): # minimax with alpha beta pruning
@@ -99,6 +99,7 @@ if __name__ == "__main__":
     if mode == "1":
         interactiveMain()
     else:
+        debug = input("Enable debug mode? (y/n): ") == "y"
         print("Choose algorithm to use (1: minimax, 2: minimax with alpha beta pruning, 3: a*, 4: mcgs):")
         algorithm = input("Enter algorithm: ")
         if int(algorithm) < 1 or int(algorithm) > 4:
