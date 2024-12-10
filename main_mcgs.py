@@ -52,7 +52,7 @@ def main(algorithm: Callable[[Board, heurisitcTypes], Tuple[bool, Board, int]],
             # print("Player 1 (⚫, 🔴): " + usedHeuristicPlayer1.name)
             # print("Player 2 (⚪, 🔵): " + usedHeuristicPlayer2.name)
             print("Latest board:")
-            print(formatBoard(winningBoard))
+            print(formatBoard(winningBoard, True))
             print("move: " + str(checkedBoards))
             print("checked boards: " + str(checkedBoards))
 

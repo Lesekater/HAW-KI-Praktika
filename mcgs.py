@@ -17,17 +17,18 @@ def makeRandomMoves(node: Board, timout: int = 200) -> bool:
         if not possibleMoves:
             return isWinning
         node = random.choice(possibleMoves)
+        node.player1 = not node.player1
         move += 1
     return isWinning
 
 ## return how many times the board is randomly won
-def simulatePlays(node: Board, times: int) -> float:
+def simulatePlays(node: Board, times: int, move: int) -> int:
     wins = 0
     for i in range(times):
         if i == 0:
-            print(f"Simulating game {i+1}/{times}")
+            print(f"{move} Simulating game {i+1}/{times}")
         else:
-            print(CURSOR_UP_ONE + ERASE_LINE + f"Simulating game {i+1}/{times}")
+            print(CURSOR_UP_ONE + ERASE_LINE + f"{move} Simulating game {i+1}/{times}")
         if makeRandomMoves(node):
             wins += 1
     return wins
@@ -41,11 +42,13 @@ def mcgs(node: Board) -> Tuple[bool, Board]:
     bestScore = -1
 
     for i, move in enumerate(possibleMoves):
-        # if i == 0:
-        #     # print(f"Checking move {i+1}/{len(possibleMoves)} (possible moves)")
+        if i == 0:
+            print("Possible moves: ", len(possibleMoves))
+            # print(f"Checking move {i+1}/{len(possibleMoves)} (possible moves)")
         # else:
         #     # print(CURSOR_UP_ONE + ERASE_LINE + f"Checking move {i+1}/{len(possibleMoves)} (possible moves)")
-        score = simulatePlays(move, 100)
+        score = simulatePlays(move, 100, i)
+        print(f"Score: {score}")
         if score > bestScore:
             bestScore = score
             bestMove = move
