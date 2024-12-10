@@ -9,10 +9,10 @@ ERASE_LINE = '\x1b[2K'
 
 initialDepth = 10
 
-def makeRandomMoves(node: Board, timout: int = 200) -> bool:
+def makeRandomMoves(node: Board, timeout: int = 200) -> bool:
     isWinning = False
     move = 0
-    while not isWinning and move < timout:
+    while not isWinning and (move < timeout or timeout == -1):
         possibleMoves, isWinning = getMoves(node, node.player1)
         if not possibleMoves:
             return isWinning
@@ -29,7 +29,7 @@ def simulatePlays(node: Board, times: int, move: int) -> int:
             print(f"{move} Simulating game {i+1}/{times}")
         else:
             print(CURSOR_UP_ONE + ERASE_LINE + f"{move} Simulating game {i+1}/{times}")
-        if makeRandomMoves(node):
+        if makeRandomMoves(node): ## set to -1 to disable timeout
             wins += 1
     return wins
 
