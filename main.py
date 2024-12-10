@@ -15,6 +15,7 @@ from piece import checkForWinningBoard
 from util import convertPiecesToEmoji, formatBoard, formatBoardWithCoords, printWinningPath, writeMiniMaxStatsToCSV, writeStatsToFile
 from main_a_star import main as main_a_star
 from main_minimax import main as main_minimax
+from main_mcgs import main as main_mcgs
 
 usedAlgorithm = None
 
@@ -74,6 +75,8 @@ def runMain(algorithm: int, board_number: int, heuristic1: int, heuristic2: int,
         main_minimax(makeMMABP, testBoards[board_number], heurisitcTypes(heuristic1), heurisitcTypes(heuristic2), debug=debug)
     elif (algorithm == 3): # a*
         main_a_star([testBoards[board_number]], [], heurisitcTypes(heuristic1), heurisitcTypes(heuristic2), debug=debug)
+    elif (algorithm == 4): # mcgs
+        main_mcgs(makeMove, testBoards[board_number], debug=debug)
 
 if __name__ == "__main__":
     debug = False
@@ -96,23 +99,27 @@ if __name__ == "__main__":
     if mode == "1":
         interactiveMain()
     else:
-        print("Choose algorithm to use (1: minimax, 2: minimax with alpha beta pruning, 3: a*):")
+        print("Choose algorithm to use (1: minimax, 2: minimax with alpha beta pruning, 3: a*, 4: mcgs):")
         algorithm = input("Enter algorithm: ")
-        if int(algorithm) < 1 or int(algorithm) > 3:
+        if int(algorithm) < 1 or int(algorithm) > 4:
             print("Invalid algorithm.")
             sys.exit(1)
 
-        print("Choose heuristic to use for Player 1 (colors: " + convertPiecesToEmoji(EPiece.DEFAULT_P1.value) + ", " + convertPiecesToEmoji(EPiece.DAME_P1.value) + "):")
-        for i, heuristic in enumerate(heurisitcTypes):
-            print(str(i) + ": " + heuristic.name)
-        heuristic1 = input("Enter heuristic: ")
-        checkForHeuristicValidity(heuristic1)
+        heuristic1 = -1
+        if int(algorithm) != 4:
+            print("Choose heuristic to use for Player 1 (colors: " + convertPiecesToEmoji(EPiece.DEFAULT_P1.value) + ", " + convertPiecesToEmoji(EPiece.DAME_P1.value) + "):")
+            for i, heuristic in enumerate(heurisitcTypes):
+                print(str(i) + ": " + heuristic.name)
+            heuristic1 = input("Enter heuristic: ")
+            checkForHeuristicValidity(heuristic1)
 
-        print("Choose heuristic to use for Player 2 (colors: " + convertPiecesToEmoji(EPiece.DEFAULT_P2.value) + ", " + convertPiecesToEmoji(EPiece.DAME_P2.value) + "):")
-        for i, heuristic in enumerate(heurisitcTypes):
-            print(str(i) + ": " + heuristic.name)
-        heuristic2 = input("Enter heuristic: ")
-        checkForHeuristicValidity(heuristic2)
+        heuristic2 = -1
+        if int(algorithm) != 4:
+            print("Choose heuristic to use for Player 2 (colors: " + convertPiecesToEmoji(EPiece.DEFAULT_P2.value) + ", " + convertPiecesToEmoji(EPiece.DAME_P2.value) + "):")
+            for i, heuristic in enumerate(heurisitcTypes):
+                print(str(i) + ": " + heuristic.name)
+            heuristic2 = input("Enter heuristic: ")
+            checkForHeuristicValidity(heuristic2)
 
         # choose test board
         print("Choose test board to use.")
