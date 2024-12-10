@@ -4,6 +4,9 @@ from const import Board
 from heuristics import calculateHeuristic, heurisitcTypes
 from piece import getMoves
 
+CURSOR_UP_ONE = '\x1b[1A'
+ERASE_LINE = '\x1b[2K'
+
 initialDepth = 10
 
 def makeRandomMoves(node: Board, timout: int = 200) -> bool:
@@ -21,7 +24,10 @@ def makeRandomMoves(node: Board, timout: int = 200) -> bool:
 def simulatePlays(node: Board, times: int) -> float:
     wins = 0
     for i in range(times):
-        print ("Simulated plays: ", i)
+        if i == 0:
+            print(f"Simulating game {i+1}/{times}")
+        else:
+            print(CURSOR_UP_ONE + ERASE_LINE + f"Simulating game {i+1}/{times}")
         if makeRandomMoves(node):
             wins += 1
     return wins
@@ -34,7 +40,11 @@ def mcgs(node: Board) -> Tuple[bool, Board]:
     bestMove = None
     bestScore = -1
 
-    for move in possibleMoves:
+    for i, move in enumerate(possibleMoves):
+        # if i == 0:
+        #     # print(f"Checking move {i+1}/{len(possibleMoves)} (possible moves)")
+        # else:
+        #     # print(CURSOR_UP_ONE + ERASE_LINE + f"Checking move {i+1}/{len(possibleMoves)} (possible moves)")
         score = simulatePlays(move, 100)
         if score > bestScore:
             bestScore = score
