@@ -71,10 +71,10 @@ def mcgs(node: Board) -> Tuple[bool, Board]:
         os.makedirs("training_data", exist_ok=True)
         # create subfolder with timestamp (only day-precision)
         timestamp = time.strftime("%Y-%m-%d")
-        os.makedirs(f"training_data/{timestamp}", exist_ok=True)
+        os.makedirs(f"training_data/{timestamp}-{len(move)}", exist_ok=True)
 
         # save to file
-        filename = f"training_data/{timestamp}/{uuid.uuid4()}.json"
+        filename = f"training_data/{timestamp}-{len(move)}/{uuid.uuid4()}.json"
         with open(filename, "w") as f:
             json.dump({"move": move, "score": score}, f)
 
