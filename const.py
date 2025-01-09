@@ -28,6 +28,15 @@ class Board:
                 newRow.append(EPiece(piece))
             self.data.append(newRow)
         return self
+    
+    def toIntList(self) -> List[List[int]]:
+        intList = []
+        for row in self.data:
+            newRow = []
+            for piece in row:
+                newRow.append(piece.value)
+            intList.append(newRow)
+        return intList
 
     def __swapOnSelf(self, firstX: int, firstY: int, secondX: int, secondY: int):
         firstPiece: EPiece = self.data[firstY][firstX]
@@ -77,8 +86,8 @@ testBoard3 = Board.fromIntList([
     [2, 0, 2, 2]])
 
 testBoard4 = Board.fromIntList([
-    [1, 0, 1, 0, 1],
     [0, 1, 0, 1, 0],
+    [1, 0, 1, 0, 1],
     [0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0],
     [0, 2, 0, 2, 0],

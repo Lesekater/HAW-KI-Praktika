@@ -3,6 +3,10 @@ from typing import List, Tuple
 from const import Board
 from heuristics import calculateHeuristic, heurisitcTypes
 from piece import getMoves
+import uuid
+import json
+import os
+import time
 
 CURSOR_UP_ONE = '\x1b[1A'
 ERASE_LINE = '\x1b[2K'
@@ -40,6 +44,8 @@ def mcgs(node: Board) -> Tuple[bool, Board]:
     
     bestMove = None
     bestScore = -1
+    
+    moves_with_scores = []
 
     for i, move in enumerate(possibleMoves):
         if i == 0:
@@ -48,10 +54,29 @@ def mcgs(node: Board) -> Tuple[bool, Board]:
         # else:
         #     # print(CURSOR_UP_ONE + ERASE_LINE + f"Checking move {i+1}/{len(possibleMoves)} (possible moves)")
         score = simulatePlays(move, 100, i)
+
+        moves_with_scores.append((move.toIntList(), score))
+
         print(f"Score: {score}")
         if score > bestScore:
             bestScore = score
             bestMove = move
+
+    # cache the moves with scores in files
+    # training_data/<timestamp>/uuid.json
+    for i, (move, score) in enumerate(moves_with_scores):
+        print(f"Move {i+1}/{len(moves_with_scores)}: {score}")
+
+        # create folder if not exists
+        os.makedirs("training_data", exist_ok=True)
+        # create subfolder with timestamp (only day-precision)
+        timestamp = time.strftime("%Y-%m-%d")
+        os.makedirs(f"training_data/{timestamp}", exist_ok=True)
+
+        # save to file
+        filename = f"training_data/{timestamp}/{uuid.uuid4()}.json"
+        with open(filename, "w") as f:
+            json.dump({"move": move, "score": score}, f)
 
     return isWinningMove, bestMove
 
