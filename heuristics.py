@@ -15,36 +15,41 @@ class heurisitcTypes(Enum):
     CountOfPiecesAndDamesOfOtherPlayer = 9
     Random = 10
 
+def normalizeTo100(value: float, max_value: float) -> float:
+    """Normalizes the value to a range between 0 and 100."""
+    return min(max(value / max_value * 100, 0), 100)
+
 def calculateHeuristic(board: Board, usedHeuristic: heurisitcTypes) -> float:
     match usedHeuristic:
         case heurisitcTypes.CountOfPieces:
-            return countOfPieces(board)
+            return normalizeTo100(countOfPieces(board), 8)
         case heurisitcTypes.CountOfDames:
-            return countOfDames(board)
+            return normalizeTo100(countOfDames(board), 8)
         case heurisitcTypes.CountOfPiecesAndDames:
-            return countOfPiecesAndDames(board)
+            # return countOfPiecesAndDames(board)
+            return normalizeTo100(countOfPiecesAndDames(board), 8)
         case heurisitcTypes.CountOfPiecesOfOtherPlayer:
-            return countOfPiecesOfOtherPlayer(board)
+            return normalizeTo100(countOfPiecesOfOtherPlayer(board), 8)
         case heurisitcTypes.CountOfDamesOfOtherPlayer:
-            return countOfDamesOfOtherPlayer(board)
+            return normalizeTo100(countOfDamesOfOtherPlayer(board), 8)
         case heurisitcTypes.CountOfPiecesAndDamesOfOtherPlayer:
-            return countOfPiecesAndDamesOfOtherPlayer(board)
+            return normalizeTo100(countOfPiecesAndDamesOfOtherPlayer(board), 8)
         case heurisitcTypes.CountOfPiecesToEliminate:
             return "unimplemented"
-            # return countOfPiecesToEliminate(board)
+            # return normalizeTo100(countOfPiecesToEliminate(board), 12)  # assuming 12 is the maximum number of pieces to eliminate
         case heurisitcTypes.CountOfPiecesAtEndOfBoard:
-            return countOfPiecesAtEndOfBoard(board)
+            return normalizeTo100(countOfPiecesAtEndOfBoard(board), 4)
         case heurisitcTypes.ProgressPiecesOnBoard:
-            return progressPiecesOnBoard(board)
+            return normalizeTo100(progressPiecesOnBoard(board), 60)
         case heurisitcTypes.CountOfPicesNotInDraw:
             return "unimplemented"
-            # return countOfPicesNotInDraw(board)
+            # return normalizeTo100(countOfPicesNotInDraw(board), 12)
         case heurisitcTypes.Random:
             return randomHeuristic(board)
         case _:
             return 0.0
 
-def countOfPieces(board: Board, maxPieces=12):
+def countOfPieces(board: Board, maxPieces=8):
     currentPlayer = board.player1
     count = 0
     for row in board.data:
@@ -55,7 +60,7 @@ def countOfPieces(board: Board, maxPieces=12):
                 count += 1
     return maxPieces - count
 
-def countOfDames(board, maxPieces=12):
+def countOfDames(board, maxPieces=8):
     currentPlayer = board.player1
     count = 0
     for row in board.data:
@@ -68,7 +73,7 @@ def countOfDames(board, maxPieces=12):
     return maxPieces - count
 
 def countOfPiecesAndDames(board):
-    return countOfPieces(board) + countOfDames(board)
+    return countOfPieces(board) + countOfDames(board) - 8
 
 def countOfPiecesAtEndOfBoard(board):
     currentPlayer = board.player1

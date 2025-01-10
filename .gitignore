@@ -167,3 +167,5 @@ stats.txt
 # Praktikum 02
 minimax_stats.csv
 results.txt
+new_training_data/
+training_data/
