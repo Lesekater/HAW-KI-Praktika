@@ -143,9 +143,9 @@ Der R²-Wert, der die Güte der Anpassung des Modells misst, fiel mit der Hinzun
   - MSE: 0.1218  
   - R²: 0.0033  
 
-## Fazit TODO
+## Fazit
 
-Die Implementierung des Minimax-Algorithmus mit Alpha-Beta-Pruning hat gezeigt, dass die Effizienz des Algorithmus erheblich verbessert werden kann. Es müssen im Durchschnitt, wie in [B2] zu sehen, deutlich weniger Züge betrachtet werden, und dadurch erhöht sich die Berechnungsgeschwindigkeit erheblich. Außerdem konnte im Vergleich zum ersten Praktikum mit diesem Algorithmus, im Gegensatz zum A*-Algorithmus, auch das volle 8×8 Dame-Feld in wenigen Minuten "gelöst" werden.
+Die Ergebnisse legen nahe, dass die Hinzunahme zusätzlicher Heuristiken nicht zwangsläufig zu einer Verbesserung der Modellleistung führt. Stattdessen scheint eine Überkomplexität der Eingabedaten die Fähigkeit des Modells, sinnvolle Zusammenhänge zu lernen, negativ zu beeinflussen. Ebenso hat das zweite Modell keine signifikanten Vorteile gegenüber dem ersten Modell gebracht, sodass die zusätzliche Komplexität des Convolutional Layers in diesem Fall nicht gerechtfertigt ist.
 
 ## Quellen & Referenzen TODO
 
