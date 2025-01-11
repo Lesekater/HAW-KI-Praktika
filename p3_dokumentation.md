@@ -107,6 +107,13 @@ Das zweite Modell erweitert die Architektur durch die Einführung eines Convolut
 
 ## Ergebnisse Training
 Die Ergebnisse des Trainings zeigen, dass das zweite Modell (mit Convolutional Layer) keinen signifikanten Vorteil im Vergleich zum ersten Modell gebracht hat. Tatsächlich schnitt das erste Modell in einigen Konfigurationen sogar leicht besser ab.
+Zur besseren Darstellung sind die folgenden Werte auch noch einmal in Diagrammform im Anhang [B1], [B2], [B3] einzusehen.
+
+Der MAE-Wert (Mean Absolute Error) <TODO: Quelle?> gibt dabei die durchschnittliche absolute Differenz zwischen den tatsächlichen und den vorhergesagten Werten im Testset an. Ein niedriger MAE-Wert weist auf eine bessere Modellvorhersagegenauigkeit hin, da er die durchschnittliche Fehlergröße in der gleichen Einheit wie die Ausgangsdaten misst.
+
+Der MSE-Wert (Mean Squared Error) <TODO: Quelle?> misst die durchschnittliche quadratische Differenz zwischen den tatsächlichen und den vorhergesagten Werten im Testset. Dieser Wert betont größere Fehler stärker, da die Fehler quadriert werden. Ein niedriger MSE-Wert bedeutet eine geringere Streuung der Fehler und eine genauere Modellvorhersage.
+
+Der R²-Wert (Bestimmtheitsmaß) <TODO: Quelle?> quantifiziert den Anteil der Varianz der Zielvariable, der durch das Modell erklärt wird. Ein R²-Wert von 1 deutet auf eine perfekte Anpassung hin, während ein Wert von 0 darauf hinweist, dass das Modell keine bessere Erklärung für die Variabilität der Zielvariable bietet als das Mittel der beobachteten Werte.
 
 ### Vergleich der Modelle
 
