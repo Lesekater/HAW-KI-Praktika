@@ -155,9 +155,4 @@ Kopec, David; 1. Aufl.; ISBN: 978-3-8362-7749-5
 [Q3] Implementierungsdetails aus Praktikum 2 (siehe [Dokumentation P2](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/p2_dokumentation.md))  
 [R1] Quellcode Dame-Anwendung (https://github.com/Lesekater/HAW-KI-Praktika.git)
 
-## Bilder
-
-[B1] 8x8_field_abp_test.png ![Testergebnisse mit 8×8 Feld](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/8x8_field_abp_test.png)  
-[B2] 4x5_field_abp_test.png ![Testergebnisse mit 4×5 Feld](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/4x5_field_abp_test.png)  
-[B3] ablauf_minimax.png ![Ablaufdiagramm Minimax ohne ABP](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/ablauf_minimax.png)  
-[B4] ablauf_minimax_abp.png ![Ablaufdiagramm Minimax mit ABP](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/ablauf_minimax_abp.png)
+## Bilder TODO: haben/ brauchen wir bilder?
