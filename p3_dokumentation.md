@@ -152,6 +152,7 @@ Die Implementierung des Minimax-Algorithmus mit Alpha-Beta-Pruning hat gezeigt, 
 [Q1] Algorithmen in Python: 32 Klassiker vom Damenproblem bis zu neuronalen Netzen  
 Kopec, David; 1. Aufl.; ISBN: 978-3-8362-7749-5  
 [Q2] Implementierungsdetails aus Praktikum 1 (siehe [Dokumentation P1](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/p1_dokumentation.md))  
+[Q3] Implementierungsdetails aus Praktikum 2 (siehe [Dokumentation P2](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/p2_dokumentation.md))  
 [R1] Quellcode Dame-Anwendung (https://github.com/Lesekater/HAW-KI-Praktika.git)
 
 ## Bilder
