@@ -47,45 +47,45 @@ Mean Absolute Error (MAE): 0.0702
 Mean Squared Error (MSE): 0.0083
 R² Score: 0.8437
 
-![alt text](image-4.png)
+![alt text](./neural_net_trainig_docu/image-4.png)
 
-![alt text](image-5.png)
+![alt text](./neural_net_trainig_docu/image-5.png)
 
 ## only CountOfPiecesAndDames (with model 01)
 Mean Absolute Error (MAE): 0.0662
 Mean Squared Error (MSE): 0.0076
 R² Score: 0.8571
 
-![alt text](image-6.png)
+![alt text](./neural_net_trainig_docu/image-6.png)
 
-![alt text](image-7.png)
+![alt text](./neural_net_trainig_docu/image-7.png)
 
 ## with CountOfPiecesAndDames, CountOfPiecesAtEndOfBoard
 Mean Absolute Error (MAE): 0.1444
 Mean Squared Error (MSE): 0.0295
 R² Score: 0.5256
 
-![alt text](image-2.png)
+![alt text](./neural_net_trainig_docu/image-2.png)
 
-![alt text](image-3.png)
+![alt text](./neural_net_trainig_docu/image-3.png)
 
 ## with CountOfPiecesAndDames, CountOfPiecesAtEndOfBoard (with model 01)
 Mean Absolute Error (MAE): 0.1374
 Mean Squared Error (MSE): 0.0264
 R² Score: 0.5777
 
-![alt text](image-8.png)
+![alt text](./neural_net_trainig_docu/image-8.png)
 
-![alt text](image-9.png)
+![alt text](./neural_net_trainig_docu/image-9.png)
 
 ## with CountOfPiecesAndDames, CountOfPiecesAtEndOfBoard, ProgressPiecesOnBoard
 Mean Absolute Error (MAE): 0.2886
 Mean Squared Error (MSE): 0.1218
 R² Score: 0.0385
 
-![alt text](image.png)
+![alt text](./neural_net_trainig_docu/image.png)
 
-![alt text](image-1.png)
+![alt text](./neural_net_trainig_docu/image-1.png)
 
 # Output
 ## with CountOfPiecesAndDames, CountOfPiecesAtEndOfBoard, ProgressPiecesOnBoard (with model 01)
@@ -93,16 +93,16 @@ Mean Absolute Error (MAE): 0.2863
 Mean Squared Error (MSE): 0.1210
 R² Score: 0.0457
 
-![alt text](image-10.png)
+![alt text](./neural_net_trainig_docu/image-10.png)
 
-![alt text](image-11.png)
+![alt text](./neural_net_trainig_docu/image-11.png)
 
 ## with \<all>
 Mean Absolute Error (MAE): 0.3126
 Mean Squared Error (MSE): 0.1218
 R² Score: 0.0033
 
-![alt text](image-12.png)
+![alt text](./neural_net_trainig_docu/image-12.png)
 
-![alt text](image-13.png)
+![alt text](./neural_net_trainig_docu/image-13.png)
 
