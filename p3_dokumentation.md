@@ -105,8 +105,43 @@ Das zweite Modell erweitert die Architektur durch die Einführung eines Convolut
 └─────────────────────────────────┴────────────────────────┴───────────────┘
 ```
 
-## Ergebnisse Training TODO
+## Ergebnisse Training
+Die Ergebnisse des Trainings zeigen, dass das zweite Modell (mit Convolutional Layer) keinen signifikanten Vorteil im Vergleich zum ersten Modell gebracht hat. Tatsächlich schnitt das erste Modell in einigen Konfigurationen sogar leicht besser ab.
 
+### Vergleich der Modelle
+
+- **CountOfPiecesAndDames (Modell 01)**:  
+  - MAE: 0.0662  
+  - MSE: 0.0076  
+  - R²: 0.8571  
+
+- **CountOfPiecesAndDames (Modell 02)**:  
+  - MAE: 0.0702  
+  - MSE: 0.0083  
+  - R²: 0.8437  
+
+Die Einführung des Convolutional Layers im zweiten Modell führte in diesem Fall zu einer geringfügigen Verschlechterung der Ergebnisse. Dies könnte darauf hinweisen, dass die räumliche Struktur der Daten in diesem Szenario keine wesentliche Rolle spielt oder dass das zusätzliche Layer-Design nicht optimal auf die Daten abgestimmt ist.
+
+### Einfluss der Heuristiken
+
+Des weiteren ist zu erkennen, dass das Training schlechter wurde, je mehr Heuristiken in den Datensatz aufgenommen wurden. Beispielsweise zeigen die Ergebnisse mit drei Heuristiken (**CountOfPiecesAndDames**, **CountOfPiecesAtEndOfBoard**, **ProgressPiecesOnBoard**) eine deutlich höhere MAE und MSE sowie einen stark abnehmenden R²-Wert:
+
+- **CountOfPiecesAndDames, CountOfPiecesAtEndOfBoard, ProgressPiecesOnBoard (Modell 01)**:  
+  - MAE: 0.2863  
+  - MSE: 0.1210  
+  - R²: 0.0457  
+
+- **CountOfPiecesAndDames, CountOfPiecesAtEndOfBoard, ProgressPiecesOnBoard (Modell 02)**:  
+  - MAE: 0.2886  
+  - MSE: 0.1218  
+  - R²: 0.0385  
+
+Der R²-Wert, der die Güte der Anpassung des Modells misst, fiel mit der Hinzunahme weiterer Heuristiken drastisch ab. Mit allen verfügbaren Heuristiken aus dem ersten Praktikum im Datensatz lag der R²-Wert bei nahezu 0:
+
+- **alle Heuristiken (Modell 01)**:  
+  - MAE: 0.3126  
+  - MSE: 0.1218  
+  - R²: 0.0033  
 
 ## Fazit TODO
 

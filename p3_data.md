@@ -42,24 +42,23 @@ model02:
 ```
 
 # Output
-## with CountOfPiecesAndDames, CountOfPiecesAtEndOfBoard, ProgressPiecesOnBoard
-Mean Absolute Error (MAE): 0.2886
-Mean Squared Error (MSE): 0.1218
-R² Score: 0.0385
+## only CountOfPiecesAndDames
+Mean Absolute Error (MAE): 0.0702
+Mean Squared Error (MSE): 0.0083
+R² Score: 0.8437
 
-![alt text](image.png)
+![alt text](image-4.png)
 
-![alt text](image-1.png)
+![alt text](image-5.png)
 
-# Output
-## with CountOfPiecesAndDames, CountOfPiecesAtEndOfBoard, ProgressPiecesOnBoard (with model 01)
-Mean Absolute Error (MAE): 0.2863
-Mean Squared Error (MSE): 0.1210
-R² Score: 0.0457
+## only CountOfPiecesAndDames (with model 01)
+Mean Absolute Error (MAE): 0.0662
+Mean Squared Error (MSE): 0.0076
+R² Score: 0.8571
 
-![alt text](image-10.png)
+![alt text](image-6.png)
 
-![alt text](image-11.png)
+![alt text](image-7.png)
 
 ## with CountOfPiecesAndDames, CountOfPiecesAtEndOfBoard
 Mean Absolute Error (MAE): 0.1444
@@ -79,23 +78,24 @@ R² Score: 0.5777
 
 ![alt text](image-9.png)
 
-## only CountOfPiecesAndDames
-Mean Absolute Error (MAE): 0.0702
-Mean Squared Error (MSE): 0.0083
-R² Score: 0.8437
+## with CountOfPiecesAndDames, CountOfPiecesAtEndOfBoard, ProgressPiecesOnBoard
+Mean Absolute Error (MAE): 0.2886
+Mean Squared Error (MSE): 0.1218
+R² Score: 0.0385
 
-![alt text](image-4.png)
+![alt text](image.png)
 
-![alt text](image-5.png)
+![alt text](image-1.png)
 
-## only CountOfPiecesAndDames (with model 01)
-Mean Absolute Error (MAE): 0.0662
-Mean Squared Error (MSE): 0.0076
-R² Score: 0.8571
+# Output
+## with CountOfPiecesAndDames, CountOfPiecesAtEndOfBoard, ProgressPiecesOnBoard (with model 01)
+Mean Absolute Error (MAE): 0.2863
+Mean Squared Error (MSE): 0.1210
+R² Score: 0.0457
 
-![alt text](image-6.png)
+![alt text](image-10.png)
 
-![alt text](image-7.png)
+![alt text](image-11.png)
 
 ## with \<all>
 Mean Absolute Error (MAE): 0.3126
