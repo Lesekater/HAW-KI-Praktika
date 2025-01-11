@@ -25,27 +25,88 @@ Wie beeinflusst die Verwendung von Alpha-Beta-Pruning die Effizienz des Minimax-
 
 Das Grundgerüst des Dame-Spiels sowie die Heuristiken wurden aus dem ersten Praktikum übernommen. Zur Generierung des Datensatzes wurde der Code aus dem zweiten Praktikum entsprechend modifiziert. Während der Simulation zufälliger Spiele mithilfe der Monte Carlo Game Search wurden alle Zwischen-Spielsituationen in .json-Dateien zwischengespeichert, um sie später für den Datensatz zu labeln. Diese Dateien wurden anschließend erneut eingelesen und mithilfe der im ersten Praktikum entwickelten Heuristiken gelabelt. Dadurch konnte ein umfassender Datensatz erstellt werden, der als Grundlage für das Training des neuronalen Netzes dient.
 
-### Ablauf der Tests TODO
+#### Datengenerierung mithilfe von MCGS
 
-1. **Initialisierung**: Die Spielfeldgröße wurde auf 8×8 festgelegt, um die Performance des Algorithmus auf einem realistischen Spielfeld zu testen. Aufgrund der hohen Rechenzeit wurden für wiederholte Tests kleinere Spielfelder mit 4×5 Feldern verwendet.
-2. **Zugbewertung**: Der Algorithmus bewertet die möglichen Spielzüge rekursiv, basierend auf einer definierten Bewertungsfunktion für Spielstände.
-3. **Optimierung**: Beim Alpha-Beta-Pruning werden die Grenzwerte _alpha_ und _beta_ eingeführt, um die Suche einzuschränken.
+Die Datengenerierung erfolgte durch die Simulation von Spielen mithilfe des modifizierten Monte Carlo Game Search-Algorithmus. Um diese Simulation zu starten, wurde der folgende Befehl verwendet:
 
-## Testergebnisse TODO
+```bash
+python3.10 main.py 0 9 10 4 &
+```
 
-### 8×8 Spielfeld
+Dabei wurde für jedes simulierte Spiel die jeweilige Zwischen-Spielsituation in einer .json-Datei gespeichert. Ein Beispiel für eine generierte Datei sieht wie folgt aus:
 
-Wie auf dem Diagramm [B1] zu sehen, wurden auf einem vollständigen Spielfeld (8×8) folgende Ergebnisse erzielt:
-- **Ohne Alpha-Beta-Pruning**: Bis zu 143.000 Knoten wurden analysiert, und die Berechnung dauerte über 20 Minuten.
-- **Mit Alpha-Beta-Pruning**: Durchschnittlich wurden pro Zug maximal 8.000 Knoten betrachtet, und die Berechnung dauerte ca. 2 Minuten.
+```json
+{
+    "move": [
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 3, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [4, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 3, 0, 0, 0, 0, 0, 0]
+    ],
+    "score": -1
+}
+```
 
-### 4×5 Spielfeld
+Im nächsten Schritt wurden die Situationen mithilfe des folgenden Skripts gelabelt:
+```bash
+python convert_training_data.py
+```
+Hierbei wurde der ursprüngliche Score durch Werte ersetzt, die auf den im ersten Praktikum entwickelten Heuristiken basieren. Für jede Heuristik wurde dabei eine eigene Datei erstellt, in der der score entsprechend angepasst wurde. Der finale Datensatz enthält somit für jede Spielsituation mehrere Scores, die die Heuristiken repräsentieren. Diese Daten dienten als Grundlage für das Training des neuronalen Netzes.
 
-Zur Durchführung von 1.000 Simulationen wurde ein reduziertes Spielfeld (4×5) verwendet. Wie auf dem Diagramm [B2] zu sehen, zeigte sich dabei:
-- **Ohne Alpha-Beta-Pruning**: Bis zu 650 Knoten wurden analysiert.
-- **Mit Alpha-Beta-Pruning**: Durchschnittlich wurden pro Zug maximal 250 Knoten betrachtet.
+### Training des Neuronalen Netz
 
-Die Ergebnisse zeigen, dass Alpha-Beta-Pruning die Anzahl der betrachteten Knoten sowie die Rechenzeit drastisch reduziert.
+Im Rahmen des Projekts wurden zwei verschiedene Modelle entwickelt und trainiert, um die Aggregation von Heuristiken zu optimieren. Das erste Modell diente als Basis, während das zweite Modell durch Hinzufügen eines Convolutional Layers weiterentwickelt wurde, um die Trainingsergebnisse zu verbessern.
+
+#### Modell 01
+
+Das erste Modell ist ein einfaches feedforward Netz mit einer flachen Architektur. Es besteht aus mehreren voll verbundenen Dense-Layern, die schrittweise die Eingabedaten transformieren. Die Architektur sieht wie folgt aus:
+
+```
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ flatten (Flatten)               │ (None, 64)             │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense (Dense)                   │ (None, 128)            │         8,320 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_1 (Dense)                 │ (None, 64)             │         8,256 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_2 (Dense)                 │ (None, 64)             │         4,160 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_3 (Dense)                 │ (None, 1)              │            65 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+```
+
+#### Modell 02
+
+Das zweite Modell erweitert die Architektur durch die Einführung eines Convolutional Layers. Dieser ermöglicht die Extraktion von räumlichen Merkmalen aus den Eingabedaten, die anschließend in Dense-Layern verarbeitet werden. Zusätzlich wurden Dropout-Schichten hinzugefügt, um gegen Overfitting gegenzuwirken. Die Architektur ist wie folgt:
+
+```
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ conv2d (Conv2D)                 │ (None, 8, 8, 32)       │           320 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ max_pooling2d (MaxPooling2D)    │ (None, 4, 4, 32)       │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dropout (Dropout)               │ (None, 4, 4, 32)       │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ flatten (Flatten)               │ (None, 512)            │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense (Dense)                   │ (None, 128)            │        65,664 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dropout_1 (Dropout)             │ (None, 128)            │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_1 (Dense)                 │ (None, 1)              │           129 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+```
+
+## Ergebnisse Training TODO
+
 
 ## Fazit TODO
 
