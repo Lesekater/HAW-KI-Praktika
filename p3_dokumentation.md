@@ -155,3 +155,6 @@ Die Ergebnisse legen nahe, dass die Hinzunahme zusätzlicher Heuristiken nicht z
 [R1] Quellcode Dame-Anwendung (https://github.com/Lesekater/HAW-KI-Praktika.git)
 
 ## Bilder TODO: haben/ brauchen wir bilder?
+[B1] P3_MAE.png ![MAE Werte von trainierten Modellen](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/P3_MAE.png)  
+[B2] P3_MSE.png ![MSE Werte von trainierten Modellen](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/P3_MSE.png)  
+[B3] P3_R^2.png ![R^2 Werte von trainierten Modellen](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/P3_R^2.png)  
