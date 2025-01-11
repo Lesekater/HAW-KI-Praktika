@@ -21,9 +21,9 @@ Wie beeinflusst die Verwendung von Alpha-Beta-Pruning die Effizienz des Minimax-
 
 ## Implementierung
 
-### Übernahme aus Praktikum 1 & 2 TODO
+### Übernahme aus Praktikum 1 & 2
 
-Das Grundgerüst des Dame-Spiels sowie die grundlegenden Bewertungsfunktionen wurden aus Praktikum 1 übernommen. Die Modifikation betrifft die Implementierung des Algorithmus: Anstelle von A* wurde der Minimax-Algorithmus mit und ohne Alpha-Beta-Pruning verwendet.
+Das Grundgerüst des Dame-Spiels sowie die Heuristiken wurden aus dem ersten Praktikum übernommen. Zur Generierung des Datensatzes wurde der Code aus dem zweiten Praktikum entsprechend modifiziert. Während der Simulation zufälliger Spiele mithilfe der Monte Carlo Game Search wurden alle Zwischen-Spielsituationen in .json-Dateien zwischengespeichert, um sie später für den Datensatz zu labeln. Diese Dateien wurden anschließend erneut eingelesen und mithilfe der im ersten Praktikum entwickelten Heuristiken gelabelt. Dadurch konnte ein umfassender Datensatz erstellt werden, der als Grundlage für das Training des neuronalen Netzes dient.
 
 ### Ablauf der Tests TODO
 
