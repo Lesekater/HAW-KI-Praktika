@@ -5,19 +5,41 @@ Elias Wernicke, Lars Janssen
 
 ## Forschungsfrage
 
-Wie gut kann ein neuronales Netz mehrere 
-
-Wie beeinflusst die Verwendung von Alpha-Beta-Pruning die Effizienz des Minimax-Algorithmus beim Spielen von Dame?
+Wie gut kann ein neuronales Netz mehrere Heuristiken aggregieren?
+Ist es moeglich ein neuronales Netz auf mehreren Heuristiken zu trainieren, um es selbst als Heuristik zu verwenden?
 
 ## Theorie
 
 ### Neuronale Netze [\<quelle>] TODO
 
+https://pmc.ncbi.nlm.nih.gov/articles/PMC6428006/
+Neuronale Netze sind Systeme, welche die struktur und funktion von biologischen gehirnen imitieren.
+Sie bestehen aus untereinander verbundenen Neuronen,
+TODO HOW TO NEURON
 
+Diese Neuronen werden zu Schichten zusammengefasst.
+Einem Input layer, in welchem die dort angesetzten Neuronen direkt die Eingabe fuer das neuronale Netz erhalten.
+Mehreren Hidden layers, welche die Daten transformieren und weiter verarbeiten.
+Und schliesslich dem Output layer, welcher die finale Entscheidung des Netzwerkes repraesentiert.
+
+Die am weitest verbreitete Art von neuronalen Netzen ist die des Feedforward Netzes, in welcher die Signale nur von Input zu Output fliessen.
 
 ### Aggregation von Heuristiken? [\<quelle>] TODO
 
+https://arxiv.org/abs/2002.06505
+Das universele approximations Theorem sagt aus, dass normale feedforward neurale Netzwerke mit nur einer verschteckten Schicht jede kontinuirliche multivariate Funktion approximiert werden.
 
+https://www.sciencedirect.com/science/article/abs/pii/0893608089900208?via%3Dihub
+Neuronale Netze koennen genutzt werden, um funktionen zu approximieren.
+
+-> function approximators source here (what are NNs in realation to our question?)
+
+(Given how they work and how minimax / a\* works, would it be smart to use them as a heuristic?)
+https://www.reddit.com/r/reinforcementlearning/comments/10t08yj/minimax_with_neural_network_evaluation_function/
+-> nn are function approximators -> errors propagate (find better sources)
+
+was macht eine gute heuristik aus?
+How does randomization affect algo?
 
 ## Implementierung
 
@@ -37,24 +59,26 @@ Dabei wurde für jedes simulierte Spiel die jeweilige Zwischen-Spielsituation in
 
 ```json
 {
-    "move": [
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 3, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [4, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 3, 0, 0, 0, 0, 0, 0]
-    ],
-    "score": -1
+  "move": [
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 3, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [4, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 3, 0, 0, 0, 0, 0, 0]
+  ],
+  "score": -1
 }
 ```
 
 Im nächsten Schritt wurden die Situationen mithilfe des folgenden Skripts gelabelt:
+
 ```bash
 python convert_training_data.py
 ```
+
 Hierbei wurde der ursprüngliche Score durch Werte ersetzt, die auf den im ersten Praktikum entwickelten Heuristiken basieren. Für jede Heuristik wurde dabei eine eigene Datei erstellt, in der der score entsprechend angepasst wurde. Der finale Datensatz enthält somit für jede Spielsituation mehrere Scores, die die Heuristiken repräsentieren. Diese Daten dienten als Grundlage für das Training des neuronalen Netzes.
 
 ### Training des Neuronalen Netz
@@ -106,6 +130,7 @@ Das zweite Modell erweitert die Architektur durch die Einführung eines Convolut
 ```
 
 ## Ergebnisse Training
+
 Die Ergebnisse des Trainings zeigen, dass das zweite Modell (mit Convolutional Layer) keinen signifikanten Vorteil im Vergleich zum ersten Modell gebracht hat. Tatsächlich schnitt das erste Modell in einigen Konfigurationen sogar leicht besser ab.
 Zur besseren Darstellung sind die folgenden Werte auch noch einmal in Diagrammform im Anhang [B1], [B2], [B3] einzusehen.
 
@@ -117,15 +142,16 @@ Der R²-Wert (Bestimmtheitsmaß) <TODO: Quelle?> quantifiziert den Anteil der Va
 
 ### Vergleich der Modelle
 
-- **CountOfPiecesAndDames (Modell 01)**:  
-  - MAE: 0.0662  
-  - MSE: 0.0076  
-  - R²: 0.8571  
+- **CountOfPiecesAndDames (Modell 01)**:
 
-- **CountOfPiecesAndDames (Modell 02)**:  
-  - MAE: 0.0702  
-  - MSE: 0.0083  
-  - R²: 0.8437  
+  - MAE: 0.0662
+  - MSE: 0.0076
+  - R²: 0.8571
+
+- **CountOfPiecesAndDames (Modell 02)**:
+  - MAE: 0.0702
+  - MSE: 0.0083
+  - R²: 0.8437
 
 Die Einführung des Convolutional Layers im zweiten Modell führte in diesem Fall zu einer geringfügigen Verschlechterung der Ergebnisse. Dies könnte darauf hinweisen, dass die räumliche Struktur der Daten in diesem Szenario keine wesentliche Rolle spielt oder dass das zusätzliche Layer-Design nicht optimal auf die Daten abgestimmt ist.
 
@@ -133,26 +159,32 @@ Die Einführung des Convolutional Layers im zweiten Modell führte in diesem Fal
 
 Des weiteren ist zu erkennen, dass das Training schlechter wurde, je mehr Heuristiken in den Datensatz aufgenommen wurden. Beispielsweise zeigen die Ergebnisse mit drei Heuristiken (**CountOfPiecesAndDames**, **CountOfPiecesAtEndOfBoard**, **ProgressPiecesOnBoard**) eine deutlich höhere MAE und MSE sowie einen stark abnehmenden R²-Wert:
 
-- **CountOfPiecesAndDames, CountOfPiecesAtEndOfBoard, ProgressPiecesOnBoard (Modell 01)**:  
-  - MAE: 0.2863  
-  - MSE: 0.1210  
-  - R²: 0.0457  
+- **CountOfPiecesAndDames, CountOfPiecesAtEndOfBoard, ProgressPiecesOnBoard (Modell 01)**:
 
-- **CountOfPiecesAndDames, CountOfPiecesAtEndOfBoard, ProgressPiecesOnBoard (Modell 02)**:  
-  - MAE: 0.2886  
-  - MSE: 0.1218  
-  - R²: 0.0385  
+  - MAE: 0.2863
+  - MSE: 0.1210
+  - R²: 0.0457
+
+- **CountOfPiecesAndDames, CountOfPiecesAtEndOfBoard, ProgressPiecesOnBoard (Modell 02)**:
+  - MAE: 0.2886
+  - MSE: 0.1218
+  - R²: 0.0385
 
 Der R²-Wert, der die Güte der Anpassung des Modells misst, fiel mit der Hinzunahme weiterer Heuristiken drastisch ab. Mit allen verfügbaren Heuristiken aus dem ersten Praktikum im Datensatz lag der R²-Wert bei nahezu 0:
 
-- **alle Heuristiken (Modell 01)**:  
-  - MAE: 0.3126  
-  - MSE: 0.1218  
-  - R²: 0.0033  
+- **alle Heuristiken (Modell 01)**:
+  - MAE: 0.3126
+  - MSE: 0.1218
+  - R²: 0.0033
 
 ## Fazit
 
 Die Ergebnisse legen nahe, dass die Hinzunahme zusätzlicher Heuristiken nicht zwangsläufig zu einer Verbesserung der Modellleistung führt. Stattdessen scheint eine Überkomplexität der Eingabedaten die Fähigkeit des Modells, sinnvolle Zusammenhänge zu lernen, negativ zu beeinflussen. Ebenso hat das zweite Modell keine signifikanten Vorteile gegenüber dem ersten Modell gebracht, sodass die zusätzliche Komplexität des Convolutional Layers in diesem Fall nicht gerechtfertigt ist.
+
+how about vs. minmax aus praktikum 1/2?
+how about only picking from heuristics for certain times from game. Diffrent heuristics are better for different phases of the game. only put gamestates + heuristic in trainingdata if the heuristic is good for the phase of the game the gamestate is in ==> results in smooth transition between heuristics?
+Heuristiks not normalized to each other
+heuristic CountOfPiecesAndDames does not work => only own move never loses own piece
 
 ## Quellen & Referenzen TODO
 
@@ -162,6 +194,7 @@ Die Ergebnisse legen nahe, dass die Hinzunahme zusätzlicher Heuristiken nicht z
 [R1] Quellcode Dame-Anwendung (https://github.com/Lesekater/HAW-KI-Praktika.git)
 
 ## Bilder TODO: haben/ brauchen wir bilder?
+
 [B1] P3_MAE.png ![MAE Werte von trainierten Modellen](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/P3_MAE.png)  
 [B2] P3_MSE.png ![MSE Werte von trainierten Modellen](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/P3_MSE.png)  
-[B3] P3_R^2.png ![R^2 Werte von trainierten Modellen](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/P3_R^2.png)  
+[B3] P3_R^2.png ![R^2 Werte von trainierten Modellen](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/P3_R^2.png)
