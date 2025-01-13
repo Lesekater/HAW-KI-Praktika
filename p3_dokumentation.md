@@ -197,7 +197,7 @@ Hirschle, Jochen; ISBN: 978-3-446-46814-6
 978-1-68392-366-4
 [R1] Quellcode Dame-Anwendung (https://github.com/Lesekater/HAW-KI-Praktika.git)
 
-## Bilder TODO: haben/ brauchen wir bilder?
+## Bilder
 
 [B1] P3_MAE.png ![MAE Werte von trainierten Modellen](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/P3_MAE.png)  
 [B2] P3_MSE.png ![MSE Werte von trainierten Modellen](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/P3_MSE.png)  
