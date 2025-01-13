@@ -3,10 +3,16 @@
 11.01.2024 \
 Elias Wernicke, Lars Janssen
 
+TODO:
+Forschungsfrage ausarbeiten
+Theorie smoothen
+quellen finden
+fuer elias part quellen finden
+fatzit schreiben
+
 ## Forschungsfrage
 
 Wie gut kann ein neuronales Netz mehrere Heuristiken aggregieren?
-Ist es moeglich ein neuronales Netz auf mehreren Heuristiken zu trainieren, um es selbst als Heuristik zu verwenden?
 
 ## Theorie
 
@@ -14,32 +20,23 @@ Ist es moeglich ein neuronales Netz auf mehreren Heuristiken zu trainieren, um e
 
 https://pmc.ncbi.nlm.nih.gov/articles/PMC6428006/
 Neuronale Netze sind Systeme, welche die struktur und funktion von biologischen gehirnen imitieren.
-Sie bestehen aus untereinander verbundenen Neuronen,
-TODO HOW TO NEURON
+
+Sie bestehen aus untereinander verbundenen Neuronen. Zu jedem Neuron gehoert eine Aktivierungsfunktion mit welche entschieden wird, ob das Neuron ausloest und ein signal an andere Neuronen weiter gibt. Dise Funktion ist gewichtet und ueber Finetuning der einzelnen Gewichte kann das Netz trainiert werden.
 
 Diese Neuronen werden zu Schichten zusammengefasst.
-Einem Input layer, in welchem die dort angesetzten Neuronen direkt die Eingabe fuer das neuronale Netz erhalten.
-Mehreren Hidden layers, welche die Daten transformieren und weiter verarbeiten.
-Und schliesslich dem Output layer, welcher die finale Entscheidung des Netzwerkes repraesentiert.
+Einem Input layer, in welchem die dort angesetzten Neuronen direkt die Eingabe fuer das neuronale Netz erhalten. Mehreren Hidden layers, welche die Daten transformieren und weiter verarbeiten.
+Und schließlich dem Output layer, welcher die finale Entscheidung des Netzwerkes repräsentiert.
 
 Die am weitest verbreitete Art von neuronalen Netzen ist die des Feedforward Netzes, in welcher die Signale nur von Input zu Output fliessen.
 
 ### Aggregation von Heuristiken? [\<quelle>] TODO
 
 https://arxiv.org/abs/2002.06505
-Das universele approximations Theorem sagt aus, dass normale feedforward neurale Netzwerke mit nur einer verschteckten Schicht jede kontinuirliche multivariate Funktion approximiert werden.
-
 https://www.sciencedirect.com/science/article/abs/pii/0893608089900208?via%3Dihub
-Neuronale Netze koennen genutzt werden, um funktionen zu approximieren.
+Das universelle approximations Theorem sagt aus, dass normale feedforward neurale Netzwerke mit nur einer verschteckten Schicht jede kontinuirliche multivariate Funktion approximiert werden.
 
--> function approximators source here (what are NNs in realation to our question?)
-
-(Given how they work and how minimax / a\* works, would it be smart to use them as a heuristic?)
-https://www.reddit.com/r/reinforcementlearning/comments/10t08yj/minimax_with_neural_network_evaluation_function/
--> nn are function approximators -> errors propagate (find better sources)
-
-was macht eine gute heuristik aus?
-How does randomization affect algo?
+https://cdn.aaai.org/AAAI/1994/AAAI94-211.pdf
+Da neuronale Netzwerke nur Funktionen approximieren und bei jedem aufruf (abhaengig von implementation) einen gewissen Zufallsfaktor beinhalten, sind wiederholte Entscheidungen bei selbem input immer leicht unterschiedlich. Dieses Rauschen ist eine durchaus unerwuenschte Eigenschaft fuer heuristiken. Da beim mehrfachen Anwenden von Neuronalen Netzen als Heuristiken sich der Effekt dieses Rauschen auf das letzendliche Ergebnis des Algorithmuses bei tieferer Suche signifikant auswirken kann.
 
 ## Implementierung
 
