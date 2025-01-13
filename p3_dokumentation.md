@@ -134,11 +134,11 @@ Das zweite Modell erweitert die Architektur durch die Einführung eines Convolut
 Die Ergebnisse des Trainings zeigen, dass das zweite Modell (mit Convolutional Layer) keinen signifikanten Vorteil im Vergleich zum ersten Modell gebracht hat. Tatsächlich schnitt das erste Modell in einigen Konfigurationen sogar leicht besser ab.
 Zur besseren Darstellung sind die folgenden Werte auch noch einmal in Diagrammform im Anhang [B1], [B2], [B3] einzusehen.
 
-Der MAE-Wert (Mean Absolute Error) <TODO: Quelle?> gibt dabei die durchschnittliche absolute Differenz zwischen den tatsächlichen und den vorhergesagten Werten im Testset an. Ein niedriger MAE-Wert weist auf eine bessere Modellvorhersagegenauigkeit hin, da er die durchschnittliche Fehlergröße in der gleichen Einheit wie die Ausgangsdaten misst.
+Der MAE-Wert (Mean Absolute Error) [Q5, s. 103] gibt dabei die durchschnittliche absolute Differenz zwischen den tatsächlichen und den vorhergesagten Werten im Testset an. Ein niedriger MAE-Wert weist auf eine bessere Modellvorhersagegenauigkeit hin, da er die durchschnittliche Fehlergröße in der gleichen Einheit wie die Ausgangsdaten misst.
 
-Der MSE-Wert (Mean Squared Error) <TODO: Quelle?> misst die durchschnittliche quadratische Differenz zwischen den tatsächlichen und den vorhergesagten Werten im Testset. Dieser Wert betont größere Fehler stärker, da die Fehler quadriert werden. Ein niedriger MSE-Wert bedeutet eine geringere Streuung der Fehler und eine genauere Modellvorhersage.
+Der MSE-Wert (Mean Squared Error) [Q5, s. 103] misst die durchschnittliche quadratische Differenz zwischen den tatsächlichen und den vorhergesagten Werten im Testset. Dieser Wert betont größere Fehler stärker, da die Fehler quadriert werden. Ein niedriger MSE-Wert bedeutet eine geringere Streuung der Fehler und eine genauere Modellvorhersage.
 
-Der R²-Wert (Bestimmtheitsmaß) <TODO: Quelle?> quantifiziert den Anteil der Varianz der Zielvariable, der durch das Modell erklärt wird. Ein R²-Wert von 1 deutet auf eine perfekte Anpassung hin, während ein Wert von 0 darauf hinweist, dass das Modell keine bessere Erklärung für die Variabilität der Zielvariable bietet als das Mittel der beobachteten Werte.
+Der R²-Wert (Bestimmtheitsmaß) [Q4, 3.1] quantifiziert den Anteil der Varianz der Zielvariable, der durch das Modell erklärt wird. Ein R²-Wert von 1 deutet auf eine perfekte Anpassung hin, während ein Wert von 0 darauf hinweist, dass das Modell keine bessere Erklärung für die Variabilität der Zielvariable bietet als das Mittel der beobachteten Werte.
 
 ### Vergleich der Modelle
 
@@ -191,6 +191,10 @@ heuristic CountOfPiecesAndDames does not work => only own move never loses own p
 [Q1] TODO  
 [Q2] Implementierungsdetails aus Praktikum 1 (siehe [Dokumentation P1](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/p1_dokumentation.md))  
 [Q3] Implementierungsdetails aus Praktikum 2 (siehe [Dokumentation P2](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/p2_dokumentation.md))  
+[Q4] Machine Learning für Zeitreihen : Einstieg in Regressions-, ARIMA- und Deep Learning-Verfahren mit Python / Jochen Hirschle 	
+Hirschle, Jochen; ISBN: 978-3-446-46814-6
+[Q5] TensorFlow Pocket Primer Oswald Campesato; ISBN: 	
+978-1-68392-366-4
 [R1] Quellcode Dame-Anwendung (https://github.com/Lesekater/HAW-KI-Praktika.git)
 
 ## Bilder TODO: haben/ brauchen wir bilder?
