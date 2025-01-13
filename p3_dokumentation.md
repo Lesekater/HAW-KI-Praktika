@@ -16,27 +16,24 @@ Wie gut kann ein neuronales Netz mehrere Heuristiken aggregieren?
 
 ## Theorie
 
-### Neuronale Netze [\<quelle>] TODO
+### Neuronale Netze 
 
-https://pmc.ncbi.nlm.nih.gov/articles/PMC6428006/
-Neuronale Netze sind Systeme, welche die struktur und funktion von biologischen gehirnen imitieren.
+Neuronale Netze sind Systeme, welche die Struktur und Funktion von biologischen Gehirnen imitieren. [Q8, S.1]
 
-Sie bestehen aus untereinander verbundenen Neuronen. Zu jedem Neuron gehoert eine Aktivierungsfunktion mit welche entschieden wird, ob das Neuron ausloest und ein signal an andere Neuronen weiter gibt. Dise Funktion ist gewichtet und ueber Finetuning der einzelnen Gewichte kann das Netz trainiert werden.
+Sie bestehen aus untereinander verbundenen Neuronen. Zu jedem Neuron gehört eine Aktivierungsfunktion mit welche entschieden wird, ob das Neuron auslöst und ein signal an andere Neuronen weiter gibt. Diese Funktion ist gewichtet und über Fine-tuning der einzelnen Gewichte kann das Netz trainiert werden. [Q8, S.1]
 
 Diese Neuronen werden zu Schichten zusammengefasst.
-Einem Input layer, in welchem die dort angesetzten Neuronen direkt die Eingabe fuer das neuronale Netz erhalten. Mehreren Hidden layers, welche die Daten transformieren und weiter verarbeiten.
-Und schließlich dem Output layer, welcher die finale Entscheidung des Netzwerkes repräsentiert.
+Einem Input layer, in welchem die dort angesetzten Neuronen direkt die Eingabe für das neuronale Netz erhalten. Mehreren Hidden layers, welche die Daten transformieren und weiter verarbeiten.
+Und schließlich dem Output layer, welcher die finale Entscheidung des Netzwerkes repräsentiert. [Q8, S.1]
 
-Die am weitest verbreitete Art von neuronalen Netzen ist die des Feedforward Netzes, in welcher die Signale nur von Input zu Output fliessen.
+Die am weitest verbreitete Art von neuronalen Netzen ist die des Feed-forward Netzes, in welcher die Signale nur von Input zu Output fließen. [Q8, S.1]
 
-### Aggregation von Heuristiken? [\<quelle>] TODO
+### Aggregation von Heuristiken? 
 
-https://arxiv.org/abs/2002.06505
-https://www.sciencedirect.com/science/article/abs/pii/0893608089900208?via%3Dihub
-Das universelle approximations Theorem sagt aus, dass normale feedforward neurale Netzwerke mit nur einer verschteckten Schicht jede kontinuirliche multivariate Funktion approximiert werden.
+Das universelle approximations Theorem sagt aus, dass normale feed-forward neurale Netzwerke mit nur einer versteckten Schicht jede kontinuierliche multivariate Funktion approximiert werden. [Q6, S.1]  [Q7, S.1]
 
-https://cdn.aaai.org/AAAI/1994/AAAI94-211.pdf
-Da neuronale Netzwerke nur Funktionen approximieren und bei jedem aufruf (abhaengig von implementation) einen gewissen Zufallsfaktor beinhalten, sind wiederholte Entscheidungen bei selbem input immer leicht unterschiedlich. Dieses Rauschen ist eine durchaus unerwuenschte Eigenschaft fuer heuristiken. Da beim mehrfachen Anwenden von Neuronalen Netzen als Heuristiken sich der Effekt dieses Rauschen auf das letzendliche Ergebnis des Algorithmuses bei tieferer Suche signifikant auswirken kann.
+
+Da neuronale Netzwerke nur Funktionen approximieren und bei jedem Aufruf (abhängig von implementation) einen gewissen Zufallsfaktor beinhalten, sind wiederholte Entscheidungen bei selbem input immer leicht unterschiedlich. Dieses Rauschen ist eine durchaus unerwünschte Eigenschaft für Heuristiken. Da beim mehrfachen Anwenden von Neuronalen Netzen als Heuristiken sich der Effekt dieses Rauschen auf das letztendliche Ergebnis des Algorithmus bei tieferer Suche signifikant auswirken kann. [Q7, S.1]
 
 ## Implementierung
 
@@ -178,20 +175,24 @@ Der R²-Wert, der die Güte der Anpassung des Modells misst, fiel mit der Hinzun
 
 Die Ergebnisse legen nahe, dass die Hinzunahme zusätzlicher Heuristiken nicht zwangsläufig zu einer Verbesserung der Modellleistung führt. Stattdessen scheint eine Überkomplexität der Eingabedaten die Fähigkeit des Modells, sinnvolle Zusammenhänge zu lernen, negativ zu beeinflussen. Ebenso hat das zweite Modell keine signifikanten Vorteile gegenüber dem ersten Modell gebracht, sodass die zusätzliche Komplexität des Convolutional Layers in diesem Fall nicht gerechtfertigt ist.
 
-how about vs. minmax aus praktikum 1/2?
-how about only picking from heuristics for certain times from game. Diffrent heuristics are better for different phases of the game. only put gamestates + heuristic in trainingdata if the heuristic is good for the phase of the game the gamestate is in ==> results in smooth transition between heuristics?
-Heuristiks not normalized to each other
-heuristic CountOfPiecesAndDames does not work => only own move never loses own piece
+Was das Netzwerk welches auf allen Heuristiken trainiert wurde wahrscheinlich unnutzbar gemacht hat, ist dass Heuristiken wie PiecesAtEndOfBoard und CountOfPieces den selben Spielzustand komplett unterschiedlich bewerten, sowohl gut als auch schlecht. Diese Unentschlossenheit der Bewertungen in den Trainingsdaten fuehrt zur Verunreinigung des Modells (Garbage in Garbage out).
+
+Schlussendlich ist also die Frage, ob sich Heuristiken wie hier aufgefuehrt durch eine neuronals Netz aggregieren lassen, mit nein zu beantworten. Allerdings gibt es noch eine Verbesserung, die hier nicht eingesetzt wurde, welche aber potenzial haben koennte.
+
+Diese Verbesserung liegt in der zussamensetztung der Trainingsdaten.
+Um zu vermeiden, dass das neuronale Netz auf mehreren Heuristiken gleichzeitig trainiert wird, koennte man zwei oder mehr Heuristiken auswaehlen und das Spiel in genau so viele Phasen unterteilen. Und so nur von einer Heuristik bewertete Spielzustaende in die Trainingsdaten geben, wenn der Spielzustand zu der entsprechenden Phase gehoert. Die Phase koennte man beispielsweise an der Anzahl der Zuege messen. Mit einem solchen Ansatz wuerde man die unentschlossenheit aus den Trainingsdaten eventuell entfernen koennen.
 
 ## Quellen & Referenzen TODO
 
-[Q1] TODO  
 [Q2] Implementierungsdetails aus Praktikum 1 (siehe [Dokumentation P1](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/p1_dokumentation.md))  
 [Q3] Implementierungsdetails aus Praktikum 2 (siehe [Dokumentation P2](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/p2_dokumentation.md))  
 [Q4] Machine Learning für Zeitreihen : Einstieg in Regressions-, ARIMA- und Deep Learning-Verfahren mit Python / Jochen Hirschle 	
 Hirschle, Jochen; ISBN: 978-3-446-46814-6
-[Q5] TensorFlow Pocket Primer Oswald Campesato; ISBN: 	
-978-1-68392-366-4
+[Q5] TensorFlow Pocket Primer Oswald Campesato; ISBN: 978-1-68392-366-4
+[Q6](https://arxiv.org/abs/2002.06505) A closer look at the approximation capabilities of neural networks / Kai Fong Ernest Chong
+[Q7](https://www.sciencedirect.com/science/article/abs/pii/0893608089900208?via%3Dihub) Multilayer feedforward networks are universal approximators / Kurt Hornik, Maxwell Stinchcombe, Halbert White
+[Q7](https://cdn.aaai.org/AAAI/1994/AAAI94-211.pdf)Evolving Nural Networks to Focus Minimax Search / David E. Moritarty, Risto Miikkulainen
+[Q8](https://pmc.ncbi.nlm.nih.gov/articles/PMC6428006/)Artificial Neural Network: Understanding the Basic Concepts without Mathematics
 [R1] Quellcode Dame-Anwendung (https://github.com/Lesekater/HAW-KI-Praktika.git)
 
 ## Bilder
