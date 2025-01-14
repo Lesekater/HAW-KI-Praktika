@@ -25,14 +25,14 @@ onlyfiles = [f for f in listdir(training_path) if isfile(join(training_path, f))
 
 
 heuristics_to_use = [
-    heurisitcTypes.CountOfPieces,
-    heurisitcTypes.CountOfDames,
+    # heurisitcTypes.CountOfPieces,
+    # heurisitcTypes.CountOfDames,
     heurisitcTypes.CountOfPiecesAndDames,
-    heurisitcTypes.CountOfPiecesAtEndOfBoard,
-    heurisitcTypes.ProgressPiecesOnBoard,
-    heurisitcTypes.CountOfPiecesOfOtherPlayer,
-    heurisitcTypes.CountOfDamesOfOtherPlayer,
-    heurisitcTypes.CountOfPiecesAndDamesOfOtherPlayer,
+    # heurisitcTypes.CountOfPiecesAtEndOfBoard,
+    # heurisitcTypes.ProgressPiecesOnBoard,
+    # heurisitcTypes.CountOfPiecesOfOtherPlayer,
+    # heurisitcTypes.CountOfDamesOfOtherPlayer,
+    # heurisitcTypes.CountOfPiecesAndDamesOfOtherPlayer,
 ]
 
 for heuristic in heuristics_to_use:
@@ -50,7 +50,7 @@ def save_scores_for_board(board: Board):
             json.dump({"move": board.toIntList(), "score": calculated_heuristic}, f)
 
 # Set target number of files to process
-target_files = int(100000/8)
+target_files = int(100000/len(heuristics_to_use))
 
 # Shuffle the files list
 random.shuffle(onlyfiles)

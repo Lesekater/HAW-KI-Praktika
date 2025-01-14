@@ -16,6 +16,7 @@ from util import convertPiecesToEmoji, formatBoard, formatBoardWithCoords, print
 from main_a_star import main as main_a_star
 from main_minimax import main as main_minimax
 from main_mcgs import main as main_mcgs
+from main_neural_net import main as main_neural_net
 
 usedAlgorithm = None
 
@@ -77,6 +78,8 @@ def runMain(algorithm: int, board_number: int, heuristic1: int, heuristic2: int,
         main_a_star([testBoards[board_number]], [], heurisitcTypes(heuristic1), heurisitcTypes(heuristic2), debug=debug)
     elif (algorithm == 4): # mcgs
         main_mcgs(makeMove, testBoards[board_number], debug=debug)
+    elif (algorithm == 5): # neural net
+        main_neural_net(makeMove, testBoards[board_number], debug=debug)
 
 if __name__ == "__main__":
     debug = False

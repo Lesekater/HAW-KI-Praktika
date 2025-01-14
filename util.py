@@ -90,6 +90,13 @@ def writeMiniMaxStatsToCSV(minimaxType: str, player1: bool, heuristic: heurisitc
             file.write("MinimaxType,Player,Heuristic,EvaluatedNodes,TotalMoves\n")
         file.write(f"{minimaxType},{1 if player1 else 2},{heuristic.name},{evaluatedNodes},{totalMoves}\n")
 
+def writeStatsToCSV(draw, winningBoard: Board, initalBoard: Board):
+    file_exists = os.path.isfile("stats.csv")
+    with open("stats.csv", "a") as file:
+        if not file_exists:
+            file.write("Winner,TotalMoves,CountOfPiecesPlayer1,CountOfPiecesPlayer2,CountOfDamesPlayer1,CountOfDamesPlayer2\n")
+        file.write(f"{'Draw' if draw else ('Player 1' if winningBoard.player1 else 'Player 2')},{winningBoard.g},{countOfPieces(winningBoard)},{countOfPieces(winningBoard, False)},{countOfDames(winningBoard)},{countOfDames(winningBoard, False)}\n")
+
 signalCtlC = False
 
 def signal_handler(sig, frame):

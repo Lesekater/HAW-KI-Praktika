@@ -1,0 +1,17 @@
+{
+    "files.exclude": {
+        // p1
+        "**/p1_*.md": true,
+        "**/p1_*.pdf": true,
+        "**/p1_*.png": true,
+        "**/*a_star*.py": true,
+        // p2
+        "**/p2_*.md": true,
+        "**/p2_*.pdf": true,
+        "**/p2_*.png": true,
+        "**/*field_*_test.png": true,
+        "*minimax*" : true,
+        // tests
+        "**/*test*.py": true,
+    }
+}

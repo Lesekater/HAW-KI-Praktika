@@ -106,3 +106,5 @@ R² Score: 0.0033
 
 ![alt text](./neural_net_trainig_docu/image-13.png)
 
+# Running Game with Model
+## with CountOfPiecesAndDames
