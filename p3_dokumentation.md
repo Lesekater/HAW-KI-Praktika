@@ -3,13 +3,6 @@
 11.01.2024 \
 Elias Wernicke, Lars Janssen
 
-TODO:
-Forschungsfrage ausarbeiten
-Theorie smoothen
-quellen finden
-fuer elias part quellen finden
-fatzit schreiben
-
 ## Forschungsfrage
 
 Wie gut kann ein neuronales Netz mehrere Heuristiken aggregieren?
@@ -30,7 +23,7 @@ Die am weitest verbreitete Art von neuronalen Netzen ist die des Feed-forward Ne
 
 ### Aggregation von Heuristiken? 
 
-Das universelle approximations Theorem sagt aus, dass normale feed-forward neurale Netzwerke mit nur einer versteckten Schicht jede kontinuierliche multivariate Funktion approximiert werden. [Q6, S.1]  [Q7, S.1]
+Das universelle approximations Theorem sagt aus, dass normale feed-forward neurale Netzwerke mit nur einer versteckten Schicht jede kontinuierliche multivariate Funktion approximiert werden. [Q6, S.1] [Q5, S.1]
 
 
 Da neuronale Netzwerke nur Funktionen approximieren und bei jedem Aufruf (abhängig von implementation) einen gewissen Zufallsfaktor beinhalten, sind wiederholte Entscheidungen bei selbem input immer leicht unterschiedlich. Dieses Rauschen ist eine durchaus unerwünschte Eigenschaft für Heuristiken. Da beim mehrfachen Anwenden von Neuronalen Netzen als Heuristiken sich der Effekt dieses Rauschen auf das letztendliche Ergebnis des Algorithmus bei tieferer Suche signifikant auswirken kann. [Q7, S.1]
@@ -128,11 +121,11 @@ Das zweite Modell erweitert die Architektur durch die Einführung eines Convolut
 Die Ergebnisse des Trainings zeigen, dass das zweite Modell (mit Convolutional Layer) keinen signifikanten Vorteil im Vergleich zum ersten Modell gebracht hat. Tatsächlich schnitt das erste Modell in einigen Konfigurationen sogar leicht besser ab.
 Zur besseren Darstellung sind die folgenden Werte auch noch einmal in Diagrammform im Anhang [B1], [B2], [B3] einzusehen.
 
-Der MAE-Wert (Mean Absolute Error) [Q5, s. 103] gibt dabei die durchschnittliche absolute Differenz zwischen den tatsächlichen und den vorhergesagten Werten im Testset an. Ein niedriger MAE-Wert weist auf eine bessere Modellvorhersagegenauigkeit hin, da er die durchschnittliche Fehlergröße in der gleichen Einheit wie die Ausgangsdaten misst.
+Der MAE-Wert (Mean Absolute Error) [Q4, s. 103] gibt dabei die durchschnittliche absolute Differenz zwischen den tatsächlichen und den vorhergesagten Werten im Testset an. Ein niedriger MAE-Wert weist auf eine bessere Modellvorhersagegenauigkeit hin, da er die durchschnittliche Fehlergröße in der gleichen Einheit wie die Ausgangsdaten misst.
 
-Der MSE-Wert (Mean Squared Error) [Q5, s. 103] misst die durchschnittliche quadratische Differenz zwischen den tatsächlichen und den vorhergesagten Werten im Testset. Dieser Wert betont größere Fehler stärker, da die Fehler quadriert werden. Ein niedriger MSE-Wert bedeutet eine geringere Streuung der Fehler und eine genauere Modellvorhersage.
+Der MSE-Wert (Mean Squared Error) [Q4, s. 103] misst die durchschnittliche quadratische Differenz zwischen den tatsächlichen und den vorhergesagten Werten im Testset. Dieser Wert betont größere Fehler stärker, da die Fehler quadriert werden. Ein niedriger MSE-Wert bedeutet eine geringere Streuung der Fehler und eine genauere Modellvorhersage.
 
-Der R²-Wert (Bestimmtheitsmaß) [Q4, 3.1] quantifiziert den Anteil der Varianz der Zielvariable, der durch das Modell erklärt wird. Ein R²-Wert von 1 deutet auf eine perfekte Anpassung hin, während ein Wert von 0 darauf hinweist, dass das Modell keine bessere Erklärung für die Variabilität der Zielvariable bietet als das Mittel der beobachteten Werte.
+Der R²-Wert (Bestimmtheitsmaß) [Q3, 3.1] quantifiziert den Anteil der Varianz der Zielvariable, der durch das Modell erklärt wird. Ein R²-Wert von 1 deutet auf eine perfekte Anpassung hin, während ein Wert von 0 darauf hinweist, dass das Modell keine bessere Erklärung für die Variabilität der Zielvariable bietet als das Mittel der beobachteten Werte.
 
 ### Vergleich der Modelle
 
@@ -182,18 +175,18 @@ Schlussendlich ist also die Frage, ob sich Heuristiken wie hier aufgefuehrt durc
 Diese Verbesserung liegt in der zussamensetztung der Trainingsdaten.
 Um zu vermeiden, dass das neuronale Netz auf mehreren Heuristiken gleichzeitig trainiert wird, koennte man zwei oder mehr Heuristiken auswaehlen und das Spiel in genau so viele Phasen unterteilen. Und so nur von einer Heuristik bewertete Spielzustaende in die Trainingsdaten geben, wenn der Spielzustand zu der entsprechenden Phase gehoert. Die Phase koennte man beispielsweise an der Anzahl der Zuege messen. Mit einem solchen Ansatz wuerde man die unentschlossenheit aus den Trainingsdaten eventuell entfernen koennen.
 
-## Quellen & Referenzen TODO
+## Quellen & Referenzen
 
-[Q2] Implementierungsdetails aus Praktikum 1 (siehe [Dokumentation P1](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/p1_dokumentation.md))  
-[Q3] Implementierungsdetails aus Praktikum 2 (siehe [Dokumentation P2](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/p2_dokumentation.md))  
-[Q4] Machine Learning für Zeitreihen : Einstieg in Regressions-, ARIMA- und Deep Learning-Verfahren mit Python / Jochen Hirschle 	
-Hirschle, Jochen; ISBN: 978-3-446-46814-6
-[Q5] TensorFlow Pocket Primer Oswald Campesato; ISBN: 978-1-68392-366-4
-[Q6](https://arxiv.org/abs/2002.06505) A closer look at the approximation capabilities of neural networks / Kai Fong Ernest Chong
-[Q7](https://www.sciencedirect.com/science/article/abs/pii/0893608089900208?via%3Dihub) Multilayer feedforward networks are universal approximators / Kurt Hornik, Maxwell Stinchcombe, Halbert White
-[Q7](https://cdn.aaai.org/AAAI/1994/AAAI94-211.pdf)Evolving Nural Networks to Focus Minimax Search / David E. Moritarty, Risto Miikkulainen
-[Q8](https://pmc.ncbi.nlm.nih.gov/articles/PMC6428006/)Artificial Neural Network: Understanding the Basic Concepts without Mathematics
-[R1] Quellcode Dame-Anwendung (https://github.com/Lesekater/HAW-KI-Praktika.git)
+[Q1] Implementierungsdetails aus Praktikum 1 (siehe [Dokumentation P1](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/p1_dokumentation.md))  
+[Q2] Implementierungsdetails aus Praktikum 2 (siehe [Dokumentation P2](https://raw.githubusercontent.com/Lesekater/HAW-KI-Praktika/refs/heads/main/p2_dokumentation.md))  
+[Q3] Machine Learning für Zeitreihen : Einstieg in Regressions-, ARIMA- und Deep Learning-Verfahren mit Python / Jochen Hirschle 	
+Hirschle, Jochen; ISBN: 978-3-446-46814-6 	\
+[Q4] TensorFlow Pocket Primer Oswald Campesato; ISBN: 978-1-68392-366-4 	\
+[Q5] [A closer look at the approximation capabilities of neural networks / Kai Fong Ernest Chong](https://arxiv.org/abs/2002.06505) \
+[Q6] [Multilayer feedforward networks are universal approximators / Kurt Hornik, Maxwell Stinchcombe, Halbert White](https://www.sciencedirect.com/science/article/abs/pii/0893608089900208?via%3Dihub) \
+[Q7] [Evolving Nural Networks to Focus Minimax Search / David E. Moritarty, Risto Miikkulainen](https://cdn.aaai.org/AAAI/1994/AAAI94-211.pdf) \
+[Q8] [Artificial Neural Network: Understanding the Basic Concepts without Mathematics](https://pmc.ncbi.nlm.nih.gov/articles/PMC6428006/) \
+[R1] Quellcode Dame-Anwendung (https://github.com/Lesekater/HAW-KI-Praktika.git) 	\
 
 ## Bilder
 
